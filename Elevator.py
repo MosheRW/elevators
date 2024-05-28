@@ -43,8 +43,7 @@ class Elevator:
   
         
     def get_next_direction(self):
-        if self.__direction == directions.STAND:
-            
+        if self.__direction == directions.STAND:            
             if self.__queque.peek() > self.__location:
                 self.__direction = directions.UP
             elif self.__queque.peek() < self.__location:

@@ -14,9 +14,7 @@ class Elevators_Management:
             
             return (True,time)
         return (False, 0.0)                                                 #maybe brock
-   
-    
-     
+           
     def __shortest_time_elevator(self, location):
         num = 0
         
@@ -26,5 +24,6 @@ class Elevators_Management:
                 
         return (i, self.__the_elevators[num].to_get_the_elevator(location))
         
+    
 
         
