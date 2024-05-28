@@ -48,9 +48,14 @@ class Queque:
         
         return data
     
-    def peek(self):
-        return self.__head.get_data()
+    def peek(self, pos = "head"):
+        if pos == "head":
+            return self.__head.get_data()
+        else:
+            return self.__tail.get_data()
+            
     
+
 
     def get_size(self):
         return self.__size
