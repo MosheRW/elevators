@@ -5,7 +5,7 @@ from Graphic_Manager import get_floors_boundries
 directions = Enum('directions', ['UP','DOWN', 'STAND'])
 
 class Elevator:
-    def __init__(self, location = 0):
+    def __init__(self, location = 0, position = 0):
         self.__elevator_location = location
         self.__queque = Queque()
         self.__last_in_line = location
@@ -13,6 +13,11 @@ class Elevator:
         self.__position
         self.__direction = directions.STAND
         self.__last_floor_entry = 0.0
+
+
+    def set_position(self, position):
+         self.__position =  position
+         
 
     def updtae(self, floors, time = 0.17) :
         self.__seconds_remain -= time
@@ -37,7 +42,7 @@ class Elevator:
                 self.__get_next_direction()
          
         else:
-            if get_floors_boundries(self.__queque.peek(),floors) == self.__position[1]:
+            if get_floors_boundries(self.__queque.peek()) == self.__position[1]:
                 self.__last_floor_entry = self.__seconds_remain
                 self.__direction = directions.STAND
      
