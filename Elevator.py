@@ -14,8 +14,9 @@ class Elevator:
         self.__direction = directions.STAND
         self.__last_floor_entry = 0.0
 
-    def updtae(self, floors) :
-        self.__seconds_remain -= 0.17
+    def updtae(self, floors, time = 0.17) :
+        self.__seconds_remain -= time
+        
         self.update_pos(self)
         self.update_state(self, floors)
         

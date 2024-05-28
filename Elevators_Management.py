@@ -25,5 +25,10 @@ class Elevators_Management:
         return (i, self.__the_elevators[num].to_get_the_elevator(location))
         
     
-
+    def update(self, time = 0.17):
+        output = [self.__the_elevators[0].update(self.__num_of_floors, time)]
         
+        for i in range(1, len(self.__the_elevators)):
+            output.append(self.__the_elevators[i].update(self.__num_of_floors))
+        
+        return output
