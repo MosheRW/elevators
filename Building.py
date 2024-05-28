@@ -11,15 +11,13 @@ class Building:
         # invited == True
         self.__floor_mange = [(0.0, False) for _ in range(self.__num_of_floors +1)]
         self.__elevator_mange = em.Elevators_Management(floors, elevators)
-
-    
-
+ 
+#methodes to utilise the class
     def get_elevator(self, floor):
          data = self.__elevator_mange.get_an_elevator(floor)
          
          if data[0]:
                self.__floor_mange[floor] = (data[1], True)
-
 
     def update(self, time = 0.017):
             output_elevators = self.__elevator_mange.update(time)
@@ -28,7 +26,8 @@ class Building:
             output_floors = self.__get_floors()
             
             return [output_elevators, output_floors]
-                                
+
+#methodes to update the floors status                               
     def __update_floors_array(self, time):
         for i in range( self.__num_of_floors + 1):
             self.__update_a_floor(i, time)
@@ -52,7 +51,7 @@ class Building:
             else:
                 self.__floor_mange[i]= (self.__floor_mange[i][0] - time, True)
                  
-                                                                                                      
+ #methodes to get the floors status                                                                                                        
     def __get_floors(self):
          return [self.__get_floor(i) for i in range(self.__num_of_floors +1)]
     
