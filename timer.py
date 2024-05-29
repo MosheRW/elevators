@@ -14,16 +14,25 @@ class timer:
             
 
     def get(self):
-        return  self.__time_in_seconds
+        return  self.__time_in_seconds, self.__delta
             
     
     def get_in_double(self):
         if self.__delta >= self.__frame_rate/2:
             return  self.__time_in_seconds + 0.5   
     
-    def set(self, time_in_seconds):
+    def set(self, time_in_seconds, half_sec = 0):
          self.__time_in_seconds = time_in_seconds
          self.__delta = self.__frame_rate
+    
+         
+    def get_exact(self):
+        return self.__time_in_seconds, self.__delta
+    
+
+    def set_exact(self, time_in_seconds, delta):
+         self.__time_in_seconds = time_in_seconds
+         self.__delta = delta
          
     def change_time(self, time_in_seconds, half_sec = 0):
          self.__time_in_seconds += time_in_seconds
@@ -35,6 +44,33 @@ class timer:
         
         if self.__delta >= self.__frame_rate:
             self.__time_in_seconds += 1
+
+    
+    def get_with_addition(self, addition):
+        ints = self.__time_in_seconds + addition[0]
+        halfs = addition[1]
+        
+        if self.__delta >= self.__frame_rate/2:
+            halfs  += 1
+            
+        ints += (int(halfs) / 2)
+        
+        halfs = int(halfs) % 2
+            
+        return ints + halfs * 0.5
+    
+    def get_exact_with_addition(self, addition):
+        
+        ints = self.__time_in_seconds + addition[0]
+        
+        
+        ints += int(int(self.__delta + addition[1]) / self.__frame_rate)
+        
+        delta = int(int(self.__delta + addition[1]) % self.__frame_rate)
+            
+        return (ints, delta)
+    
+
 
     def __get_delta(self):
         return  self.__delta
