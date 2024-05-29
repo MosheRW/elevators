@@ -1,19 +1,32 @@
 from Queque import Queque
 from enum import Enum
 from Graphic_Manager import get_floors_boundries
+import Graphic_Manager as gm
+
+
+
+from updatable_pic_model import UPM
+
 
 directions = Enum('directions', ['UP','DOWN', 'STAND'])
 
-class Elevator:
-    def __init__(self, location = 0, position = 0):
-        self.__elevator_location = location
+class Elevator(UPM):
+    def __init__(self, floor = 0, position = 0, serial = 0):
+        super.__init__(floor, gm.ELEVATOR_PIC_FILE, get_init_position(floor))
+        self.__last_in_line = self.__floor
         self.__queque = Queque()
-        self.__last_in_line = location
+
+        self.__floor = location need
+        
+       # self.__last_in_line = location
         self.__seconds_remain = 0.0
-        self.__position
+      #  self.__position ------------- in parent
         self.__direction = directions.STAND
         self.__last_floor_entry = 0.0
 
+    
+
+   
 
     def set_position(self, position):
          self.__position =  position
@@ -78,7 +91,7 @@ class Elevator:
            
     def __calculate_travel_time(self, location_1, location_2 = None ) -> float:
         if location_2 == None:
-            location_2 = self.__elevator_location
+            location_2 = self.__floor
             
         if location_1 > location_2:
             return 0.5 * (location_1 - location_2)
@@ -106,3 +119,5 @@ class Elevator:
         return other.to_get_the_elevator != self.to_get_the_elevator
 
    
+def get_init_position(serial, first_elevator_is = 1):      
+        return gm.FLOOR_SIZE[0] + gm.SPACE + (serial - first_elevator_is) * (gm.ELEVATOR_SIZE[0] + gm.SPACE)
