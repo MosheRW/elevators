@@ -43,7 +43,12 @@ class Floor(UPM):
         else: #case elevator is here
             if self._timer.is_time_is_up():
                 self._state = states.STILL
-                
+         
+    def __str__ (self):
+        return f'floor: {self._floor}, ' + UPM.__str__(self)
+    
+    def __repr__ (self):
+        return f'floor: {self._floor}' + UPM.__repr__(self)
         
 
 

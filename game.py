@@ -59,24 +59,32 @@ class Game:
                     
                  if key[pygame.K_RETURN]:
                      if  tes_i <   len(tes):
+                         
                          print(self.__building)
                          self.__building.get_elevator(tes[tes_i])
                          print(self.__building)
+                         tes_i += 1
                      elif tes_i ==   len(tes):
                          running = False
-                         
+            
+             """                         
              count += 1
         
              if count == 60:
-                print("hii")
+               # print("hii")
                 #print(self.__building)
                 count = 0
             
              #   pygame.display.flip()
-            
+             """
+             self.__building.update()
              self.__clock.tick(60)
+             
+
+
+
     def get_ele(self,i):
-        self.__building.get_elevator(tes_i)
+        self.__building.get_elevator(i)
         
     def print_building(self):
         print(self.__building)
@@ -85,16 +93,20 @@ class Game:
         self.__building.update()
         
 game = Game()
-#game.init()
-#game.tests()
+game.init()
+game.tests()
 
-
+"""
 tes = [8,3,5,7,4,2,1]
 tes_i = 0
 
     
-for tes_i in tes:
-    print(tes_i)
-    game.get_ele(tes_i)
+#for tes_i in tes:
+for i in range(len(tes)):
+    print(tes[i])
+  #  game.update()
+    game.get_ele(set[i])
     game.update()
     game.print_building()
+    
+"""    

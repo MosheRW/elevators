@@ -14,8 +14,9 @@ class Building:
  
 #methodes to utilise the class
     def get_elevator(self, floor):
+        
         if self._floors_mange.is_this_floor_needs_an_elevator(floor):
-         
+            print("geting an elevator") 
             exac_time = self.__elevator_mange.get_an_elevator(floor)
             self._floors_mange.get_an_elevator(floor,exac_time)
 

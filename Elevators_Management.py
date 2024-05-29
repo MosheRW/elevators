@@ -10,34 +10,17 @@ class Elevators_Management:
         self.__the_elevators = [Elevator(0,0,i) for i in range(self.__num_of_elevators)]
         
     def get_an_elevator(self, floor):
-        #time, elevat = self.__shortest_time_elevator(floor)         # the most short queque
+     
         elevat = self.__shortest_time_elevator(floor)         # the most short queque
-        # assert self.__the_elevators[elevat].get_the_elevator(floor), "didn't order the elevator"    #get this elevtor
+        
         return self.__the_elevators[elevat].get_the_elevator(floor)
          
-        
-        """
-        if not self.__is_the_floor_in_line:
-            time, elevat = self.__shortest_time_elevator(floor)         # the most short queque
-            assert self.__the_elevators[elevat].get_the_elevator(floor), "didn't order the elevator"    #get this elevtor
-            
-            return (True,time)
-        return (False, 0.0)                                                 #maybe brock
-        """   
-                
+      
     def update(self, time = 0.17):
         for elevate in  self.__the_elevators:
                  elevate.update(self.__num_of_floors, time)
-                         
-        """
-        output = [self.__the_elevators[0].update(self.__num_of_floors, time)]
-        
-        for i in range(1, len(self.__the_elevators)):
-            output.append(self.__the_elevators[i].update(self.__num_of_floors))
-        
-        return output
-        """
-    
+       
+                 
     def get(self):
         return [i.get() for i in self.__the_elevators]
                 

@@ -35,31 +35,36 @@ class Queque:
     size = 0
     head = None
     tail = None
+    
     def __init__ (self, data = None):
+        self.size = 0
         if type(data) != None:
            self.init(data)
-        else:
-            self.head = None
-            self.tail = None
-            self.size = 0
+       
            
     def init(self, data):
         new_node = Node(data)
         self.head = new_node
         self.tail =  self.head
         self.size = 1
-
+        
+       #print(f'inserted data: {data} end of Queque.init, self.head.data: {self.head.data}')
+        
+        assert type(self.head) != None, "inside Queque.init"
+        
     def push(self, data):
         new_node = Node(data)
 
         if self.head == None:
             self.init(data)
+            assert type(self.head) != None, "inside Queque.push 1"
         else:
             #self.head.next_ = new_node
             self.tail.next_ = new_node
             self.tail = self.tail.next_
             self.size += 1
 
+            assert type(self.head) != None, "inside Queque.push 2"
 
         """
         if self.is_empty():
@@ -75,7 +80,7 @@ class Queque:
         """    
    
     def pop(self):
-        print("pop")
+       #print("pop")
         
         if self.head != None and self.size >= 1:
             data = self.head.get_data()
@@ -86,17 +91,22 @@ class Queque:
             return data           
     
     def peek(self):
-        print(self.head)
-        return self.head.get_data()
+        assert type(self.head) != None, "inside Queque.peek"
+       #print(type(self.head))
+       #print("peek")
+       #print(self.head)
+       # data = self.head.get_data()
+        data = self.head.data
+        return data
 
 
     def get_size(self):
         return self.size
     
     def is_empty(self):
-       print(f'size: {self.get_size()}')
+      #print(f'size: {self.get_size()}')
        #print(self)
-       return self.get_size() <= 0
+       return self.get_size() <= 0 or self.head == None or self.head.data == None
    
     def __repr__(self) -> str:
         temp = self.head
@@ -114,32 +124,32 @@ class Queque:
         
 def test():
     data = [random.randint(1,10) for _ in range(10)]
-    print(data)
+   #print(data)
     
     q = Queque(data[0])
-    print(f'initilize: {q}')
+   #print(f'initilize: {q}')
     
     for i in range(1,8,2):
         q.push(data[i])
-        print(f'pushing: {data[i]}')
-        print(f'first push:{q}')
+       #print(f'pushing: {data[i]}')
+       #print(f'first push:{q}')
 
-        print(f'first peek: {q.peek()}')
+       #print(f'first peek: {q.peek()}')
        
         q.push(data[i+1])
-        print(f'pushing: {data[i+1]}')
-        print(f'second push:{q}')
+       #print(f'pushing: {data[i+1]}')
+       #print(f'second push:{q}')
 
         q.pop()
-        print(f'pop:{q}')
+       #print(f'pop:{q}')
         
-        print(f'second peek: {q.peek()}')
+       #print(f'second peek: {q.peek()}')
         
-        print(f'end of loo:{q}')
+       #print(f'end of loo:{q}')
         
     while not q.is_empty():
         q.pop()
-        print(f'pop:{q}')
+       #print(f'pop:{q}')
         
 
 #test()

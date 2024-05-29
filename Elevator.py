@@ -1,4 +1,5 @@
 from Queque import Queque
+from Queque import test
 from enum import Enum
 from Graphic_Manager import WAIT_IN_FLOOR, get_floors_boundries
 import Graphic_Manager as gm
@@ -11,26 +12,18 @@ from updatable_pic_model import UPM
 directions = Enum('directions', ['GOING_UP','GOING_DOWN', 'STILL', 'DOORS_OPEN'])
 
 class Elevator(UPM):
-    __time_at_last_floor_entry = None
     __last_in_line = 0
-    __queque = Queque()
+    _queque = Queque()
     def __init__(self, floor = 0, position = 0, serial = 0):
         
         super().__init__(floor, gm.ELEVATOR_PIC_FILE, get_init_position(floor))
                 
         self.__last_in_line = self._floor
-     
-        #self.__time_at_last_floor_entry
         
         self.__current_ride = timer()
         
         self._state = directions.STILL
         
-       # self.__last_in_line = location
-       # self._timer = 0.0    ----------- timer in parent
-      #  self._position ------------- in parent
-      #  self.__direction = directions.STILL ---- in parent         
-
 
     def set_position(self, position):
          self._position =  position
@@ -43,7 +36,7 @@ class Elevator(UPM):
            
     def get_the_elevator(self, floor):
         
-        self.__queque.push(floor)
+        self._queque.push(floor)
         self._last_in_line = floor
         self.set_the_new_time(floor)
         
@@ -78,6 +71,7 @@ class Elevator(UPM):
         # still - calculate if got invited
         # doors open - calculate if time to close
         
+       # print(self._queque)
         if self._state == directions.GOING_DOWN or  self._state == directions.GOING_UP:
             self.__calculate_if_arrived()
         elif self._state == directions.DOORS_OPEN:
@@ -100,14 +94,18 @@ class Elevator(UPM):
             self.calculate_if_got_invited()
             
     def __calculate_if_got_invited(self):#still (and )
-        if not self.__queque.is_empty():
-                print(self.__queque.peek())
+        assert not type(self._queque) == None, "queque in None" 
+
+        if not self._queque.is_empty():
+                temp = self._queque.peek()    
+                print(f'temp: {temp}')
+                #print(self._queque.peek())
                 
-                if self.__queque.peek() > self._floor:
+                if temp > self._floor:
                     self._state = directions.GOING_UP
                     
                 
-                elif self.__queque.peek() < self._floor:
+                elif temp < self._floor:
                     self._state = directions.GOING_DOWN       
                     
         else:
@@ -153,4 +151,5 @@ class Elevator(UPM):
 def get_init_position(serial, first_elevator_is = 1):      
         return (gm.FLOOR_SIZE[0] + gm.SPACE + (serial - first_elevator_is) * (gm.ELEVATOR_SIZE[0] + gm.SPACE), 0)
 
-    
+
+#test()    
