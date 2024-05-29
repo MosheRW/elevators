@@ -5,40 +5,43 @@ import pygame
 
 
 class UPM:
+    _img = None
+    _state = None
+
     def __init__ (self, floor, filename, position):
-        self.__floor = floor
-        self.__position = position                #tuple (x,y)
-        self.__img
-        self.__state
-        self.__timer = timer()
-        self.__set_img(filename)
+        self._floor = floor
+        self._position = position                #tuple (x,y)
+        #self._img = None # = pygame.image.load(filename).convert()
+       
+        self._timer = timer()
+        
         
     def set_floor(self, floor):
-         self.__floor = floor
+         self._floor = floor
 
     def set_position(self, vertex):
-        self.__position  = position
+        self._position  = position
       
     def set_state(self, state):
-           self.__state = state
+           self._state = state
            
     def set_img(self, filename):
-          self.__img = pygame.image.load(filename).convert()
+          self._img = pygame.image.load(filename).convert()
       
     def update(self):
-        self.__timer.update()
+        self._timer.update()
     
     def get(self):
-        return self.__img, self.__position, self.__timer.get_exact
+        return self._img, self._position, self._timer.get_exact
     
     def get_state(self):
-        return self.__state
+        return self._state
         
     def __repr__(self) -> str:
-        return f'position:{self.__position}, state:{self.__state}' 
+        return f'position:{self._position}, state:{self._state}' 
       
     def __str__(self) -> str:
-        return f'position:{self.__position}, state:{self.__state}' 
+        return f'position:{self._position}, state:{self._state}' 
       
   
       

@@ -1,4 +1,4 @@
-import Elevator
+from Elevator import Elevator
 import Graphic_Manager as gm
 
 class Elevators_Management:
@@ -45,7 +45,7 @@ class Elevators_Management:
         minimum = 0
         
         
-        for i in range(1,self.__the_elevators):
+        for i in range(1,len(self.__the_elevators)):
             if self.is_left_smaller(i,minimum, floor):
                 minimum = i
         """        

@@ -11,17 +11,19 @@ states = Enum('states', ['WAITING', 'ELEVATOR_HERE', 'STILL'])
 
 class Floor(UPM):
     def __init__(self, floor = 0, position = 0):
-        super.__init__(floor, gm.FLOOR_PIC_FILE, get_init_position(floor))
+        #super.__init__('Floor')
+        super().__init__(floor, gm.FLOOR_PIC_FILE, get_init_position(floor))
 
-        self.__state = states.STILL
+        #super
+        self._state = states.STILL
 
 
     def is_this_floor_needs_an_elevator(self):
-        return self.__state == states.STILL
+        return self._state == states.STILL
     
     def get_elevator(self, exact_time):
-        self.__state = states.WAITING
-        self.__timer.set(exact_time[0], exact_time[1])
+        self._state = states.WAITING
+        self._timer.set(exact_time[0], exact_time[1])
 
 
     def update(self):
@@ -29,18 +31,18 @@ class Floor(UPM):
         self.__update_status()
         
     def __update_timer(self):
-        self.__timer.update()
+        self._timer.update()
         
     def __update_status(self):
-        if  self.__state == states.STILL:
+        if  self._state == states.STILL:
             pass
-        elif  self.__state == states.WAITING:
-            if self.__timer.is_time_is_up():
-                self.__state = states.ELEVATOR_HERE
-                self.__timer.set(2)
+        elif  self._state == states.WAITING:
+            if self._timer.is_time_is_up():
+                self._state = states.ELEVATOR_HERE
+                self._timer.set(2)
         else: #case elevator is here
-            if self.__timer.is_time_is_up():
-                self.__state = states.STILL
+            if self._timer.is_time_is_up():
+                self._state = states.STILL
                 
         
 

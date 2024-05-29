@@ -3,13 +3,14 @@ import pygame
 import Graphic_Manager as gm
 
 class Game:
+    screen = None
     def __init__(self, floors = 8, elevators =3):
         self.__num_of_floors = floors
         self.__num_of_elevators =elevators
         
         self.__building = Building(self.__num_of_floors, self.__num_of_elevators)
         
-        self.__screen
+        
         self.__clock = pygame.time.Clock()
 
 
@@ -24,12 +25,17 @@ class Game:
                 
         self.init_screen()
             
-    def earse_screen(self):
+    def erease_screen(self):
         pass
         
     def init_screen(self):
-        pass
+        pygame.init()
         
+        self.screen = pygame.display.set_mode((1280, 720))
+        print(pygame.display.get_desktop_sizes())
+        self.screen.fill("white")
+        self.screen.set_colorkey()
+       
 
     #tests
     def tests(self):
@@ -53,6 +59,8 @@ class Game:
                  if key[pygame.K_RETURN]:
                      if  tes_i <   len(tes):
                          self.__building.get_elevator(tes[tes_i])
+                     elif tes_i ==   len(tes):
+                         running = False
                          
         count += 1
         
@@ -61,3 +69,8 @@ class Game:
             count = 0
             
         self.__clock.tick(60)
+        
+
+game = Game()
+game.init()
+game.tests()
