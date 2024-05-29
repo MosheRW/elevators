@@ -4,6 +4,7 @@ import Graphic_Manager as gm
 
 class Game:
     screen = None
+    
     def __init__(self, floors = 8, elevators =3):
         self.__num_of_floors = floors
         self.__num_of_elevators =elevators
@@ -58,7 +59,9 @@ class Game:
                     
                  if key[pygame.K_RETURN]:
                      if  tes_i <   len(tes):
+                         print(self.__building)
                          self.__building.get_elevator(tes[tes_i])
+                         print(self.__building)
                      elif tes_i ==   len(tes):
                          running = False
                          
@@ -66,14 +69,32 @@ class Game:
         
              if count == 60:
                 print("hii")
-                print(self.__building)
+                #print(self.__building)
                 count = 0
             
              #   pygame.display.flip()
             
              self.__clock.tick(60)
+    def get_ele(self,i):
+        self.__building.get_elevator(tes_i)
         
-
+    def print_building(self):
+        print(self.__building)
+        
+    def update(self):
+        self.__building.update()
+        
 game = Game()
-game.init()
-game.tests()
+#game.init()
+#game.tests()
+
+
+tes = [8,3,5,7,4,2,1]
+tes_i = 0
+
+    
+for tes_i in tes:
+    print(tes_i)
+    game.get_ele(tes_i)
+    game.update()
+    game.print_building()

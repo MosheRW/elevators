@@ -1,9 +1,10 @@
 class Node:
      __data = None
      __next = None
-     def __init__ (self, data = None):
+     def __init__ (self, data = None, next_ = None):
         if type(data) != None:
             self.__data = data 
+        self._next = next_
    
 
 
@@ -38,21 +39,29 @@ class Queque:
            
 
     def push(self, data):
-        self.__tail.set_next(Node(data))
-        self.__tail  = self.__tail.get_next()
+        if self.is_empty():
+            self.__head = Node(data)
+            self.__tail = None
+            
+        else:
+            self.__tail = Node(data, self.__tail.get_next())
+            self.__tail  = self.__tail.get_next()
+            
         self.__size += 1
         
     def pop(self):
-        data = self.__head.get_data()
-        if self.__head.get_next() == None:
-            self.__init__()
-        else:
-            self.__head = self.__head.get_next()
-            self.__size -= 1
+        if self.__head != None:
+            data = self.__head.get_data()
+            if self.__head.get_next() == None:
+                self.__init__()
+            else:
+                self.__head = self.__head.get_next()
+                self.__size -= 1
         
         return data
     
     def peek(self, pos = "head"):
+        
         if pos == "head":
             return self.__head.get_data()
         else: #get tails
@@ -65,7 +74,7 @@ class Queque:
         return self.__size
     
     def is_empty(self):
-       return self.get_size() == 1
+       return self.get_size() == 0
    
     def __repr__(self) -> str:
         temp = self.__head
@@ -76,6 +85,7 @@ class Queque:
         return data
         
     def __str__(self):
+        
         return self.__repr__()
         
         

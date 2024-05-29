@@ -28,7 +28,7 @@ class UPM:
     def set_img(self, filename):
           self._img = pygame.image.load(filename).convert()
       
-    def update(self):
+    def update_(self):
         self._timer.update()
     
     def get(self):

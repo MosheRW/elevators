@@ -12,13 +12,14 @@ directions = Enum('directions', ['GOING_UP','GOING_DOWN', 'STILL', 'DOORS_OPEN']
 
 class Elevator(UPM):
     __time_at_last_floor_entry = None
-
+    __last_in_line = 0
+    __queque = Queque()
     def __init__(self, floor = 0, position = 0, serial = 0):
         
         super().__init__(floor, gm.ELEVATOR_PIC_FILE, get_init_position(floor))
                 
         self.__last_in_line = self._floor
-        self.__queque = Queque()
+     
         #self.__time_at_last_floor_entry
         
         self.__current_ride = timer()
@@ -54,13 +55,13 @@ class Elevator(UPM):
         return self._timer.get_exact_with_addition(self.__calculate_addition_time(floor))
      
 
-    def updtae(self, floors, time = 0.17) :
+    def update(self, floors, time = 0.17) :
         
-        UPM.update()
+        self.update_()
         
-        self.__update_pos(self)
+        self.__update_pos()
         self.__update_iternal_timer()
-        self.__update_state(self, floors)
+        self.__update_state( floors)
   
         
 
@@ -100,7 +101,7 @@ class Elevator(UPM):
             
     def __calculate_if_got_invited(self):#still (and )
         if not self.__queque.is_empty():
-            if not self.__queque.is_empty():
+                print(self.__queque.peek())
                 
                 if self.__queque.peek() > self._floor:
                     self._state = directions.GOING_UP
@@ -126,7 +127,7 @@ class Elevator(UPM):
         if floor_1 > floor_2:
             return (int(int(floor_1 - floor_2) / 2) , int(floor_1 - floor_2) % 2)
         else:
-            return (    int(int(floor_2 - floor_1) / 2 ), int(floor_2 - floor_1) % 2)
+            return (  int(int(floor_2 - floor_1) / 2 ), int(floor_2 - floor_1) % 2)
         
 #Comparison Operators:
     """        
