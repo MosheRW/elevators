@@ -2,7 +2,7 @@ from floor import Floor
 import Graphic_Manager as gm
 
 
-class floors_managment:
+class Floors_managment:
     def __init__ (self, num_of_floors):
         self.__num_of_floors = num_of_floors
         self.__the_floors = [Floor(i) for i in range(self.__num_of_floors +1)]
