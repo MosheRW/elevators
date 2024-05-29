@@ -12,7 +12,10 @@ class timer:
             self.__time_in_seconds -= 1
             self.__delta = self.__frame_rate
             
-
+    
+    def is_time_is_up(self):
+        return self.__time_in_seconds != 0 and self.__delta != 0
+    
     def get(self):
         return  self.__time_in_seconds, self.__delta
             

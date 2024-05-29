@@ -25,12 +25,8 @@ class Elevator(UPM):
        # self.__last_in_line = location
        # self.__timer = 0.0    ----------- timer in parent
       #  self.__position ------------- in parent
-      #  self.__direction = directions.STILL ---- in parent
-       
+      #  self.__direction = directions.STILL ---- in parent         
 
-    
-
-   
 
     def set_position(self, position):
          self.__position =  position
@@ -87,7 +83,9 @@ class Elevator(UPM):
           
     def __update_iternal_timer(self):
         self.__current_ride.update()
-     
+ 
+        
+
     def __calculate_if_arrived(self):     #going_up, going_down
         if self.__current_ride.get_exact() == (0,0):
             self.__state = directions.DOORS_OPEN
@@ -110,7 +108,9 @@ class Elevator(UPM):
                     
         else:
             self.__state = directions.STILL
-                      
+    
+            
+
     def __calculate_addition_time(self, floor):
         travel_time = self.__calculate_travel_time(self._last_in_line, floor)
         return (travel_time[0] + 2, travel_time[1])
@@ -148,4 +148,4 @@ class Elevator(UPM):
     """
    
 def get_init_position(serial, first_elevator_is = 1):      
-        return gm.FLOOR_SIZE[0] + gm.SPACE + (serial - first_elevator_is) * (gm.ELEVATOR_SIZE[0] + gm.SPACE)
+        return (gm.FLOOR_SIZE[0] + gm.SPACE + (serial - first_elevator_is) * (gm.ELEVATOR_SIZE[0] + gm.SPACE), 0)
