@@ -62,13 +62,16 @@ class Game:
                      elif tes_i ==   len(tes):
                          running = False
                          
-        count += 1
+             count += 1
         
-        if count == 60:
-            print(self.__building)
-            count = 0
+             if count == 60:
+                print("hii")
+                print(self.__building)
+                count = 0
             
-        self.__clock.tick(60)
+             #   pygame.display.flip()
+            
+             self.__clock.tick(60)
         
 
 game = Game()

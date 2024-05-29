@@ -1,12 +1,10 @@
 class Node:
-     def __init__ (self, data = 0):
-         self.__data = data
-         self.__next = None
-        
-         if type(data) != int or data != 0:
-              self.__size = 1
-         else:
-              self.__size = 0
+     __data = None
+     __next = None
+     def __init__ (self, data = None):
+        if type(data) != None:
+            self.__data = data 
+   
 
 
      def set_data(self, data):
@@ -29,10 +27,16 @@ class Node:
      
 
 class Queque:
-    def __init__ (self, init_data = "start"):
-        self.__head = Node(init_data)
-        self.__tail = self.__head
-        
+    __size = 0
+    __head = None
+    __tail = None
+    def __init__ (self, data = None):
+        if type(data) != None:
+            self.__head = Node(data)
+            self.__tail = self.__head
+            self.__size += 1
+           
+
     def push(self, data):
         self.__tail.set_next(Node(data))
         self.__tail  = self.__tail.get_next()
@@ -51,7 +55,7 @@ class Queque:
     def peek(self, pos = "head"):
         if pos == "head":
             return self.__head.get_data()
-        else:
+        else: #get tails
             return self.__tail.get_data()
             
     

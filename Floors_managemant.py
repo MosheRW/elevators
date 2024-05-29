@@ -27,3 +27,8 @@ class Floors_managment:
     
 
 
+    def __repr__(self):
+        return f'the floors: {self.__the_floors}'
+    
+    def __str__(self):
+        return f'the floors: {self.__the_floors}'

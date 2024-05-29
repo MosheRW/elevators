@@ -62,10 +62,10 @@ class Building:
  
     """
     def __str__(self):
-         return f'floor_manger: {self._floor_mange}\nelevator_mange: {self.__elevator_mange}'
+         return f'floor_manger: {self._floors_mange}\nelevator_mange: {self.__elevator_mange}'
     
     def __repr__(self):
-         return f'floor_manger: {self._floor_mange}\nelevator_mange: {self.__elevator_mange}'
+         return f'floor_manger: {self._floors_mange}\nelevator_mange: {self.__elevator_mange}'
          
          
          
