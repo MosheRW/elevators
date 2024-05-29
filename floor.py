@@ -10,11 +10,18 @@ from updatable_pic_model import UPM
 states = Enum('states', ['WAITING', 'ELEVATOR_HERE', 'STILL'])
 
 class Floor(UPM):
-    def __init__(self, floor = 0, position = 0, serial = 0):
+    def __init__(self, floor = 0, position = 0):
         super.__init__(floor, gm.FLOOR_PIC_FILE, get_init_position(floor))
 
         self.__state = states.STILL
 
+
+    def is_this_floor_needs_an_elevator(self):
+        return self.__state == states.STILL
+    
+    def get_elevator(self, exact_time):
+        self.__state = states.WAITING
+        self.__timer.set(exact_time[0], exact_time[1])
 
 
     def update(self):

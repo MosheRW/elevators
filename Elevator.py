@@ -37,7 +37,7 @@ class Elevator(UPM):
         time_to_add = self.__calculate_addition_time(floor)
         self.__timer.change_time(time_to_add[0],time_to_add[1])
            
-    def get_the_elevator(self, floor) -> float:
+    def get_the_elevator(self, floor):
         
         self.__queque.push(floor)
         self._last_in_line = floor
@@ -108,8 +108,7 @@ class Elevator(UPM):
                     
         else:
             self.__state = directions.STILL
-    
-            
+               
 
     def __calculate_addition_time(self, floor):
         travel_time = self.__calculate_travel_time(self._last_in_line, floor)
@@ -146,6 +145,8 @@ class Elevator(UPM):
     def __ne__(self, other):
         return other.to_get_the_elevator() != self.to_get_the_elevator()
     """
-   
+
 def get_init_position(serial, first_elevator_is = 1):      
         return (gm.FLOOR_SIZE[0] + gm.SPACE + (serial - first_elevator_is) * (gm.ELEVATOR_SIZE[0] + gm.SPACE), 0)
+
+    

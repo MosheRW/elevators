@@ -29,12 +29,16 @@ class UPM:
         self.__timer.update()
     
     def get(self):
-        return self.__img, self.__position
+        return self.__img, self.__position, self.__timer.get_exact
     
     def get_state(self):
         return self.__state
-    
- 
+        
+    def __repr__(self) -> str:
+        return f'position:{self.__position}, state:{self.__state}' 
+      
+    def __str__(self) -> str:
+        return f'position:{self.__position}, state:{self.__state}' 
       
   
       
