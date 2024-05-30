@@ -1,3 +1,4 @@
+import random
 from Queque import Queque
 from Queque import test
 from enum import Enum
@@ -14,14 +15,15 @@ directions = Enum('directions', ['GOING_UP','GOING_DOWN', 'STILL', 'DOORS_OPEN']
 class Elevator(UPM):
     __last_in_line = 0
     _queque = Queque()
+    __current_ride = timer()
     def __init__(self, floor = 0, position = 0, serial = 0):
         
         super().__init__(floor, gm.ELEVATOR_PIC_FILE, get_init_position(floor))
-                
+        
+        self.serial = serial
+        
         self.__last_in_line = self._floor
-        
-        self.__current_ride = timer()
-        
+                    
         self._state = directions.STILL
         
 
@@ -29,9 +31,11 @@ class Elevator(UPM):
          self._position =  position
 
     def set_the_new_time(self, floor):
-        #currentTime + time to travel to the new location + timePos ther 
         
+        #currentTime + time to travel to the new location + timePos ther 
+        print('elevator.add the new time')
         time_to_add = self.__calculate_addition_time(floor)
+        print(f'time_to_add: {time_to_add}')
         self._timer.change_time(time_to_add[0],time_to_add[1])
            
     def get_the_elevator(self, floor):
@@ -39,6 +43,8 @@ class Elevator(UPM):
         self._queque.push(floor)
         self._last_in_line = floor
         self.set_the_new_time(floor)
+       # self._state = 
+        self.__calculate_if_got_invited()
         
         
         return (self._timer.get_exact()[0] - 2, self._timer.get_exact()[1])
@@ -81,37 +87,34 @@ class Elevator(UPM):
           
     def __update_iternal_timer(self):
         self.__current_ride.update()
- 
-        
+       
 
     def __calculate_if_arrived(self):     #going_up, going_down
         if self.__current_ride.get_exact() == (0,0):
+            
             self._state = directions.DOORS_OPEN
             self.__current_ride.set_exact(int(WAIT_IN_FLOOR),0)
+
+            self._floor = self._queque.pop()
         
     def  __calculate_if_time_to_close(self):  #doors_open
         if self.__current_ride.get_exact() == (0,0):
             self.calculate_if_got_invited()
             
     def __calculate_if_got_invited(self):#still (and )
-        assert not type(self._queque) == None, "queque in None" 
+        assert not type(self._queque) == None, "queque is None" 
 
         if not self._queque.is_empty():
-                temp = self._queque.peek()    
-                print(f'temp: {temp}')
-                #print(self._queque.peek())
-                
-                if temp > self._floor:
-                    self._state = directions.GOING_UP
+            print("__calculate_if_got_invited")    
+            if self._queque.peek() > self._floor:
+                self._state = directions.GOING_UP
                     
-                
-                elif temp < self._floor:
-                    self._state = directions.GOING_DOWN       
+            elif self._queque.peek() < self._floor:
+                self._state = directions.GOING_DOWN       
                     
         else:
             self._state = directions.STILL
                
-
     def __calculate_addition_time(self, floor):
         travel_time = self.__calculate_travel_time(self.__last_in_line, floor)
         return (travel_time[0] + 2, travel_time[1])
@@ -148,8 +151,26 @@ class Elevator(UPM):
         return other.to_get_the_elevator() != self.to_get_the_elevator()
     """
 
-def get_init_position(serial, first_elevator_is = 1):      
-        return (gm.FLOOR_SIZE[0] + gm.SPACE + (serial - first_elevator_is) * (gm.ELEVATOR_SIZE[0] + gm.SPACE), 0)
-
-
+    
+    def __str__ (self):
+            return f'|elevator: {self.serial},  ' + UPM.__str__(self) + " timer: " + repr(self._timer) + ' |'
+    
+    def __repr__ (self):
+        return f'elevator: {self.serial}   ' + UPM.__repr__(self) + " timer: " + repr(self._timer) +' |'
+        
 #test()    
+
+def get_init_position(serial, first_elevator_is = 1):      
+            return (gm.FLOOR_SIZE[0] + gm.SPACE + (serial - first_elevator_is) * (gm.ELEVATOR_SIZE[0] + gm.SPACE), 0)
+
+
+def test():
+    e = Elevator()
+    
+    tes = [random.randint(1,10) for _ in range(10)]
+    
+    for i in range(len(tes)):
+        print(e.to_get_the_elevator(i))
+        
+
+#test()

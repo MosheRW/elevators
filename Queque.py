@@ -43,6 +43,7 @@ class Queque:
        
            
     def init(self, data):
+        #
         new_node = Node(data)
         self.head = new_node
         self.tail =  self.head
@@ -53,18 +54,23 @@ class Queque:
         assert type(self.head) != None, "inside Queque.init"
         
     def push(self, data):
-        new_node = Node(data)
+#        new_node = Node(data)
 
-        if self.head == None:
+        if self.head == None or  self.head.data == None:
             self.init(data)
             assert type(self.head) != None, "inside Queque.push 1"
         else:
+            assert type(self.head) != None, "inside Queque.push 1.5"
+            new_node = Node(data)
+            assert type(self.head) != None, "inside Queque.push 2.1"
             #self.head.next_ = new_node
             self.tail.next_ = new_node
+            assert type(self.head) != None, "inside Queque.push 2.2"
             self.tail = self.tail.next_
+            assert type(self.head) != None, "inside Queque.push 2.3"
             self.size += 1
 
-            assert type(self.head) != None, "inside Queque.push 2"
+            assert type(self.head) != None, "inside Queque.push 2.4"
 
         """
         if self.is_empty():
@@ -92,6 +98,7 @@ class Queque:
     
     def peek(self):
         assert type(self.head) != None, "inside Queque.peek"
+        assert type(self.head.data) != None, "inside Queque.peek"
        #print(type(self.head))
        #print("peek")
        #print(self.head)
@@ -111,6 +118,7 @@ class Queque:
     def __repr__(self) -> str:
         temp = self.head
         data = ""
+        
         while temp != None:
             data += f" {temp.get_data()},"
             temp = temp.get_next()

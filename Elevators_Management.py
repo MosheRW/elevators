@@ -1,3 +1,4 @@
+import random
 from Elevator import Elevator
 import Graphic_Manager as gm
 
@@ -7,7 +8,7 @@ class Elevators_Management:
         self.__num_of_elevators = elevators
      #   self.__is_the_floor_in_line = [False for _ in range(self.__num_of_floors + 1)]                      #needs to move to another class
      #   self.__the_elevators = [Elevator(0,gm.ELEVATOR_SIZE[0]*i) for i in range(self.__num_of_elevators)]
-        self.__the_elevators = [Elevator(0,0,i) for i in range(self.__num_of_elevators)]
+        self.__the_elevators = [Elevator(i,0,i) for i in range(self.__num_of_elevators)]
         
     def get_an_elevator(self, floor):
      
@@ -17,8 +18,10 @@ class Elevators_Management:
          
       
     def update(self, time = 0.17):
-        for elevate in  self.__the_elevators:
-                 elevate.update(self.__num_of_floors, time)
+       # for elevate in  self.__the_elevators:
+        for i in  range(len(self.__the_elevators)):
+            self.__the_elevators[i].update(self.__num_of_floors, time)     
+                 #elevate.update(self.__num_of_floors, time)
        
                  
     def get(self):
@@ -31,17 +34,14 @@ class Elevators_Management:
         for i in range(1,len(self.__the_elevators)):
             if self.is_left_smaller(i,minimum, floor):
                 minimum = i
-        """        
-        for i in range(1,self.__the_elevators):
-            if self.__the_elevators[i].to_get_the_elevator(floor) < self.__the_elevators[num].to_get_the_elevator(floor):
-                num = i
-           """
-        
-       # return (i, self.__the_elevators[minimum].to_get_the_elevator(floor))
+       
         return i
         
     def is_left_smaller(self, elevator_1, elevator_2, floor) -> bool:
-            return self.__the_elevators[elevator_1].to_get_the_elevator(floor) < self.__the_elevators[elevator_2].to_get_the_elevator(floor)
+            if self.__the_elevators[elevator_1].to_get_the_elevator(floor)[0] < self.__the_elevators[elevator_2].to_get_the_elevator(floor)[0]:
+                return True
+            elif self.__the_elevators[elevator_1].to_get_the_elevator(floor)[0] == self.__the_elevators[elevator_2].to_get_the_elevator(floor)[0] and  self.__the_elevators[elevator_1].to_get_the_elevator(floor)[1] < self.__the_elevators[elevator_2].to_get_the_elevator(floor)[1]:
+                return True 
     
 
     def __repr__(self) -> str:
@@ -50,3 +50,14 @@ class Elevators_Management:
     def __str__(self) -> str:
         return f'the elevators: {self.__the_elevators}'
              
+
+def test():
+    e = Elevators_Management()
+    
+    tes = [random.randint(1,10) for _ in range(10)]
+    
+    for i in range(len(tes)):
+        print(e.get_an_elevator(i))
+        
+
+#test()

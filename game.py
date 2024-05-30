@@ -46,6 +46,7 @@ class Game:
         clock = pygame.time.Clock()
         running = True
         count = 0
+        
         while running:
             
              for event in pygame.event.get():
@@ -57,19 +58,25 @@ class Game:
                  if key[pygame.K_ESCAPE]:
                     running = False 
                     
-                 if key[pygame.K_RETURN]:
+                 if key[pygame.K_RETURN]: # and count % 15 == 0:
                      if  tes_i <   len(tes):
-                         
-                         print(self.__building)
+                         print (f"invite to the {tes[tes_i]}'th floor\n")
+                         #print(self.__building)
+                         #print("")
                          self.__building.get_elevator(tes[tes_i])
+                         print("")
                          print(self.__building)
                          tes_i += 1
                      elif tes_i ==   len(tes):
-                         running = False
-            
-             """                         
-             count += 1
-        
+                         tes_i = 0
+                         count += 1
+                         
+                     if count == 4:
+                         running = False 
+                                      
+             
+                          
+             """   
              if count == 60:
                # print("hii")
                 #print(self.__building)
@@ -91,10 +98,49 @@ class Game:
         
     def update(self):
         self.__building.update()
+
+
+def close_terminal():
+    
+    print("insert first digit: ",)
+    first = int(input(""))# end="\r")
+    
+    while first != 4:
+        print("insert first digit: ") #\r)#, end="\r")
+        first = int(input(""))
         
+
+    
+    print("insert second digit: ") #, end="\r")
+    second = int(input(""))
+    
+    while second != 0:
+        print("insert second digit: ") #, end="\r")
+        second = int(input(""))
+    
+    print("insert thired digit: ") #, end="\r")
+    thired = int(input(""))
+    
+    while thired != 4:
+        print("insert thired digit: ") #, end="\r")
+        thired = int(input(""))
+        
+
+    
+    print("insert fourth digit: ") #, end="\r")
+    fourth = int(input(""))
+    
+    while fourth != 1:
+        print("insert fourth digit: ") #, end="\r")
+        fourth = int(input(""))
+        
+
+
+
 game = Game()
 game.init()
 game.tests()
+close_terminal()
 
 """
 tes = [8,3,5,7,4,2,1]

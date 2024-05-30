@@ -22,7 +22,9 @@ class Floor(UPM):
         return self._state == states.STILL
     
     def get_elevator(self, exact_time):
+        print(f'get elevator: {self._state}')
         self._state = states.WAITING
+        print(f'get elevator: {self._state}')
         self._timer.set(exact_time[0], exact_time[1])
 
 
@@ -45,10 +47,10 @@ class Floor(UPM):
                 self._state = states.STILL
          
     def __str__ (self):
-        return f'floor: {self._floor}, ' + UPM.__str__(self)
+        return f'|floor: {self._floor},  ' + UPM.__str__(self) + " timer: " + repr(self._timer) + ' |'
     
     def __repr__ (self):
-        return f'floor: {self._floor}' + UPM.__repr__(self)
+        return f'floor: {self._floor}   ' + UPM.__repr__(self) + " timer: " + repr(self._timer) +' |'
         
 
 

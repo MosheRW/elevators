@@ -1,20 +1,51 @@
 class timer:
+    __time_in_seconds = 0
+    __frame_rate = 0
+    __delta = 0
+       
+    
     def __init__(self, time_in_seconds = 0, frame_rate = 60):
         self.__time_in_seconds = time_in_seconds
         self.__frame_rate = frame_rate
-        self.__delta = frame_rate
+        self.__delta = 0
         
 
     def update(self):
-        self.__delta -= 1
-        
-        if self.__delta == self.__frame_rate:
-            self.__time_in_seconds -= 1
-            self.__delta = self.__frame_rate
+         if  self.__time_in_seconds == 0:
+            if self.__delta > 0:
+                 self.__delta -= 1
+                 print(f"update -- sec: {self.__time_in_seconds}, delta: {self.__delta}", end="\r") #, flush=True) 
+          
+            """    
+           if self.__delta == 0:
+                 #  print(f"update -- sec: {self.__time_in_seconds}, delta: {self.__delta}", end="\r") #, flush=True)
+            elif self.__delta > 0:
+                self.__delta -= 1
+                     print(f"update -- sec: {self.__time_in_seconds}, delta: {self.__delta}", end="\r") #, flush=True) 
+               """ 
+
+         elif self.__time_in_seconds < 0:
+            self.__time_in_seconds  = 0
+            self.__delta = 0
+            
+         elif self.__delta > 0:      # if self.__time_in_seconds > 0:
+             
+            self.__delta -= 1
+            assert self.__delta >= 0, f"delta is wrong: {self.__delta}"
+            #if self.__delta == self.__frame_rate:
+            if self.__delta == 0:              # self.__frame_rate:
+                self.__time_in_seconds -= 1
+                self.__delta = self.__frame_rate
+            
+            if  self.__time_in_seconds < 0:
+                self.__time_in_seconds  = 0
+                self.__delta = 0
+            
+            
             
     
     def is_time_is_up(self):
-        return self.__time_in_seconds != 0 and self.__delta != 0
+        return self.__time_in_seconds == 0 and self.__delta == 0
     
     def get(self):
         return  self.__time_in_seconds, self.__delta
@@ -38,15 +69,21 @@ class timer:
          self.__delta = delta
          
     def change_time(self, time_in_seconds, half_sec = 0):
+         print('change time') 
+         print(f'befor: { self.__time_in_seconds },  {self.__delta}')  
          self.__time_in_seconds += time_in_seconds
-         for _ in range(half_sec):
+         
+         for _ in range(0,half_sec):
              self.__add_half_sec()
-
+         
+         print(f'after: { self.__time_in_seconds },  {self.__delta}')  
+         
     def __add_half_sec(self):
-        self.__delta += self.__frame_rate / 2
+        self.__delta += int(self.__frame_rate / 2) 
         
         if self.__delta >= self.__frame_rate:
             self.__time_in_seconds += 1
+            self.__delta = 0                # self.__frame_rate
 
     
     def get_with_addition(self, addition):
@@ -67,7 +104,7 @@ class timer:
         ints = self.__time_in_seconds + addition[0]
         
         
-        ints += int(int(self.__delta + addition[1]) / self.__frame_rate)
+        ints += int(int(self.__delta + addition[1]) / self.__frame_rate) - 1
         
         delta = int(int(self.__delta + addition[1]) % self.__frame_rate)
             
@@ -94,5 +131,6 @@ class timer:
         return f'{self.__time_in_seconds}.{self.__delta}'
      
     def __str__(self):
-        return f'{self.get_in_double()}'
+         return f'{self.__time_in_seconds}.{self.__delta}'
+        #return f'{self.get_in_double()}'
              
