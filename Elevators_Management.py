@@ -10,48 +10,49 @@ class Elevators_Management:
         self.__num_of_floors = floors
         self.__num_of_elevators = elevators
   
-        self.__the_elevators = [Elevator(0,0,i) for i in range(self.__num_of_elevators)]
+        self._the_elevators = [Elevator(0,0,i) for i in range(self.__num_of_elevators)]
         
     def get_an_elevator(self, floor):
      
         elevat = self.__shortest_time_elevator(floor)         # the most short queque
         
-        return self.__the_elevators[elevat].get_the_elevator(floor)
+        tup = self._the_elevators[elevat].get_the_elevator(floor)
+        return tup
          
       
     def update(self, time = 0.17):
-       # for elevate in  self.__the_elevators:
-        for i in  range(len(self.__the_elevators)):
-            self.__the_elevators[i].update()     
+       # for elevate in  self._the_elevators:
+        for i in  range(len(self._the_elevators)):
+            self._the_elevators[i].update()     
                  #elevate.update(self.__num_of_floors, time)
        
                  
     def get(self):
-        return [self.__the_elevators[i].get() for i in range(len(self.__the_elevators))]
-        #return [i.get() for i in range(len(self.__the_elevators))]
+        return [self._the_elevators[i].get() for i in range(len(self._the_elevators))]
+        #return [i.get() for i in range(len(self._the_elevators))]
                 
     def __shortest_time_elevator(self, floor) -> int:
         minimum = 0
         
         
-        for i in range(1,len(self.__the_elevators)):
+        for i in range(1,len(self._the_elevators)):
             if self.is_left_smaller(i,minimum, floor):
                 minimum = i
        
         return minimum
         
     def is_left_smaller(self, elevator_1, elevator_2, floor) -> bool:
-            if self.__the_elevators[elevator_1].to_get_the_elevator(floor)[0] < self.__the_elevators[elevator_2].to_get_the_elevator(floor)[0]:
+            if self._the_elevators[elevator_1].to_get_the_elevator(floor)[0] < self._the_elevators[elevator_2].to_get_the_elevator(floor)[0]:
                 return True
-            elif self.__the_elevators[elevator_1].to_get_the_elevator(floor)[0] == self.__the_elevators[elevator_2].to_get_the_elevator(floor)[0] and  self.__the_elevators[elevator_1].to_get_the_elevator(floor)[1] < self.__the_elevators[elevator_2].to_get_the_elevator(floor)[1]:
+            elif self._the_elevators[elevator_1].to_get_the_elevator(floor)[0] == self._the_elevators[elevator_2].to_get_the_elevator(floor)[0] and  self._the_elevators[elevator_1].to_get_the_elevator(floor)[1] < self._the_elevators[elevator_2].to_get_the_elevator(floor)[1]:
                 return True 
     
 
     def __repr__(self) -> str:
-        return f'the elevators: {self.__the_elevators}'
+        return f'the elevators: {self._the_elevators}'
 
     def __str__(self) -> str:
-        return f'the elevators: {self.__the_elevators}'
+        return f'the elevators: {self._the_elevators}'
              
 
 def test():

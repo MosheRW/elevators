@@ -55,7 +55,7 @@ class Game:
             
     def pack_elevators_to_desplay(self, elevators_pac):
         for i in range(self.__num_of_elevators):
-            assert (gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]) >= 0 and  (gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]) <= gm.WINDOW_SIZE[1], f'{(elevators_pac[i][1][0], gm.WINDOW_SIZE[1] - elevators_pac[i][1][1])}'
+           # assert (gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]) >= 0 and  (gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]) <= gm.WINDOW_SIZE[1], f'{(elevators_pac[i][1][0], gm.WINDOW_SIZE[1] - elevators_pac[i][1][1])}'
             
             self.screen.blit(elevators_pac[i][0],(elevators_pac[i][1][0], gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]))
         
@@ -86,8 +86,7 @@ class Game:
                     
                      if key[pygame.K_RETURN]:
                          if tes_i < len(tes):
-                            self.__building.get_elevator(9)
-                            
+                            self.__building.get_elevator(tes[tes_i])                           
                             break
                      """   
                  f, m = self.get_floor(key)

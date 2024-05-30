@@ -38,6 +38,7 @@ class Elevator(UPM):
            
     def get_the_elevator(self, floor):
         
+        temp_s = self._state
         self._queque.push(floor)
         
         self.set_the_new_time(floor)
@@ -45,6 +46,8 @@ class Elevator(UPM):
        # self._state = 
         self.__calculate_if_got_invited()
         
+        if temp_s != self._state:
+            print("here")
         
         return (self._timer.get_exact()[0] - 2, self._timer.get_exact()[1])
 
