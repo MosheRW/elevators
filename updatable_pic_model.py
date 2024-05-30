@@ -7,11 +7,11 @@ import pygame
 class UPM:
     _img = None
     _state = None
-
-    def __init__ (self, floor, filename, position):
+    screen = display = gm.get_screen()
+    def __init__ (self, floor, filename, position): #, display = gm.get_screen() ):
         self._floor = floor
         self._position = position                #tuple (x,y)
-        #self._img = None # = pygame.image.load(filename).convert()
+        self._img = pygame.image.load(filename).convert()
        
         self._timer = timer()
         

@@ -27,16 +27,21 @@ class Game:
         self.init_screen()
             
     def erease_screen(self):
-        pass
+        self.screen.fill("white")
+        self.screen.set_colorkey()
         
     def init_screen(self):
         pygame.init()
         
+        #self.screen = pygame.display.set_mode((1280, 720))
         self.screen = pygame.display.set_mode((1280, 720))
         print(pygame.display.get_desktop_sizes())
         self.screen.fill("white")
         self.screen.set_colorkey()
        
+    def pack_to_desplay(self):
+        #blit
+        pass
 
     #tests
     def tests(self):
@@ -136,10 +141,11 @@ def close_terminal():
         
 
 
+#img = pygame.image.load(gm.ELEVATOR_PIC_FILE).convert()
 
 game = Game()
 game.init()
-game.tests()
+#game.tests()
 close_terminal()
 
 """
