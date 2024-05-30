@@ -13,6 +13,7 @@ FLOOR_PIC_FILE = 'resources\wall.jpg'
 
 
 screenz = pygame.display.set_mode((1280, 720))
+WINDOW_SIZE = pygame.display.get_window_size()
 def get_floors_boundries(floor):
     return {"ceiling" : floor +1 * FLOOR_SIZE[1], "floor" : floor * FLOOR_SIZE[1]}
 

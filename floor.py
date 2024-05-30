@@ -15,7 +15,7 @@ class Floor(UPM):
         super().__init__(floor, gm.FLOOR_PIC_FILE, get_init_position(floor))
 
         #super
-        self._state = states.STILL
+        UPM._state = states.STILL
 
 
     def is_this_floor_needs_an_elevator(self):
@@ -39,13 +39,12 @@ class Floor(UPM):
         self._timer.update()
         
     def __update_status(self):
-        if  self._state == states.STILL:
-            pass
-        elif  self._state == states.WAITING:
+        
+        if  self._state == states.WAITING:
             if self._timer.is_time_is_up():
                 self._state = states.ELEVATOR_HERE
                 self._timer.set(2)
-        else: #case elevator is here
+        elif self._state == states.ELEVATOR_HERE: #case elevator is here
             if self._timer.is_time_is_up():
                 self._state = states.STILL
          

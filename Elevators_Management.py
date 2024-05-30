@@ -3,12 +3,14 @@ from Elevator import Elevator
 import Graphic_Manager as gm
 
 class Elevators_Management:
-    def __init__(self, floors = 8, elevators = 3):
+    __num_of_floors = 8
+    __num_of_elevators = 4
+    
+    def __init__(self, floors = 8, elevators = 5):
         self.__num_of_floors = floors
         self.__num_of_elevators = elevators
-     #   self.__is_the_floor_in_line = [False for _ in range(self.__num_of_floors + 1)]                      #needs to move to another class
-     #   self.__the_elevators = [Elevator(0,gm.ELEVATOR_SIZE[0]*i) for i in range(self.__num_of_elevators)]
-        self.__the_elevators = [Elevator(i,0,i) for i in range(self.__num_of_elevators)]
+  
+        self.__the_elevators = [Elevator(0,0,i) for i in range(self.__num_of_elevators)]
         
     def get_an_elevator(self, floor):
      
@@ -20,14 +22,15 @@ class Elevators_Management:
     def update(self, time = 0.17):
        # for elevate in  self.__the_elevators:
         for i in  range(len(self.__the_elevators)):
-            self.__the_elevators[i].update(self.__num_of_floors, time)     
+            self.__the_elevators[i].update()     
                  #elevate.update(self.__num_of_floors, time)
        
                  
     def get(self):
-        return [i.get() for i in self.__the_elevators]
+        return [self.__the_elevators[i].get() for i in range(len(self.__the_elevators))]
+        #return [i.get() for i in range(len(self.__the_elevators))]
                 
-    def __shortest_time_elevator(self, floor):
+    def __shortest_time_elevator(self, floor) -> int:
         minimum = 0
         
         

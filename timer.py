@@ -36,11 +36,11 @@ class timer:
             if self.__delta == 0:              # self.__frame_rate:
                 self.__time_in_seconds -= 1
                 self.__delta = self.__frame_rate
-            
+            """
             if  self.__time_in_seconds < 0:
                 self.__time_in_seconds  = 0
                 self.__delta = 0
-            
+            """
             
             
     
@@ -61,7 +61,7 @@ class timer:
     
          
     def get_exact(self):
-        return self.__time_in_seconds, self.__delta
+        return int(self.__time_in_seconds), int(self.__delta)
     
 
     def set_exact(self, time_in_seconds, delta):

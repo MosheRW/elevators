@@ -9,7 +9,7 @@ class Floors_managment:
         
 
     def get(self):
-        return [floor.get() for floor in self.__the_floors]
+        return [self.__the_floors[i].get() for i in range(len(self.__the_floors))]
 
     def update(self):
         for floor in self.__the_floors:
