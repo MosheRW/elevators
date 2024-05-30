@@ -10,6 +10,8 @@ SPACE = 5
 ELEVATOR_PIC_FILE = 'resources\elv.png'
 FLOOR_PIC_FILE = 'resources\wall.jpg'
 
+
+
 screenz = pygame.display.set_mode((1280, 720))
 def get_floors_boundries(floor):
     return {"ceiling" : floor +1 * FLOOR_SIZE[1], "floor" : floor * FLOOR_SIZE[1]}

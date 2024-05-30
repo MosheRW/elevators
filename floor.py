@@ -3,7 +3,7 @@ from enum import Enum
 from Graphic_Manager import WAIT_IN_FLOOR, get_floors_boundries
 import Graphic_Manager as gm
 from timer import timer
-
+import pygame
 
 from updatable_pic_model import UPM
 
@@ -27,6 +27,9 @@ class Floor(UPM):
         print(f'get elevator: {self._state}')
         self._timer.set(exact_time[0], exact_time[1])
 
+    def get(self):
+        arr = UPM.get(self)
+        return pygame.transform.scale(arr[0], gm.FLOOR_SIZE), arr[1], arr[2]
 
     def update(self):
         self.__update_timer()

@@ -5,7 +5,7 @@ from enum import Enum
 from Graphic_Manager import WAIT_IN_FLOOR, get_floors_boundries
 import Graphic_Manager as gm
 from timer import timer
-
+import pygame
 
 from updatable_pic_model import UPM
 
@@ -62,15 +62,19 @@ class Elevator(UPM):
         self.__update_iternal_timer()
         self.__update_state( floors)
   
+    def get(self):
+        arr = UPM.get(self)
+        return pygame.transform.scale(arr[0], gm.ELEVATOR_SIZE), arr[1], arr[2]
         
 
     def __update_pos(self):
-   
+    
+            #its the opisate of that!!11
         if self._state == directions.GOING_UP:
-            self._position = (self._position[0], self._position[1] +1)
+            self._position = (self._position[0], self._position[1] -1)
             
         elif self._state == directions.GOING_DOWN:
-            self._position = (self._position[0], self._position[1] -1)
+            self._position = (self._position[0], self._position[1] +1)
                   
     def __update_state(self, floors):#to heandle
         # on the way - calculate if arrived(using_time)

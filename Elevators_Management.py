@@ -35,7 +35,7 @@ class Elevators_Management:
             if self.is_left_smaller(i,minimum, floor):
                 minimum = i
        
-        return i
+        return minimum
         
     def is_left_smaller(self, elevator_1, elevator_2, floor) -> bool:
             if self.__the_elevators[elevator_1].to_get_the_elevator(floor)[0] < self.__the_elevators[elevator_2].to_get_the_elevator(floor)[0]:

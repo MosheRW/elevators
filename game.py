@@ -3,11 +3,11 @@ import pygame
 import Graphic_Manager as gm
 
 class Game:
-    screen = None
+    screen = gm.get_screen()
     
-    def __init__(self, floors = 8, elevators =3):
+    def __init__(self, floors = 12, elevators = 1):
         self.__num_of_floors = floors
-        self.__num_of_elevators =elevators
+        self.__num_of_elevators = elevators
         
         self.__building = Building(self.__num_of_floors, self.__num_of_elevators)
         
@@ -16,6 +16,7 @@ class Game:
 
 
     def init(self, state = "test"):
+        pygame.init()
         if state != "test":
             self.__num_of_floors    = input("insert the number of floors: ")
             self.__num_of_elevators    = input("insert the number of elevators: ")
@@ -31,17 +32,31 @@ class Game:
         self.screen.set_colorkey()
         
     def init_screen(self):
-        pygame.init()
+        
         
         #self.screen = pygame.display.set_mode((1280, 720))
-        self.screen = pygame.display.set_mode((1280, 720))
+        #self.screen = pygame.display.set_mode((1280, 720))
         print(pygame.display.get_desktop_sizes())
         self.screen.fill("white")
         self.screen.set_colorkey()
-       
+     
+    def display(self):
+        self.erease_screen()
+        self.pack_to_desplay()
+        
     def pack_to_desplay(self):
-        #blit
-        pass
+        floors_pac, elevators_pac = self.__building.get()
+        self.pack_floors_to_desplay(floors_pac)
+        self.pack_elevators_to_desplay(elevators_pac)
+        
+    def pack_floors_to_desplay(self, floors_pac):
+        for i in range(self.__num_of_floors):
+            self.screen.blit(floors_pac[i][0],floors_pac[i][1])
+            
+    def pack_elevators_to_desplay(self, elevators_pac):
+        for i in range(self.__num_of_elevators):
+            self.screen.blit(elevators_pac[i][0],elevators_pac[i][1])
+        
 
     #tests
     def tests(self):
@@ -66,32 +81,30 @@ class Game:
                  if key[pygame.K_RETURN]: # and count % 15 == 0:
                      if  tes_i <   len(tes):
                          print (f"invite to the {tes[tes_i]}'th floor\n")
-                         #print(self.__building)
-                         #print("")
+                         
                          self.__building.get_elevator(tes[tes_i])
-                         print("")
+                     #    print("")
                          print(self.__building)
                          tes_i += 1
-                     elif tes_i ==   len(tes):
-                         tes_i = 0
-                         count += 1
+                   
                          
-                     if count == 4:
-                         running = False 
+                     #if count == 4:
+                      #   running = False 
                                       
              
                           
-             """   
-             if count == 60:
-               # print("hii")
-                #print(self.__building)
-                count = 0
-            
-             #   pygame.display.flip()
-             """
-             self.__building.update()
-             self.__clock.tick(60)
+             count += 1
              
+             if count % 15 == 0:
+                 print(pygame.mouse.get_pos())
+             self.__building.update()
+             self.display()
+             
+             pygame.display.flip()
+             
+             self.__clock.tick(60)
+        
+        print(self.__building)
 
 
 
@@ -144,8 +157,8 @@ def close_terminal():
 #img = pygame.image.load(gm.ELEVATOR_PIC_FILE).convert()
 
 game = Game()
-game.init()
-#game.tests()
+#game.init()
+game.tests()
 close_terminal()
 
 """

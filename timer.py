@@ -14,7 +14,7 @@ class timer:
          if  self.__time_in_seconds == 0:
             if self.__delta > 0:
                  self.__delta -= 1
-                 print(f"update -- sec: {self.__time_in_seconds}, delta: {self.__delta}", end="\r") #, flush=True) 
+               #  print(f"update -- sec: {self.__time_in_seconds}, delta: {self.__delta}", end="\r") #, flush=True) 
           
             """    
            if self.__delta == 0:
@@ -31,7 +31,7 @@ class timer:
          elif self.__delta > 0:      # if self.__time_in_seconds > 0:
              
             self.__delta -= 1
-            assert self.__delta >= 0, f"delta is wrong: {self.__delta}"
+            #assert self.__delta >= 0, f"delta is wrong: {self.__delta}"
             #if self.__delta == self.__frame_rate:
             if self.__delta == 0:              # self.__frame_rate:
                 self.__time_in_seconds -= 1
@@ -69,14 +69,14 @@ class timer:
          self.__delta = delta
          
     def change_time(self, time_in_seconds, half_sec = 0):
-         print('change time') 
-         print(f'befor: { self.__time_in_seconds },  {self.__delta}')  
+         #print('change time') 
+         #print(f'befor: { self.__time_in_seconds },  {self.__delta}')  
          self.__time_in_seconds += time_in_seconds
          
          for _ in range(0,half_sec):
              self.__add_half_sec()
          
-         print(f'after: { self.__time_in_seconds },  {self.__delta}')  
+         #print(f'after: { self.__time_in_seconds },  {self.__delta}')  
          
     def __add_half_sec(self):
         self.__delta += int(self.__frame_rate / 2) 
