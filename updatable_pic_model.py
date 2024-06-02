@@ -5,9 +5,7 @@ import pygame
 
 
 class UPM:
-    _img = None
-    _state = None
-    screen = display = gm.get_screen()
+ 
     def __init__ (self, floor, filename, position): #, display = gm.get_screen() ):
         self._floor = floor
         self._position = position                #tuple (x,y)
@@ -32,7 +30,7 @@ class UPM:
         self._timer.update()
     
     def get(self):
-        return self._img, self._position, self._timer.get_exact
+        return self._img, self._position, self._timer.get_exact()
     
     def get_state(self):
         return self._state

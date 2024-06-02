@@ -76,6 +76,13 @@ class timer:
          self.__time_in_seconds = time_in_seconds
          self.__delta = delta
          
+    def set_exact_addition(self, time_in_seconds, delta):
+         self.__time_in_seconds += time_in_seconds
+         self.__delta += delta
+         
+         self.__time_in_seconds =+ self.__delta // self.__frame_rate
+         self.__delta = delta % self.__frame_rate
+         
     #def change_time(self, time_in_seconds, half_sec = 0):
     def change_time(self, time_in_seconds, delta):
          self.__time_in_seconds += time_in_seconds

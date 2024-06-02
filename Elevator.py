@@ -12,59 +12,56 @@ import Graphic_Manager as gm
 from timer import timer
 import pygame
 
-from updatable_pic_model import UPM
-
 
 directions = Enum('directions', ['GOING_UP','GOING_DOWN', 'STILL', 'DOORS_OPEN', 'INVITED'])
 
-class Elevator(UPM):
-    
-    
-    
-    
+class Elevator:
+    screen = display = gm.get_screen()
+         
     def __init__(self, serial = 0, position = 0, floor = 0):
         
-        super().__init__(0, gm.ELEVATOR_PIC_FILE, get_init_position(floor))
-        
+  
         self.serial = serial
-        
         self._floor = 0
+        
+        self._position = get_init_position(floor)                #tuple (x,y)
+        self._img = pygame.image.load(gm.ELEVATOR_PIC_FILE).convert()
+       
         
         self.__last_in_line = self._floor
                     
-        self._state_ = directions.STILL
+        self._state = directions.STILL
         
         
         self._queque = Queque()
         self.__current_ride = timer()
-        
+        self._timer = timer()
         
 
     def set_the_new_time(self, floor):
         
         #currentTime + time to travel to the new location + timePos ther 
         
-        print('elevator.add the new time')
         time_to_add = self.__calculate_addition_time(floor)
         
-        print(f'time_to_add: {time_to_add}')
-        self._timer.change_time(time_to_add[0],time_to_add[1])
+       #self._timer.change_time(time_to_add[0],time_to_add[1])
+        self._timer.set_exact_addition(time_to_add[0],time_to_add[1])
         
 
-           
     def get_the_elevator(self, floor_):
         
-        temp_s = self._state_ 
+        temp_s = self._state 
 
         self._queque.push(floor_)
         
         self.set_the_new_time(floor_)
         
         self.__last_in_line = floor_
-        self._state_ = directions.INVITED
+        if self._state == directions.STILL:
+            self._state = directions.INVITED
         #self.__calculate_if_got_invited()
         
-        if temp_s != self._state_:
+        if temp_s != self._state:
             print("here")
         
         return (self._timer.get_exact()[0], self._timer.get_exact()[1])
@@ -76,14 +73,14 @@ class Elevator(UPM):
         temp = self._queque
         tim1 = self.__current_ride
         tim2 = self._timer
-        sta = self._state_
+        sta = self._state
         
         time = self._timer.get_exact_with_addition(self.__calculate_addition_time(floor))
         
         assert self._queque == temp, "unauthorised change has done with the queque"
         assert self.__current_ride == tim1, "unauthorised change has done with the current ride timer"
         assert self._timer == tim2, "unauthorised change has done with the timer"
-        assert self._state_ == sta, "unauthorised change has done with the state"
+        assert self._state == sta, "unauthorised change has done with the state"
             
 
        # print(f'serial: {self.serial}, {self._state}')
@@ -93,32 +90,32 @@ class Elevator(UPM):
 
     def update(self) :
         
-        UPM.update_(self)
         
-        state = self._state_
         
+        state = self._state
+        
+        self._timer.update()
         self.__update_state()
         self.__update_pos()
         self.__update_iternal_timer()
         
         
-        if state != self._state_:
+        if state != self._state:
             print("-------------------------change-------------------------------\n")
-            print(f"{state} -> {self._state_}")
+            print(f"{state} -> {self._state}")
             
 
-    def get(self):
-        arr = UPM.get(self)
-        return pygame.transform.scale(arr[0], gm.ELEVATOR_SIZE), arr[1], arr[2]
+    def get(self):        
+        return pygame.transform.scale(self._img, gm.ELEVATOR_SIZE), self._position, self._timer.get_exact()
         
 
     def __update_pos(self):
         
             #its the opisate of that!!11
-        if self._state_ == directions.GOING_UP:
+        if self._state == directions.GOING_UP:
             self._position = (self._position[0], self._position[1] + 2)
             
-        elif self._state_ == directions.GOING_DOWN:
+        elif self._state == directions.GOING_DOWN:
             self._position = (self._position[0], self._position[1] - 2)
 
 
@@ -129,22 +126,21 @@ class Elevator(UPM):
         # doors open - calculate if time to close
         change = False
         
-        if self._state_ == directions.INVITED:
-            self._state_ = self.calculate_direction(self._floor, self.next_in_line())
+        if self._state == directions.INVITED:
             
             tup = self.__calculate_travel_time(self._floor,self.next_in_line())
             self.__current_ride.set_exact(tup[0]-2, tup[1])
+            
+            self._state = self.calculate_direction(self._floor, self.next_in_line())
+            
+            assert  self._state != directions.STILL, "WRONG!"
             print (self.__current_ride)
             change = True
-            """  
-            elif self._state_ == directions.STILL and not change:
-            change = self.__calculate_if_got_invited()
-            """
-            
-        elif (self._state == directions.GOING_DOWN or  self._state_ == directions.GOING_UP) and not change:
+          
+        elif (self._state == directions.GOING_DOWN or  self._state == directions.GOING_UP) and not change:
                change = self.__calculate_if_arrived()
             
-        elif self._state_ == directions.DOORS_OPEN and not change:
+        elif self._state == directions.DOORS_OPEN and not change:
                 self.__calculate_if_time_to_close()
         
           
@@ -153,10 +149,11 @@ class Elevator(UPM):
        
 
     def __calculate_if_arrived(self):     #going_up, going_down
-        if self.__current_ride.is_time_is_up() and (self._state_ == directions.GOING_DOWN or self._state_ == directions.GOING_UP):
+        if self.__current_ride.is_time_is_up() and (self._state == directions.GOING_DOWN or self._state == directions.GOING_UP):
+            print(f"self.__current_ride.is_time_is_up() {self.__current_ride.is_time_is_up()} self._state == directions.GOING_DOWN {self._state == directions.GOING_DOWN} self._state == directions.GOING_UP {self._state == directions.GOING_UP}")
             print("-------------------> arrived <--------------")
             print(f"->>>>>>>>>>>>>>>>>>>  self.__current_ride: {self.__current_ride}")
-            self._state_ = directions.DOORS_OPEN
+            self._state = directions.DOORS_OPEN
             
             self.__current_ride.set_exact(int(WAIT_IN_FLOOR),0)
             print(f"->>>>>>>>>>>>>>>>>>> self.__current_ride: {self.__current_ride}")
@@ -168,8 +165,8 @@ class Elevator(UPM):
             
         
     def  __calculate_if_time_to_close(self):  #doors_open
-        if self.__current_ride.is_time_is_up() and self._state_ == directions.DOORS_OPEN: #.get_exact() == (0,0):
-            self._state_ = directions.STILL
+        if self.__current_ride.is_time_is_up() and self._state == directions.DOORS_OPEN: #.get_exact() == (0,0):
+            self._state = directions.STILL
             #self.__calculate_if_got_invited()
 
 
@@ -179,8 +176,8 @@ class Elevator(UPM):
         elif floo_1 > floo_1:
             return directions.GOING_DOWN
         elif floo_1 == floor_2:
-            return directions.DOORS_OPEN
             self.__current_ride.set_exact(int(WAIT_IN_FLOOR),0)
+            return directions.DOORS_OPEN
         else:
             return directions.STILL
         
@@ -192,12 +189,12 @@ class Elevator(UPM):
         assert not type(self._queque) == None, "queque is None" 
 
 
-        if not self._queque.is_empty() and  self._state_ == directions.STILL:
+        if not self._queque.is_empty() and  self._state == directions.STILL:
             print(f"__calculate_if {self.serial} _got_invited")    
             print(self._queque.peek())
             
             if self._queque.peek() > self._floor:
-                self._state_ = directions.GOING_UP
+                self._state = directions.GOING_UP
                 
                 tup = self.__calculate_travel_time(self._queque.peek(),self.__last_in_line)
                 self.__current_ride.set_exact(tup[0], tup[1])
@@ -205,7 +202,7 @@ class Elevator(UPM):
                 return True
             
             elif self._queque.peek() < self._floor:
-                self._state_ = directions.GOING_DOWN                   
+                self._state = directions.GOING_DOWN                   
                 
                 tup = self.__calculate_travel_time(self._queque.peek(),self.__last_in_line)
                 self.__current_ride.set_exact(tup[0], tup[1])
@@ -216,9 +213,8 @@ class Elevator(UPM):
       
     def __calculate_addition_time(self, floor):
         travel_time = self.__calculate_travel_time(self.__last_in_line, floor)
+        
         return (travel_time[0] + 2, travel_time[1] * gm.FRAN_RATE  // 2)
-       # return 2.0 + self.__calculate_travel_time(location)
-        #currentTime + timePos ther + time to travel to the new location 
            
     def __calculate_travel_time(self, floor_1, floor_2 = None ):
         if floor_2 == None:
@@ -243,10 +239,10 @@ class Elevator(UPM):
     
     def __str__ (self):
            # return f'|elevator: {self.serial},  ' + UPM.__str__(self) + str(self._state_) + str(self._state) + " timer: " + repr(self._timer) + f" |f' | currrent: {self.__current_ride}, the ride is toword {self.__last_in_line}\n"
-            return f'|elevator: {self.serial},  ' +  str(self._state_) + " timer: " + repr(self._timer) + f" |f' | currrent: {self.__current_ride}, the ride is toword {self.__last_in_line}\n"
+            return f'|elevator: {self.serial},  ' +  str(self._state) + " timer: " + {self._timer} + f" |f' | currrent: {self.__current_ride}, the ride is toword {self.__last_in_line}\n"
     
     def __repr__ (self):
-       return f'elevator: {self.serial}   ' + str(self._state_) + " timer: " + repr(self._timer) + f" | currrent: {self.__current_ride}, the ride is toword {self.__last_in_line}\n"
+       return f'elevator: {self.serial}   ' + str(self._state) + " timer: " + str(self._timer) + f" | currrent: {self.__current_ride}, the ride is toword {self.__last_in_line}\n"
       # return f'elevator: {self.serial}   ' + UPM.__repr__(self) + str(self._state_) + str(self._state) + " timer: " + repr(self._timer) + f" | currrent: {self.__current_ride}, the ride is toword {self.__last_in_line}\n"
         
 #test()    

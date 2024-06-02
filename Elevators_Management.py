@@ -117,7 +117,7 @@ def test():
                  print(e)
                  count = 0
             
-            clock.tick(60)
+            clock.tick(30)
         
     """
     for i in range(len(tes)):
