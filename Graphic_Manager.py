@@ -9,6 +9,7 @@ FLOOR_SIZE = (160,60)
 SPACE = 5
 ELEVATOR_PIC_FILE = 'resources\elv.png'
 FLOOR_PIC_FILE = 'resources\wall.jpg'
+FRAN_RATE = 60
 
 
 
