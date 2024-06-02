@@ -1,9 +1,10 @@
-from shutil import move
+
 import pygame
 #import Queque
 import Graphic_Manager as gm
 from enum import Enum
 import Timer_2
+
 
 ele_status = Enum('ele_status',['GOING_UP','GOING_DOWN', 'STILL', 'DOORS_OPEN', 'INVITED'])
 
@@ -17,12 +18,12 @@ class Elevator:
         pygame.init
         
         self._queque = []
-        self._floor  = starting_point
+        self._floor  = int(starting_point)
         self._serial = serial
         self._position = get_init_position(0,0)
         
         self._status = ele_status.STILL
-        self.img =  self.set_img() #pygame.image.load( gm.ELEVATOR_PIC_FILE).convert()
+        self.img =  pygame.image.load(gm.ELEVATOR_PIC_FILE).convert()
         self.novment_counter = 0
         self.novment_limit = 0
         
@@ -38,15 +39,20 @@ class Elevator:
              
 
     def is_call_worthy(self, floor):
-         return self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
+        if(len(self._queque) >0): 
+            return self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
+        else:
+             return self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._floor,floor))
 
     def call(self, floor):
         self._queque.append(floor)
         self.set_status(ele_status.INVITED)
         
-        temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-2],self._queque[-1]))
+        #temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-2],self._queque[-1]))
+        temp = self.is_call_worthy(floor)   #_time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-2],self._queque[-1]))
         
-        self._time_until_clear.add(calculate_time_from_one_store_to_another(self._queque[-2],self._queque[-2]))
+       # self._time_until_clear.add(calculate_time_from_one_store_to_another(self._queque[-2],self._queque[-2]))
+        self._time_until_clear.add(temp[0], temp[1])
         self._time_until_clear.add(2)
         
         return temp
@@ -154,7 +160,7 @@ class Elevator:
         return f"\nserial: {self._serial}, status: {self._status}, position: {self._position}, timer: {self._time_until_clear}" 
     
     def __repr__(self):
-        return f"\nserial: {self._serial}, status: {self._status}, position: {self._position}, timer: {self._time_until_clear}, small timer: {self._time_to_end_status}, movments: {self._movment_count}" 
+        return f"\nserial: {self._serial}, status: {self._status} " + str(self._queque[0]) if len(self._queque) > 0  else "" + f", position: {self._position}, timer: {self._time_until_clear}, small timer: {self._time_to_end_status}, movments: {self._movment_count}"
     
 
 def calculate_time_from_one_store_to_another(strt, end):
@@ -174,3 +180,24 @@ def calculate_movment_direction(strt, end):
             return ele_status.GOING_DOWN
         else:
             return ele_status.GOING_UP
+        
+
+#------------------------------------------------------
+def test()        :
+    ele = Elevator(0)
+    
+    floor = 4
+    
+    print(ele)
+
+    print(ele.is_call_worthy(floor))
+    
+    print(ele.call(floor))
+    
+    ele.update()
+    
+   # print(ele.is_call_worthy(5))
+
+    print(ele)
+
+test()

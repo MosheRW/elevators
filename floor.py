@@ -1,4 +1,4 @@
-from Queque import Queque
+#from Queque import Queque
 from enum import Enum
 from Graphic_Manager import WAIT_IN_FLOOR, get_floors_boundries
 import Graphic_Manager as gm

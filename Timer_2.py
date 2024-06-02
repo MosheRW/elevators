@@ -1,4 +1,4 @@
-from os import remove
+
 import Graphic_Manager as gm
 
 class Timer_2:
@@ -65,8 +65,12 @@ class Timer_2:
         return calculate(temp_sec, temp_parts)
        
     def get_with_addition(self, sec, parts = 0):
-        temp_sec =  self.__seconds + sec
-        temp_parts = self.__parts + parts
+        if type(sec) == tuple:
+            temp_sec =  self.__seconds + sec[0]
+            temp_parts =  self.__seconds + sec[1]
+        else:
+            temp_sec =  self.__seconds + sec
+            temp_parts = self.__parts + parts
         
         return calculate(temp_sec, temp_parts)
         
