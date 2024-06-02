@@ -16,7 +16,7 @@ import pygame
 directions = Enum('directions', ['GOING_UP','GOING_DOWN', 'STILL', 'DOORS_OPEN', 'INVITED'])
 
 class Elevator:
-    screen = display = gm.get_screen()
+    screen = gm.get_screen()
          
     def __init__(self, serial = 0, position = 0, floor = 0):
         

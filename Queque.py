@@ -31,7 +31,7 @@ class Node:
          return f'data: {self.data}'
      
 
-class Queque:
+class Queque_0:
     size = 0
     head = None
     tail = None
