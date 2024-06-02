@@ -1,3 +1,4 @@
+import random
 from Building import Building 
 import pygame
 import Graphic_Manager as gm
@@ -34,9 +35,6 @@ class Game:
         
     def init_screen(self):
         
-        
-        #self.screen = pygame.display.set_mode((1280, 720))
-        #self.screen = pygame.display.set_mode((1280, 720))
         print(pygame.display.get_desktop_sizes())
         self.screen.fill("white")
         self.screen.set_colorkey()
@@ -72,7 +70,7 @@ class Game:
         count = 0
         
         while running:
-            
+             count += 1
              for event in pygame.event.get():
                   
                   if event.type == pygame.KEYDOWN:
@@ -86,7 +84,8 @@ class Game:
                         running = False 
                     
                      if key[pygame.K_RETURN]:
-                         if tes_i < len(tes):
+                        # self.__building.get_elevator(random.randint(2,10))  
+                         if tes_i < len(tes):                         
                             self.__building.get_elevator(tes[tes_i])                           
                          
                      """   
@@ -102,6 +101,13 @@ class Game:
                       #   running = False 
                                       
            
+             if count % 20 == 0:
+                 #print(count,end="\r")
+                 print(self.__building, end="\r")
+                 
+             if count == 60: 
+                count = 0
+                
              self.__building.update()
              self.display()
              

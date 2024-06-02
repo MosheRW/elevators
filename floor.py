@@ -15,7 +15,7 @@ class Floor(UPM):
         super().__init__(floor, gm.FLOOR_PIC_FILE, get_init_position(floor))
 
         #super
-        UPM._state = states.STILL
+        self._state = states.STILL
 
 
     def is_this_floor_needs_an_elevator(self):
@@ -33,7 +33,7 @@ class Floor(UPM):
 
     def update(self):
         self.__update_timer()
-        self.__update_status()
+       # self.__update_status()
         
     def __update_timer(self):
         self._timer.update()
@@ -49,10 +49,10 @@ class Floor(UPM):
                 self._state = states.STILL
          
     def __str__ (self):
-        return f'|floor: {self._floor},  ' + UPM.__str__(self) + " timer: " + repr(self._timer) + ' |'
+        return f'|floor: {self._floor},  ' + UPM.__str__(self) + " timer: " + repr(self._timer) + ' |\n'
     
     def __repr__ (self):
-        return f'floor: {self._floor}   ' + UPM.__repr__(self) + " timer: " + repr(self._timer) +' |'
+        return f'floor: {self._floor}   ' + UPM.__repr__(self) + " timer: " + repr(self._timer) +' |\n'
         
 
 
