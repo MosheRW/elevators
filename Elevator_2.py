@@ -35,6 +35,7 @@ class Elevator:
         self.set_position(position)
           
     def get(self):
+        
         return self.screen.blit(self.get_img(),self.get_position())
              
 
@@ -149,7 +150,7 @@ class Elevator:
                     self.set_status(ele_status.STILL)
                     
     def calculate_movment_direction(self, end):
-        return calculate_movment_direction(self._queque[0],end)
+        return calculate_movment_direction(self._floor,end)
 
     def update_novment_limit(self, end):
         self.novment_limit = calculate_novment_limit(self._queque[0],end)
