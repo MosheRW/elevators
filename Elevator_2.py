@@ -32,17 +32,19 @@ class Elevator:
         
     def set(self, position):
         self.set_position(position)
-        
-    
+          
     def get(self):
         return self.screen.blit(self.get_img(),self.get_position())
              
-    
+
+    def is_call_worthy(self, floor):
+         return self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
+
     def call(self, floor):
         self._queque.append(floor)
         self.set_status(ele_status.INVITED)
         
-        temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-2],self._queque[-2]))
+        temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-2],self._queque[-1]))
         
         self._time_until_clear.add(calculate_time_from_one_store_to_another(self._queque[-2],self._queque[-2]))
         self._time_until_clear.add(2)
@@ -59,6 +61,7 @@ class Elevator:
          self.update_small_timer()
          self.update_status()
 
+
     def get_position(self):
         return self._position
     
@@ -70,24 +73,28 @@ class Elevator:
             self._position[0] = position
             self._position[1] = y            
     
+
     def get_img(self):
         return pygame.transform.scale(self._img, gm.ELEVATOR_SIZE)
     
     def set_img(self):
         self.img = pygame.image.load(gm.ELEVATOR_PIC_FILE).convert()
     
+
     def get_status(self):
         return self._status
     
     def set_status(self, new_status):
         self._status = new_status
-            
+    
+        
     def update_big_timer(self):
         self._time_until_clear.update() 
     
     def update_small_timer(self):
         self._time_to_end_status.update()
     
+
     def move(self):
         if self.get_status() == ele_status.GOING_UP:
              self.move_up()
@@ -102,10 +109,11 @@ class Elevator:
          self._position = (self._position[0], self._position[0] - gm.PACE)
          self.novment_counter += gm.PACE
     
+
     def is_got_to_place(self):
         return self.novment_counter >= self.novment_limit
     
-    def update_status(self):
+    def update_status(self):                                            #need to disassmble
         if self.get_status() == ele_status.STILL:
             self.set_status(self.get_status())
         
@@ -139,7 +147,16 @@ class Elevator:
 
     def update_novment_limit(self, end):
         self.novment_limit = calculate_novment_limit(self._queque[0],end)
+        
+
+
+    def __str__(self):
+        return f"\nserial: {self._serial}, status: {self._status}, position: {self._position}, timer: {self._time_until_clear}" 
     
+    def __repr__(self):
+        return f"\nserial: {self._serial}, status: {self._status}, position: {self._position}, timer: {self._time_until_clear}, small timer: {self._time_to_end_status}, movments: {self._movment_count}" 
+    
+
 def calculate_time_from_one_store_to_another(strt, end):
      if strt > end:
             return Timer_2.calculate(0, (strt - end))
