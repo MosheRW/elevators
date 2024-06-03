@@ -17,6 +17,15 @@ filename_2 = 'resources\wall.jpg'
 img_2 = pygame.image.load(filename_2).convert()
 
 
+fonta = pygame.font.Font('Roboto-Black.ttf',23)
+
+text = fonta.render("time",True,(0,0,0))
+
+textRect = text.get_rect()
+
+textRect.center = ((1280 // 2, 720 //2))
+
+
 #ygame.transform.scale(img, (200,200) )
 # pygame setup
 
@@ -48,11 +57,13 @@ while running:
         if key[pygame.K_RETURN]:
             screen.fill("white")
             
-            img_1 = pygame.transform.scale(img_1, gm.ELEVATOR_SIZE)
-            img_2 = pygame.transform.scale(img_2, gm.FLOOR_SIZE)
+            #img_1 = pygame.transform.scale(img_1, gm.ELEVATOR_SIZE)
+            #img_2 = pygame.transform.scale(img_2, gm.FLOOR_SIZE)
             
             screen.blit(img_1, (100,300))
             screen.blit(img_2, (0,0))
+            
+            screen.blit(text,textRect)
             
 
     # fill the screen with a color to wipe away anything from last frame

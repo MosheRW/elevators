@@ -11,7 +11,7 @@ SPACE = 0
 ELEVATOR_PIC_FILE = 'resources\elv.png'
 FLOOR_PIC_FILE = 'resources\wall.jpg'
 FRAN_RATE = 60
-PACE = 1
+PACE = 2
 
 
 screenz = pygame.display.set_mode((1280, 720))
@@ -40,6 +40,12 @@ def get_screen():
 
 pygame.font.init()
 
-fonta = pygame.font.Font(pygame.font.get_default_font(),23)
 
-text = fonta.render("time",True,(0,0,0))
+font = pygame.font.Font('Roboto-Black.ttf',23)
+
+text = font.render("time",True,(0,0,0))
+
+textRect = text.get_rect()
+
+
+textRect.center = ((1280 // 2, 720 //2))

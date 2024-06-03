@@ -24,7 +24,9 @@ class Floor_2:
         self._timer = Timer_2()
         
         self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()
-
+        
+        self.text = gm.font.render(self.textGenerator(),True,(0,0,0))
+        self.text_rect = self.text.get_rect()
 
     def init(self, floor):
         self._floor = floor
@@ -44,11 +46,12 @@ class Floor_2:
 #----------------------------------------------------------------------------------
         
     def get(self):    
-        return (self.get_img(), self.get_position())
+        return (self.get_img(), self.get_position(), self.get_text())
     
     def update(self):
         self.update_timer()
         self.update_status()
+        self.update_text()
         
   
 #----------------------------------------------------------
@@ -72,6 +75,11 @@ class Floor_2:
     def get_img(self):
          return pygame.transform.scale(self.img, gm.FLOOR_SIZE)
     
+    def get_text(self):
+        
+        return self.text, self.get_position()
+        #return self.text,self.text_rect
+    
 #-----------------------------------------------------------
 
     def set_position(self,new_position):
@@ -87,8 +95,19 @@ class Floor_2:
         self._timer.set(new_time)
 
     def set_img(self,filename):         #maybe need to implement another one, with state as input
-       pass
+         self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()
+         
+    def set_text(self):
+        self.text = gm.font.render(self.textGenerator(),True,(0,0,0))
+       
+        self.text_rect = self.text.get_rect()
+        
+        #self.text_rect.topleft(self.get_position())
+        
+        
+        
     
+
 #-------------------------------------------------------------
 
     def update_status(self):
@@ -111,10 +130,18 @@ class Floor_2:
         pass
 
 
+    def update_text(self):
+        self.set_text()
+        
 
 
-
-
+    def textGenerator(self) -> str:
+        if self.get_status() == states.STILL:
+            return "click here!"
+        elif self.get_status() == states.ELEVATOR_HERE:
+            return "arruved!"
+        elif self.get_status() == states.WAITING:
+            return str(self.get_timer())
 
 #-------------------------------------------------------------
     def __str__ (self):
