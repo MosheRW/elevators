@@ -31,7 +31,7 @@ class Timer_2:
     def update(self):
         self.__parts -= 1
         
-        if self.__parts == 0:
+        if self.__parts <= 0:
             self.__seconds -= 1
             self.__parts = gm.FRAN_RATE
             
@@ -75,6 +75,13 @@ class Timer_2:
         return calculate(temp_sec, temp_parts)
         
 
+    def __str__(self):
+        return f"sec: {self.get()[0]}, parts: {self.get()[1]}, is running: {self.is_running()}\n"
+      
+    def __repr__(self):
+        return f"sec: {self.get()[0]}, parts: {self.get()[1]}, is running: {self.is_running()}\n"
+        
+
 def get_with_addition(self, sec, parts = 0):
     temp_sec =  self.get()[0] + sec
     temp_parts = self.get()[1] + parts
@@ -82,7 +89,7 @@ def get_with_addition(self, sec, parts = 0):
     return calculate(temp_sec, temp_parts)
 
 def calculate(sec, parts = 0):
-    sec += parts // gm.FRAN_RATE
+    sec += (parts // gm.FRAN_RATE)
     parts = parts % gm.FRAN_RATE
     
     return sec, parts
