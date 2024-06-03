@@ -33,7 +33,11 @@ screen.blit(img_1, (100,200))
 
 clock = pygame.time.Clock()
 running = True
-
+pygame.mixer.init()
+pygame.mixer.music.load('ding.mp3')
+pygame.mixer.music.set_volume(0.7)
+pygame.mixer.music.play(-1)
+        
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -64,6 +68,8 @@ while running:
             screen.blit(img_2, (0,0))
             
             screen.blit(text,textRect)
+            pygame.mixer.music.play(-1)
+            
             
 
     # fill the screen with a color to wipe away anything from last frame
@@ -75,5 +81,7 @@ while running:
     pygame.display.flip()
 
     clock.tick(60)  # limits FPS to 60
+    
+pygame.mixer.music.play()
 
 pygame.quit()

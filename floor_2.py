@@ -118,6 +118,7 @@ class Floor_2:
             if not self._timer.is_running():
                 self.set_status(states.ELEVATOR_HERE)
                 self.set_timer(gm.WAIT_IN_FLOOR)
+                self.play_ding()
                 
         elif self.get_status() == states.ELEVATOR_HERE: #case elevator is here
             if not self._timer.is_running():
@@ -134,7 +135,9 @@ class Floor_2:
     def update_text(self):
         self.set_text()
         
-
+    def play_ding(self):
+        pygame.mixer.music.load("resources\ding.mp3")
+        pygame.mixer.music.play()
 
     def textGenerator(self) -> str:
         #return str(self.get_timer()) + str(self.get_status())
