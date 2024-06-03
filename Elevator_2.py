@@ -55,7 +55,8 @@ class Elevator:
         
         self._queque.append(floor)
         
-        if  self.get_status() != ele_status.DOORS_OPEN:
+       # if  self.get_status() != ele_status.DOORS_OPEN:
+        if  self.get_status() == ele_status.STILL:
              self.set_status(ele_status.INVITED)
                      
         temp = self.is_call_worthy(floor) 
