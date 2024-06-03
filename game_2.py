@@ -1,4 +1,5 @@
 import random
+from turtle import Screen
 from Building_2 import Building 
 import pygame
 import Graphic_Manager as gm
@@ -153,7 +154,7 @@ class Game:
               self._building.update()
               #print(self._building, end="\r")
               self.display()
-
+              self.screen.blit(gm.text)
               pygame.display.flip()
               clock.tick(60)
 

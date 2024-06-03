@@ -37,3 +37,9 @@ def get_screen():
 כל מחלקה תהיה אחראית לייצר את התמונה כולל המיקום ולהחזיר אותו לפונקציה המרכזית באמצעות טכניקת משפך שיעשה אפדייט למסך עצמו ובו נעשה את השימוש בבליט
 
 """
+
+pygame.font.init()
+
+fonta = pygame.font.Font(pygame.font.get_default_font(),23)
+
+text = fonta.render("time",True,(0,0,0))
