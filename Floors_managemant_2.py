@@ -12,7 +12,8 @@ class Floors_managment:
 #-------------------------------------------------------------------------        
     def init(self):
          for i in range(len(self._the_floors)):
-            self._the_elevators[i].set_position((fl.get_init_position(i)))
+            self._the_floors[i].init(i)
+             #self._the_floors[i].set_position((fl.get_init_position(i)))
        
         
     def get(self):
@@ -26,7 +27,8 @@ class Floors_managment:
 #----------------------------------------------------------------------------
 
     def is_this_floor_needs_an_elevator(self, floor):
-        return self.__the_floors[floor].is_this_floor_needs_an_elevator()
+        print(f"floor_managemant.is_this_floor_needs_an_elevator: self._the_floors[floor].get_status()) {self._the_floors[floor].get_status()}")
+        return self._the_floors[floor].is_this_floor_needs_an_elevator()
         
     def get_an_elevator(self, floor, new_time):
         self._the_floors[floor].get_elevator(new_time)
@@ -40,7 +42,7 @@ class Floors_managment:
 #----------------------------------------------------------------------------
 
     def __repr__(self):
-        return f'the floors: {self.__the_floors}'
+        return f'the floors: {self._the_floors}'
     
     def __str__(self):
-        return f'the floors: {self.__the_floors}'
+        return f'the floors: {self._the_floors}'

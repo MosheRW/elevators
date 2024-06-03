@@ -38,8 +38,8 @@ class Elevator:
         self.set_position(position)
           
     def get(self):
-        
-        return self.screen.blit(self.get_img(),self.get_position())
+        #return self.screen.blit(self.get_img(),self.get_position())
+        return (self.get_img(),self.get_position())
              
 
     def is_call_worthy(self, floor):
@@ -51,9 +51,10 @@ class Elevator:
     def call(self, floor):
         if len(self._queque) > 0:
             if self._queque[-1] == floor:
-                return  self.get_time()
+                return  self.get_time().get()
         
         self._queque.append(floor)
+        
         if  self.get_status() != ele_status.DOORS_OPEN:
              self.set_status(ele_status.INVITED)
                      
@@ -62,10 +63,13 @@ class Elevator:
      
         self._time_until_clear.add(temp[0], temp[1])
         self._time_until_clear.add(2)
-        assert type(temp) == tuple
-        print(temp)
         
-        return self._time_until_clear.get()
+        temp = self._time_until_clear.get()
+        assert type(temp) == tuple, "ERROR"
+        print(f"Elevator_2.call.temp: {temp}")
+        
+       
+        return temp #self._time_until_clear.get()
         
        
     def get_time(self):
@@ -243,9 +247,9 @@ def calculate_time_from_one_store_to_another(strt, end):
              
 def calculate_novment_limit(strt, end):
     if strt <= end:
-        return (end - strt) * gm.ELEVATOR_SIZE[1]
+        return (end - strt) * (gm.ELEVATOR_SIZE[1] + gm.SPACE)
     else:
-        return (strt - end) * gm.ELEVATOR_SIZE[1]
+        return (strt - end) *(gm.ELEVATOR_SIZE[1] + gm.SPACE)
  
 def calculate_movment_direction(strt, end):
         if strt > end:

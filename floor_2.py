@@ -6,7 +6,7 @@ from Timer_2 import Timer_2
 import pygame
 
 
-states = Enum('States', ['WAITING', 'ELEVATOR_HERE', 'STILL'])
+states = Enum('states', ['WAITING', 'ELEVATOR_HERE', 'STILL'])
 
 def get_init_position(serial, first_floor_is = 0):
      return (0, gm.FLOOR_SIZE[1] + (serial - first_floor_is) * (gm.ELEVATOR_SIZE[0]))
@@ -26,16 +26,20 @@ class Floor_2:
         self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()
 
 
-
+    def init(self, floor):
+        self._floor = floor
+        self.set_status(states.STILL)
+        self.set_position(get_init_position(floor))
+        
 #---------------------------------------------------------------------------------
 
         
     def is_this_floor_needs_an_elevator(self):
-        return self._state == states.STILL
+        return self.get_status() == states.STILL
     
 
     def get_elevator(self, time):
-        self.set_state(states.WAITING)
+        self.set_status(states.WAITING)
         self.set_timer(time)
 #----------------------------------------------------------------------------------
         
@@ -56,7 +60,11 @@ class Floor_2:
         return self._position
     
     def get_status(self):
-        self._position
+        assert type(self._status) == states, "ERROR, Wrong type"
+        #print( self._status)
+        return self._status
+        #temp = self._status
+        #return temp
     
     def get_timer(self):
         return self._timer.get()
@@ -84,14 +92,16 @@ class Floor_2:
 #-------------------------------------------------------------
 
     def update_status(self):
-         if  self.get_status() == states.WAITING:
+        #temp =  self._status        # self.get_status()
+        if  self.get_status() == states.WAITING:
+        #if  temp == states.WAITING:
             if not self._timer.is_running():
                 self.set_status(states.ELEVATOR_HERE)
-                self.set_timer(2,0)
+                self.set_timer(gm.WAIT_IN_FLOOR)
                 
-         elif self.get_status() == states.ELEVATOR_HERE: #case elevator is here
+        elif self.get_status() == states.ELEVATOR_HERE: #case elevator is here
             if not self._timer.is_running():
-                self.get_status = states.STILL
+                self.set_status(states.STILL)
 
     
     def update_timer(self):
@@ -108,9 +118,8 @@ class Floor_2:
 
 #-------------------------------------------------------------
     def __str__ (self):
-        return f'|floor: {self.get_floor()},  status: {self.get_status()}, timer: {self.get_timer().get()} |\n'
+        return f'|floor: {self.get_floor()},  status: {self.get_status()}, timer: {self.get_timer()} |\n'
     
     def __repr__ (self):
-       return f'|floor: {self.get_floor()},  status: {self.get_status()}, timer: {self.get_timer().get()} |\n'
+       return f'|floor: {self.get_floor()},  status: {self.get_status()}, timer: {self.get_timer()} |\n'
         
-

@@ -8,12 +8,14 @@ class Timer_2:
         self.__is_running = False
         
     def set(self, seconds, parts = 0):
-        if type(seconds) == int:
-            self.__seconds = seconds
-            self.__parts = parts
-        else:
+        if type(seconds) == tuple:
             self.__seconds = seconds[0]
             self.__parts = seconds[0]
+        else:
+            self.__seconds = int(seconds)
+            self.__parts = int(parts)
+        
+            
             
         self.calculate()
         self.update_is_running()        

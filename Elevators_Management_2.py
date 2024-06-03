@@ -13,7 +13,7 @@ class Elevators_Management_2:
     def __init__(self, elevators = 12):
         self.__num_of_elevators = elevators
   
-        self._the_elevators = [Elevator(i,0) for i in range(self.__num_of_elevators)]
+        self._the_elevators = [Elevator(i,0) for i in range(self.__num_of_elevators + 1)]
         
 
     def init(self):
@@ -26,20 +26,23 @@ class Elevators_Management_2:
        
                     
     def get(self):
+        """
         temp = [self._the_elevators[0].get()]
         for i in range(1,len(self._the_elevators)):
             temp += self._the_elevators[i].get()
             print(self._the_elevators[i].get())
         print(temp)
         return temp
-        #return [self._the_elevators[i].get() for i in range(len(self._the_elevators))]
+        """    
+        return [self._the_elevators[i].get() for i in range(len(self._the_elevators))]
 
                 
     def get_an_elevator(self, floor):     
         elevat = self.__shortest_time_elevator(floor)         # the shortest queque
-        print(f"elevator num: {elevat}")
-        tup = self._the_elevators[elevat].call(floor)
-        return tup
+        #print(f"elevator num: {elevat}")
+        #tup = self._the_elevators[elevat].call(floor)
+        #return tup
+        return self._the_elevators[elevat].call(floor)
          
    
     def __shortest_time_elevator(self, floor = 4) -> int:
@@ -103,7 +106,7 @@ def test():
     #time = Timer_2()
     #time.set(10)
     
-    print(e)
+    #print(e)
     while running:
             
             for event in pygame.event.get():
@@ -123,9 +126,9 @@ def test():
                         
                         floor =  random.randint(1,10)
                              
-                        print(f"floor: {floor}")
+                        #print(f"floor: {floor}")
                         time = e.get_an_elevator(floor)                                                       
-                        print(f"time to: {time}")
+                        #print(f"time to: {time}")
                        
                         #e.get_an_elevator(tes_i)
                                 
@@ -133,7 +136,7 @@ def test():
                        
                         
 
-
+            
             screen.fill("white")
             screen.set_colorkey()
             
@@ -160,4 +163,4 @@ def test():
        """ 
         
 
-test()
+#test()
