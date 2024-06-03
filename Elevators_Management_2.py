@@ -37,7 +37,7 @@ class Elevators_Management_2:
                 
     def get_an_elevator(self, floor):     
         elevat = self.__shortest_time_elevator(floor)         # the shortest queque
-        print(elevat)
+        print(f"elevator num: {elevat}")
         tup = self._the_elevators[elevat].call(floor)
         return tup
          
@@ -90,18 +90,18 @@ def test():
     e = Elevators_Management_2(12)
     e.init()
     
-    tes = [random.randint(1,12) for _ in range(20)]
-    print(tes)
-    doc= [False for _ in range(13)]
-    tes_i = 0
+    #tes = [random.randint(1,12) for _ in range(20)]
+    #print(tes)
+    #doc= [False for _ in range(13)]
+    #tes_i = 0
     count = 0
     running = True
     clock = pygame.time.Clock()
     
     screen.fill("white")
     screen.set_colorkey()
-    time = Timer_2()
-    time.set(10)
+    #time = Timer_2()
+    #time.set(10)
     
     print(e)
     while running:
@@ -121,11 +121,11 @@ def test():
                           
                          #if tes_i < len(tes):
                         
-                        r =  random.randint(1,10)
+                        floor =  random.randint(1,10)
                              
-                        print(r)
-                        t = e.get_an_elevator(r)                                                       
-                        print(t)
+                        print(f"floor: {floor}")
+                        time = e.get_an_elevator(floor)                                                       
+                        print(f"time to: {time}")
                        
                         #e.get_an_elevator(tes_i)
                                 
@@ -137,7 +137,8 @@ def test():
             screen.fill("white")
             screen.set_colorkey()
             
-            time.update()
+           
+           #time.update()
             e.update()
             e.pack(screen)
            # print(f"time: {time.get()}, is running? {time.is_running()}")

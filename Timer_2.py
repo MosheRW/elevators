@@ -8,9 +8,13 @@ class Timer_2:
         self.__is_running = False
         
     def set(self, seconds, parts = 0):
-        self.__seconds = seconds
-        self.__parts = parts
-        
+        if type(seconds) == int:
+            self.__seconds = seconds
+            self.__parts = parts
+        else:
+            self.__seconds = seconds[0]
+            self.__parts = seconds[0]
+            
         self.calculate()
         self.update_is_running()        
                 

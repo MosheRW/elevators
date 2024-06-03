@@ -30,7 +30,10 @@ class Elevator:
         self._time_until_clear = Timer_2.Timer_2()
         
         self._time_to_end_status = Timer_2.Timer_2()
-        
+
+
+#--------------------------------------------------------------------------
+#        
     def set(self, position):
         self.set_position(position)
           
@@ -48,21 +51,21 @@ class Elevator:
     def call(self, floor):
         if len(self._queque) > 0:
             if self._queque[-1] == floor:
-                return  
+                return  self.get_time()
         
         self._queque.append(floor)
-        self.set_status(ele_status.INVITED)
-        print("hello")
-        print(self._time_until_clear)
-        #temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-2],self._queque[-1]))
-        temp = self.is_call_worthy(floor)   #_time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-2],self._queque[-1]))
+        if  self.get_status() != ele_status.DOORS_OPEN:
+             self.set_status(ele_status.INVITED)
+                     
+        temp = self.is_call_worthy(floor) 
         
-       # self._time_until_clear.add(calculate_time_from_one_store_to_another(self._queque[-2],self._queque[-2]))
+     
         self._time_until_clear.add(temp[0], temp[1])
         self._time_until_clear.add(2)
+        assert type(temp) == tuple
         print(temp)
         
-        return temp
+        return self._time_until_clear.get()
         
        
     def get_time(self):
@@ -135,6 +138,11 @@ class Elevator:
     def is_got_to_place(self):
         return self.novment_counter >= self.novment_limit
     
+    def open_the_doors(self):
+        self._time_to_end_status.set(gm.WAIT_IN_FLOOR)
+        self.set_status(ele_status.DOORS_OPEN)
+        self.set_floor(self._queque.pop(0))
+    
     def update_status_case_still(self):
           if self.get_status() == ele_status.STILL:            
             self.set_status(self.get_status())
@@ -143,9 +151,10 @@ class Elevator:
     def update_status_case_moving(self):
         if self.get_status() == ele_status.GOING_DOWN or self.get_status() == ele_status.GOING_UP:
             if(self.is_got_to_place()):
-                self._time_to_end_status.set(gm.WAIT_IN_FLOOR)
-                self.set_status(ele_status.DOORS_OPEN)
-                self.set_floor(self._queque.pop(0))
+                 self.open_the_doors()
+              #  self._time_to_end_status.set(gm.WAIT_IN_FLOOR)
+              #  self.set_status(ele_status.DOORS_OPEN)
+              #  self.set_floor(self._queque.pop(0))
                 
     def update_status_case_doors_opened(self):
          if self.get_status() == ele_status.DOORS_OPEN:
@@ -159,9 +168,9 @@ class Elevator:
     def update_status_case_invited(self):
         if self.get_status() == ele_status.INVITED:
             if len(self._queque) > 0:                     
-                         #self.set_status(self.calculate_movment_direction(self._floor))
-                         self.set_status(self.calculate_movment_direction(self._queque[0]))
-                         self.update_novment_limit(self._queque[0])
+                #self.set_status(self.calculate_movment_direction(self._floor))
+                self.set_status(self.calculate_movment_direction(self._queque[0]))
+                self.update_novment_limit(self._queque[0])
             else:
                 self.set_status(ele_status.STILL)
         
@@ -206,8 +215,10 @@ class Elevator:
                     self.set_status(ele_status.STILL)
                    """ 
     def calculate_movment_direction(self, end):
-        print (self.get_status())
+        print (f"calculate movment: {self.get_status()}")
+        
         temp = calculate_movment_direction(self._floor,end)
+        assert type(temp) == ele_status, "ERROR"
         print(temp)
         return temp #calculate_movment_direction(self._floor,end)
 
@@ -242,7 +253,9 @@ def calculate_movment_direction(strt, end):
         elif strt < end:
             return ele_status.GOING_UP
         else:
-            pass 
+            return ele_status.GOING_DOWN
+            
+             
        # assert strt != end, "ERROE"
             
         
