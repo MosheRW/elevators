@@ -43,30 +43,48 @@ class Elevator:
              
 
     def is_call_worthy(self, floor):
-        if(len(self._queque) >0): 
-            return self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
+        if(len(self._queque) > 0):
+           # print(f"Elevator.is_call_worthy: _queque not empty ")
+            #return self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
+            temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
         else:
-             return self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._floor,floor))
+             #print(f"Elevator.is_call_worthy: _queque is empty ") 
+             #return self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._floor,floor))
+             temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._floor,floor))
+             
+        print(f"{self._serial} Elevator.is_call_worthy.temp: {temp}")
+        return temp
 
     def call(self, floor):
         if len(self._queque) > 0:
             if self._queque[-1] == floor:
                 return  self.get_time().get()
+        elif len(self._queque) == 0:
+            if self._floor == floor:
+                return   self.get_time().get()
         
+
+        temp = self.is_call_worthy(floor) 
         self._queque.append(floor)
         
        # if  self.get_status() != ele_status.DOORS_OPEN:
         if  self.get_status() == ele_status.STILL:
              self.set_status(ele_status.INVITED)
-                     
-        temp = self.is_call_worthy(floor) 
+             """
+             temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._floor,floor))
+        else:
+            temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
+                """     
+        #temp = self.is_call_worthy(floor) 
         
+        print(F"call.temp: {temp}")
      
         self._time_until_clear.add(temp[0], temp[1])
         self._time_until_clear.add(2)
         
-        temp = self._time_until_clear.get()
+        #temp = self._time_until_clear.get()
         assert type(temp) == tuple, "ERROR"
+        #assert temp != (0,0), 
         print(f"Elevator_2.call.temp: {temp}")
         
        
@@ -237,14 +255,18 @@ class Elevator:
         return f"\nserial: {self._serial}, status: {self._status}, position: {self._position}, timer: {self._time_until_clear}" 
     
     def __repr__(self):
-        return f"\nserial: {self._serial}, status: {self._status} " + str(self._queque[0]) if len(self._queque) > 0  else "" + f", position: {self._position}, timer: {self._time_until_clear}, small timer: {self._time_to_end_status}, movments: {self.novment_counter}"
+        if len(self._queque) > 0:
+            temp = str(self._queque[0])
+        else: ""
+        
+        return f"\nserial: {self._serial}, status: {self._status} " +  temp + f", position: {self._position}, timer: {self._time_until_clear}, small timer: {self._time_to_end_status}, movments: {self.novment_counter}"
     
 
 def calculate_time_from_one_store_to_another(strt, end):
-     if strt >= end:
-            return Timer_2.calculate(0, (strt - end) * gm.FLOOR_SIZE[1])
+     if strt > end: 
+           return Timer_2.calculate(0, (strt - end) * gm.FLOOR_SIZE[1] / gm.PACE)
      else:
-           return Timer_2.calculate(0, (end - strt) * gm.FLOOR_SIZE[1])
+           return Timer_2.calculate(0, (end - strt) * gm.FLOOR_SIZE[1]/ gm.PACE)
              
 def calculate_novment_limit(strt, end):
     if strt <= end:
@@ -307,3 +329,5 @@ def test()        :
     print(ele)
 
 #test()
+
+#print(calculate_time_from_one_store_to_another(0,5) )

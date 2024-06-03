@@ -22,11 +22,11 @@ class Building:
 #----------------------------------------------------------------------------
     def get_elevator(self, floor):
         if self._floors_mange.is_this_floor_needs_an_elevator(floor):
-            print("building.get_elevator")
+            print(f"building.get_elevator, floor: {floor}")
             
             time_stamp = self._elevator_mange.get_an_elevator(floor)
             
-            print(f"building.get_elevator,time: {time_stamp}")
+            print(f"building.get_elevator,time: {time_stamp}------------------------------")
             assert type(time_stamp) == tuple, "Error, incorrect value"
             
             self._floors_mange.get_an_elevator(floor,time_stamp)

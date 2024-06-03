@@ -40,15 +40,16 @@ class Floor_2:
         return self.get_status() == states.STILL
     
 
-    def get_elevator(self, time):
-        self.set_status(states.WAITING)
+    def get_elevator(self, time):        
         self.set_timer(time)
+        self.set_status(states.WAITING)
 #----------------------------------------------------------------------------------
         
     def get(self):    
         return (self.get_img(), self.get_position(), self.get_text())
     
     def update(self):
+        #self.update_text()
         self.update_timer()
         self.update_status()
         self.update_text()
@@ -136,12 +137,14 @@ class Floor_2:
 
 
     def textGenerator(self) -> str:
+        #return str(self.get_timer()) + str(self.get_status())
+    
         if self.get_status() == states.STILL:
-            return "click here!"
+            return f"{self.get_timer()} click here!"
         elif self.get_status() == states.ELEVATOR_HERE:
-            return "arruved!"
+            return f"{self.get_timer()} arruved!"
         elif self.get_status() == states.WAITING:
-            return str(self.get_timer())
+            return f"{self.get_timer()} states.WAITING"
 
 #-------------------------------------------------------------
     def __str__ (self):

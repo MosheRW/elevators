@@ -36,13 +36,13 @@ class Elevators_Management_2:
         """    
         return [self._the_elevators[i].get() for i in range(len(self._the_elevators))]
 
-                
+        
     def get_an_elevator(self, floor):     
         elevat = self.__shortest_time_elevator(floor)         # the shortest queque
-        #print(f"elevator num: {elevat}")
-        #tup = self._the_elevators[elevat].call(floor)
-        #return tup
-        return self._the_elevators[elevat].call(floor)
+        print(f"elevator num: {elevat}")
+        tup = self._the_elevators[elevat].call(floor)
+        return tup
+        #return self._the_elevators[elevat].call(floor)
          
    
     def __shortest_time_elevator(self, floor = 4) -> int:
@@ -52,12 +52,16 @@ class Elevators_Management_2:
             if self.is_left_smaller(i,minimum, floor):
                 minimum = i
        
+        print(f"Elevator_managemant.__shortest_time_elevator: is_call_worthy= {self._the_elevators[minimum].is_call_worthy(floor)}")
         return minimum
         
     def is_left_smaller(self, elevator_1, elevator_2, floor) -> bool:
-         if self._the_elevators[elevator_1].is_call_worthy(floor)[0] < self._the_elevators[elevator_2].is_call_worthy(floor)[0]:
+         temp_1 = self._the_elevators[elevator_1].is_call_worthy(floor)
+         temp_2 = self._the_elevators[elevator_2].is_call_worthy(floor)
+         
+         if temp_1[0] <temp_2[0]:
                 return True
-         elif self._the_elevators[elevator_1].is_call_worthy(floor)[0] == self._the_elevators[elevator_2].is_call_worthy(floor)[0] and  self._the_elevators[elevator_1].is_call_worthy(floor)[1] < self._the_elevators[elevator_2].is_call_worthy(floor)[1]:
+         elif temp_1[0] == temp_2[0] and  temp_1[1] <temp_2[1]:
                 return True 
             
          return False

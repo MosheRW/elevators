@@ -71,15 +71,23 @@ class Timer_2:
         return calculate(temp_sec, temp_parts)
        
     def get_with_addition(self, sec, parts = 0):
-        if type(sec) == tuple:
-            temp_sec =  self.__seconds + sec[0]
-            temp_parts =  self.__seconds + sec[1]
+        temp_sec = 0
+        temp_parts = 0
+        if self.is_running():
+            if type(sec) == tuple:
+                temp_sec =  self.__seconds + sec[0]
+                temp_parts =  self.__seconds + sec[1]
+            else:
+                temp_sec =  self.__seconds + sec
+                temp_parts = self.__parts + parts
+        
+            return calculate(temp_sec, temp_parts)
+        
         else:
-            temp_sec =  self.__seconds + sec
-            temp_parts = self.__parts + parts
-        
-        return calculate(temp_sec, temp_parts)
-        
+             if type(sec) == tuple:
+                return calculate(sec[0], sec[1])
+             else:        
+                 return calculate(sec, parts)
 
     def __str__(self):
         return f"sec: {self.get()[0]}, parts: {self.get()[1]}, is running: {self.is_running()}\n"
@@ -94,9 +102,9 @@ def get_with_addition(self, sec, parts = 0):
         
     return calculate(temp_sec, temp_parts)
 
-def calculate(sec, parts = 0):
-    sec += (parts // gm.FRAN_RATE)
-    parts = parts % gm.FRAN_RATE
+def calculate(sec = 0, parts = 0):
+    sec += parts // int(gm.FRAN_RATE)# * gm.WAIT_IN_FLOOR))
+    parts = parts % int(gm.FRAN_RATE)# * gm.WAIT_IN_FLOOR))
     
-    return sec, parts
+    return int(sec), int(parts)
     

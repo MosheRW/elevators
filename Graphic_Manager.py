@@ -3,7 +3,7 @@
 #responsebol on window and display managment
 
 TIME_TRAVEL_BETWEEN_FLOORS = 0.5 #seconds
-WAIT_IN_FLOOR = 2.0
+WAIT_IN_FLOOR = 2
 ELEVATOR_SIZE = (60,60)
 FLOOR_SIZE = (160,60)
 #SPACE = 5

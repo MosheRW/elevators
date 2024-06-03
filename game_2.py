@@ -157,7 +157,7 @@ class Game:
               self.display()
               #self.screen.blit(gm.text)
               pygame.display.flip()
-              clock.tick(60)
+              clock.tick(30)
 
     def get_floor(self, key):
          if key[pygame.K_KP0]:
