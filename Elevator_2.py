@@ -8,8 +8,8 @@ import Timer_2
 
 ele_status = Enum('ele_status',['GOING_UP','GOING_DOWN', 'STILL', 'DOORS_OPEN', 'INVITED'])
 
-def get_init_position(serial, first_elevator_is = 1):      
-            return (gm.FLOOR_SIZE[0] + gm.SPACE + gm.ELEVATOR_SIZE[0] + (serial - first_elevator_is) * (gm.ELEVATOR_SIZE[0] + gm.SPACE), gm.ELEVATOR_SIZE[1])
+def get_init_position(serial, first_elevator_is = 1) -> tuple:      
+            return (gm.FLOOR_SIZE[0] + gm.SPACE + gm.ELEVATOR_SIZE[0] + (serial - first_elevator_is) * (gm.ELEVATOR_SIZE[0] + gm.SPACE),     gm.ELEVATOR_SIZE[1])
 
 class Elevator:
     screen = gm.get_screen()
@@ -82,7 +82,7 @@ class Elevator:
     
 
     def get_img(self):
-        return pygame.transform.scale(self._img, gm.ELEVATOR_SIZE)
+        return pygame.transform.scale(self.img, gm.ELEVATOR_SIZE)
     
     def set_img(self):
         self.img = pygame.image.load(gm.ELEVATOR_PIC_FILE).convert()
@@ -161,7 +161,7 @@ class Elevator:
         return f"\nserial: {self._serial}, status: {self._status}, position: {self._position}, timer: {self._time_until_clear}" 
     
     def __repr__(self):
-        return f"\nserial: {self._serial}, status: {self._status} " + str(self._queque[0]) if len(self._queque) > 0  else "" + f", position: {self._position}, timer: {self._time_until_clear}, small timer: {self._time_to_end_status}, movments: {self._movment_count}"
+        return f"\nserial: {self._serial}, status: {self._status} " + str(self._queque[0]) if len(self._queque) > 0  else "" + f", position: {self._position}, timer: {self._time_until_clear}, small timer: {self._time_to_end_status}, movments: {self.novment_counter}"
     
 
 def calculate_time_from_one_store_to_another(strt, end):

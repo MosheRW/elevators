@@ -1,6 +1,6 @@
 import random
 from Elevator_2 import Elevator
-import Elevator_2
+import Elevator_2 as ele
 import Graphic_Manager as gm
 import pygame
 
@@ -21,18 +21,23 @@ class Elevators_Management_2:
        
                  
     def get(self):
-        return [self._the_elevators[i].get() for i in range(len(self._the_elevators))]
+        temp = [self._the_elevators[0].get()]
+        for i in range(1,len(self._the_elevators)):
+            temp += self._the_elevators[i].get()
+            print(self._the_elevators[i].get())
+        print(temp)
+        return temp
+        #return [self._the_elevators[i].get() for i in range(len(self._the_elevators))]
 
                 
     def get_an_elevator(self, floor):     
         elevat = self.__shortest_time_elevator(floor)         # the shortest queque
-        tup = self._the_elevators[elevat].get_the_elevator(floor)
+        tup = self._the_elevators[elevat].call(floor)
         return tup
          
    
     def __shortest_time_elevator(self, floor = 4) -> int:
         minimum = 0
-        
         
         for i in range(1,len(self._the_elevators)):
             if self.is_left_smaller(i,minimum, floor):
@@ -42,11 +47,13 @@ class Elevators_Management_2:
         
     def is_left_smaller(self, elevator_1, elevator_2, floor) -> bool:
             print(f"floor: {floor}")    
-            print(f"is_left_smaller: {self._the_elevators[elevator_1].to_get_the_elevator(floor)}, {self._the_elevators[elevator_2].to_get_the_elevator(floor)}")
+            print(f"is_left_smaller: {self._the_elevators[elevator_1].is_call_worthy(floor)}, {self._the_elevators[elevator_2].is_call_worthy(floor)}")
         
-            if self._the_elevators[elevator_1].to_get_the_elevator(floor)[0] < self._the_elevators[elevator_2].to_get_the_elevator(floor)[0]:
+           # if self._the_elevators[elevator_1].to_get_the_elevator(floor)[0] < self._the_elevators[elevator_2].to_get_the_elevator(floor)[0]:
+            if self._the_elevators[elevator_1].is_call_worthy(floor)[0] < self._the_elevators[elevator_2].is_call_worthy(floor)[0]:
                 return True
-            elif self._the_elevators[elevator_1].to_get_the_elevator(floor)[0] == self._the_elevators[elevator_2].to_get_the_elevator(floor)[0] and  self._the_elevators[elevator_1].to_get_the_elevator(floor)[1] < self._the_elevators[elevator_2].to_get_the_elevator(floor)[1]:
+           # elif self._the_elevators[elevator_1].to_get_the_elevator(floor)[0] == self._the_elevators[elevator_2].to_get_the_elevator(floor)[0] and  self._the_elevators[elevator_1].to_get_the_elevator(floor)[1] < self._the_elevators[elevator_2].to_get_the_elevator(floor)[1]:
+            elif self._the_elevators[elevator_1].is_call_worthy(floor)[0] == self._the_elevators[elevator_2].is_call_worthy(floor)[0] and  self._the_elevators[elevator_1].is_call_worthy(floor)[1] < self._the_elevators[elevator_2].is_call_worthy(floor)[1]:
                 return True 
             
             return False
@@ -63,15 +70,22 @@ class Elevators_Management_2:
 
 
 #----------------------------------------------             
+    def pack(self, screen):
+        for i in range(len(self._the_elevators)):
+            #screen.blit(elevators_pac[i][0],(elevators_pac[i][1][0],gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]))
+            screen.blit(self._the_elevators[i].get_img(),(self._the_elevators[i].get_position()[0],gm.WINDOW_SIZE[1] - self._the_elevators[i].get_position()[1]))
+
 def pack(elevators_pac, screen):
-    for i in range(len(elevators_pac)):
-        screen.blit(elevators_pac[i][0],(elevators_pac[i][1][0],gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]))
+    pass
+    #for i in range(len(elevators_pac)):
+        #screen.blit(elevators_pac[i][0],(elevators_pac[i][1][0],gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]))
+      #  screen.blit(self._the_elevators[i].get_img(),(elevators_pac[i][1][0],gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]))
 
 
 def test():
     pygame.init
     screen = gm.get_screen()
-    e = Elevators_Management()
+    e = Elevators_Management_2()
     
     tes = [random.randint(2,10) for _ in range(10)]
     tes_i = 0
@@ -105,7 +119,7 @@ def test():
             screen.set_colorkey()
             
             e.update()
-            pack(e.get(),screen)
+            e.pack(screen)
             
             pygame.display.flip()          
             
