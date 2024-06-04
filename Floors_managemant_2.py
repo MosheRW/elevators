@@ -35,7 +35,11 @@ class Floors_managment:
         
 
     def who_clicked(self, location_of_the_click):
-        pass
+        for i in range(len(self._the_floors)):
+            if self._the_floors[i].is_clicked(location_of_the_click):
+                return i
+        return -1
+        
         #return index of the floor
     
 

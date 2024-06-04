@@ -13,7 +13,7 @@ def get_init_position(serial, first_floor_is = 0):
 
          
 def convert(position):
-    return (position[0], position[1] - gm.WINDOW_SIZE[1])
+    return (position[0], gm.WINDOW_SIZE[1] - position[1] )
 
 class Floor_2:
     
@@ -160,8 +160,10 @@ class Floor_2:
 
     def is_clicked(self, m_position):
         m_position = convert(m_position)
-        #print(f"m_position[0] >= self.get_position()[0] and m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])     and     m_position[1] >= self.get_position()[1] and m_position[1] <= (self.get_position()[0] + gm.FLOOR_SIZE[1]):")
-        if m_position[0] >= self.get_position()[0] and m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])     and     m_position[1] >= self.get_position()[1] and m_position[1] <= (self.get_position()[0] + gm.FLOOR_SIZE[1]):
+        print(m_position)
+        print(f"{m_position[0] >= self.get_position()[0]}, {m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])}, {m_position[1] >= self.get_position()[1]}, {m_position[1] <= (self.get_position()[0] + gm.FLOOR_SIZE[1])}")
+        print(f"{self.get_position()[0]}, {(self.get_position()[0] + gm.FLOOR_SIZE[0])}, {self.get_position()[1]}, {(self.get_position()[0] + gm.FLOOR_SIZE[1])}")
+        if m_position[0] >= self.get_position()[0] and m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])     and     m_position[1] >= self.get_position()[1] and m_position[1] >= (self.get_position()[0] + gm.FLOOR_SIZE[1]):
             return True
         
         return False
@@ -179,4 +181,4 @@ class Floor_2:
 fl = Floor_2(0)
 print(fl.get_position())
 print(fl.is_clicked((15,15)))
-"""s
+"""

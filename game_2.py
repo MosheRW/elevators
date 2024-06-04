@@ -135,17 +135,35 @@ class Game:
             
 
               for event in pygame.event.get():
+                  if pygame.mouse.get_pressed()[0]:
+                    pos = pygame.mouse.get_pos()
+                    print(f"pos: {pos}")
+                    floor =  self._building.who_clicked(pos)
+                    print(floor)
+                    if floor != -1:
+                             self._building.get_elevator(floor)
                    
                   
-                   if event.type == pygame.KEYDOWN:
+
+                  if event.type == pygame.KEYDOWN:
                         key = pygame.key.get_pressed()
-                        
+                        #kek = pygame
                         if key[pygame.K_ESCAPE]:
                             running = False                     
                             
                         floor =  self.get_floor(key)[0]
+                        
+                        """     
+                        if key[pygame.MOUSEBUTTONDOWN]:
+                            pos = pygame.mouse.get_pos()
+                            print(f"pos: {pos}")
+                            floor =  self._building.who_clicked(pos)
+                            """
                         if floor != -1:
                              self._building.get_elevator(floor)
+                             
+                   #if event.type == pygame.MOUSEBUTTONUP:
+                       
                                                
                             
                             

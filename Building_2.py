@@ -44,6 +44,8 @@ class Building:
     def get(self):
         return [self._floors_mange.get(), self._elevator_mange.get()]
     
+    def who_clicked(self, location_of_the_click):
+        return self._floors_mange.who_clicked(location_of_the_click)
     def __str__(self):
          return f'floor_manger: {self._floors_mange}\nelevator_mange: {self._elevator_mange}'
     

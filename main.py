@@ -61,6 +61,8 @@ while running:
         if key[pygame.K_RETURN]:
             screen.fill("white")
             
+       # if key[pygame.MOUSEBUTTONUP]:
+        #    floor = 
             #img_1 = pygame.transform.scale(img_1, gm.ELEVATOR_SIZE)
             #img_2 = pygame.transform.scale(img_2, gm.FLOOR_SIZE)
             
