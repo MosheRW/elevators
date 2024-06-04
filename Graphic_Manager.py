@@ -9,9 +9,11 @@ FLOOR_SIZE = (160,60)
 #SPACE = 5
 SPACE = 0
 ELEVATOR_PIC_FILE = 'resources\elv.png'
+ELEVATOR_GREEN_PIC_FILE = 'resources\green-elv.png'
 FLOOR_PIC_FILE = 'resources\wall.jpg'
 FRAN_RATE = 60
 PACE = 2
+FRAMES_TO_CROSS_A_FLOOR = int(TIME_TRAVEL_BETWEEN_FLOORS * FRAN_RATE)
 
 
 screenz = pygame.display.set_mode((1280, 720))

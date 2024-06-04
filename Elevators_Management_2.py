@@ -4,7 +4,8 @@ import Elevator_2 as ele
 import Graphic_Manager as gm
 import pygame
 
-from Timer_2 import Timer_2
+from Timer_2 import Timer_2 
+import Timer_2 as timer
 
 
 class Elevators_Management_2:
@@ -13,7 +14,7 @@ class Elevators_Management_2:
     def __init__(self, elevators = 12):
         self.__num_of_elevators = elevators
   
-        self._the_elevators = [Elevator(i,0) for i in range(self.__num_of_elevators + 1)]
+        self._the_elevators = [Elevator(i,0) for i in range(self.__num_of_elevators)]
         
 
     def init(self):
@@ -26,14 +27,6 @@ class Elevators_Management_2:
        
                     
     def get(self):
-        """
-        temp = [self._the_elevators[0].get()]
-        for i in range(1,len(self._the_elevators)):
-            temp += self._the_elevators[i].get()
-            print(self._the_elevators[i].get())
-        print(temp)
-        return temp
-        """    
         return [self._the_elevators[i].get() for i in range(len(self._the_elevators))]
 
         
@@ -41,8 +34,10 @@ class Elevators_Management_2:
         elevat = self.__shortest_time_elevator(floor)         # the shortest queque
         print(f"elevator num: {elevat}")
         tup = self._the_elevators[elevat].call(floor)
-        return tup
+        print(f"Elevator_managemant.get_an_elevator.tup: {tup}")
+        #return timer.calculate(tup[0], tup[1] - 30)
         #return self._the_elevators[elevat].call(floor)
+        return tup
          
    
     def __shortest_time_elevator(self, floor = 4) -> int:

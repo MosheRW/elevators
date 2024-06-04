@@ -35,19 +35,25 @@ class Timer_2:
         self.update_is_running()
     
     def update(self):
-        self.__parts -= 1
+        if self.is_running():
+            self.__parts -= 1
         
-        if self.__parts <= 0:
-            self.__seconds -= 1
-            self.__parts = gm.FRAN_RATE
+            if self.__parts <= 0:
+                self.__seconds -= 1
+                self.__parts = gm.FRAN_RATE - 1
             
             if self.__seconds < 0:
-                self.__seconds = 0
-                self.__parts = 0
-                self.__is_running = False
-
+                self.set_nulify()
+                    
+        assert self.__parts <  gm.FRAN_RATE, "ERROR. too big"
     def get(self):
         return self.__seconds,  self.__parts
+
+    def  set_nulify(self):
+        self.__seconds = 0
+        self.__parts = 0
+        self.__is_running = False
+
 
     def is_running(self):
         return self.__is_running
@@ -103,8 +109,18 @@ def get_with_addition(self, sec, parts = 0):
     return calculate(temp_sec, temp_parts)
 
 def calculate(sec = 0, parts = 0):
+    if  parts < 0:
+        sec -= abs(parts) // gm.FRAN_RATE
+        parts = gm.FRAN_RATE - (abs(parts) % gm.FRAN_RATE)
+        
+        return  int(sec), int(parts)
+        
+
     sec += parts // int(gm.FRAN_RATE)# * gm.WAIT_IN_FLOOR))
     parts = parts % int(gm.FRAN_RATE)# * gm.WAIT_IN_FLOOR))
+   
     
     return int(sec), int(parts)
     
+
+

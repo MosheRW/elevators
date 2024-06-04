@@ -8,7 +8,7 @@ import Graphic_Manager as gm
 class Game:
     screen = gm.get_screen()
     
-    def __init__(self, floors = 10, elevators = 12):
+    def __init__(self, floors = 10, elevators = 1):
         self.__num_of_floors = floors
         self.__num_of_elevators = elevators
         
@@ -113,7 +113,7 @@ class Game:
                  #print(self._building, end="\r")
                  pass
              
-             if count == 60: 
+             if count == gm.FRAN_RATE: 
                 count = 0
                 
              self._building.update()
@@ -121,7 +121,7 @@ class Game:
              
              pygame.display.flip()
              
-             self.__clock.tick(60)
+             self.__clock.tick(gm.FRAN_RATE)
         
         print(self._building)
 
@@ -136,28 +136,22 @@ class Game:
               for event in pygame.event.get():
                   
                    if event.type == pygame.KEYDOWN:
-                        #print("pressed") 
-                    
                         key = pygame.key.get_pressed()
-                    
-                    
-                 
+                        
                         if key[pygame.K_ESCAPE]:
-                            running = False 
-                    
-                        if key[pygame.K_RETURN]:
-                           # print("enter")
-                            floor =  random.randint(0,self.__num_of_floors)
-                            #print(f"floor: {floor}")
-                            self._building.get_elevator(floor)
+                            running = False                     
                             
-                                 
-              self._building.update()
-              #print(self._building, end="\r")
+                        floor =  self.get_floor(key)[0]
+                        if floor != -1:
+                             self._building.get_elevator(floor)
+                                               
+                            
+                            
+              self.update()                                               
               self.display()
-              #self.screen.blit(gm.text)
+              
               pygame.display.flip()
-              clock.tick(30)
+              clock.tick(30) #gm.FRAN_RATE)
 
     def get_floor(self, key):
          if key[pygame.K_KP0]:
@@ -180,9 +174,11 @@ class Game:
              return 8,True
          elif key[pygame.K_KP9]:
              return 9,True
-         
+         elif key[pygame.K_RETURN]:
+             return random.randint(0,self.__num_of_floors), True
          return -1,False
 
+ 
 
     def get_ele(self,i):
         self._building.get_elevator(i)
