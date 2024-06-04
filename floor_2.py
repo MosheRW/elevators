@@ -160,13 +160,28 @@ class Floor_2:
 
     def is_clicked(self, m_position):
         m_position = convert(m_position)
-        print(m_position)
+        print(f"\n\n{self.get_floor()}")
+        print(f"m_position: {m_position}")
+        
+        
+        top_x, top_y = self.get_position()
+        bottom_x, bottom_y = gm.FLOOR_SIZE[0], self.get_position()[1] - gm.FLOOR_SIZE[1]
+        
+        print(f"top: ({top_x}, {top_y}), bottom: ({bottom_x}, {bottom_y})")
+
+        if m_position[0] <= top_x   and m_position[0] >= bottom_x:
+           if m_position[1] <= top_y   and m_position[1] >= bottom_y:
+            return True
+        return False
+            
+        """            
         print(f"{m_position[0] >= self.get_position()[0]}, {m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])}, {m_position[1] >= self.get_position()[1]}, {m_position[1] <= (self.get_position()[0] + gm.FLOOR_SIZE[1])}")
         print(f"{self.get_position()[0]}, {(self.get_position()[0] + gm.FLOOR_SIZE[0])}, {self.get_position()[1]}, {(self.get_position()[0] + gm.FLOOR_SIZE[1])}")
         if m_position[0] >= self.get_position()[0] and m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])     and     m_position[1] >= self.get_position()[1] and m_position[1] >= (self.get_position()[0] + gm.FLOOR_SIZE[1]):
             return True
         
         return False
+            """    
         
     
 #-------------------------------------------------------------
