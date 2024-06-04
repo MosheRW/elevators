@@ -133,7 +133,9 @@ class Game:
         
         while running:
             
+
               for event in pygame.event.get():
+                   
                   
                    if event.type == pygame.KEYDOWN:
                         key = pygame.key.get_pressed()
@@ -151,6 +153,7 @@ class Game:
               self.display()
               
               pygame.display.flip()
+              
               clock.tick(30) #gm.FRAN_RATE)
 
     def get_floor(self, key):

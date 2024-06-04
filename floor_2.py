@@ -41,8 +41,9 @@ class Floor_2:
     
 
     def get_elevator(self, time):        
-        print(f"->  Floor_2.get_elevator.time: {time}   <-")
+        print(f"-> 1 -> Floor_2.get_elevator.time: {time}   <-")
         self.set_timer(time)
+        print(f"-> 2 -> Floor_2.get_elevator.time: {time}   <-")
         self.set_status(states.WAITING)
 #----------------------------------------------------------------------------------
         
@@ -120,7 +121,7 @@ class Floor_2:
                 self.set_status(states.ELEVATOR_HERE)
                 self.set_timer(gm.WAIT_IN_FLOOR)
                 self.play_ding()
-                dBug =input("ariived on time? ")
+               # dBug =input("ariived on time? ")
                 
         elif self.get_status() == states.ELEVATOR_HERE: #case elevator is here
             if not self._timer.is_running():
@@ -129,6 +130,7 @@ class Floor_2:
     
     def update_timer(self):
         self._timer.update()
+        
     
     def update_img(self):                           #maybe need to implement another one, with state as inputs
         pass

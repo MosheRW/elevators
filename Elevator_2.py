@@ -132,6 +132,7 @@ class Elevator:
         if self.get_status() == ele_status.DOORS_OPEN:
             
             self.set_img(gm.ELEVATOR_GREEN_PIC_FILE)
+            
         else:
              self.set_img()
             
@@ -175,7 +176,7 @@ class Elevator:
     def is_got_to_place(self):
         return self.novment_counter >= self.novment_limit
     
-    def open_the_doors(self):
+    def open_the_doors(self):    
         self._time_to_end_status.set(gm.WAIT_IN_FLOOR)
         self.set_status(ele_status.DOORS_OPEN)
         self.set_floor(self._queque.pop(0))
@@ -251,9 +252,10 @@ class Elevator:
 def calculate_time_from_one_store_to_another(strt, end):
     print (f"{abs(strt - end)}, strt:{strt}, end:{end}")
     if abs(strt - end) % 2 == 0:
-        return  Timer_2.calculate(0,abs(strt - end) * gm.FRAMES_TO_CROSS_A_FLOOR + gm.FRAMES_TO_CROSS_A_FLOOR)
+        return  Timer_2.calculate(0,abs(strt - end) * gm.FRAMES_TO_CROSS_A_FLOOR) # + gm.FRAMES_TO_CROSS_A_FLOOR)
     else: 
-        return  Timer_2.calculate(0,abs(strt - end) * gm.FRAMES_TO_CROSS_A_FLOOR)
+        print("not even")
+        return  Timer_2.calculate(0,abs(strt - end) * gm.FRAMES_TO_CROSS_A_FLOOR) # + gm.FRAMES_TO_CROSS_A_FLOOR)
     """    
      if strt > end: 
            return Timer_2.calculate(0, (strt - end) * gm.FRAMES_TO_CROSS_A_FLOOR + gm.FRAMES_TO_CROSS_A_FLOOR)
