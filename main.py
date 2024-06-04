@@ -67,8 +67,10 @@ while running:
             screen.blit(img_1, (100,300))
             screen.blit(img_2, (0,0))
             
+            print("")
+            
             screen.blit(text,textRect)
-            pygame.mixer.music.play(-1)
+           # pygame.mixer.music.play(-1)
             
             
 

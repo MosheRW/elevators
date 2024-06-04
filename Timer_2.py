@@ -42,12 +42,12 @@ class Timer_2:
         
             if self.__parts <= 0:
                 self.__seconds -= 1
-                self.__parts = gm.FRAN_RATE - 1
+                self.__parts = gm.FRAN_RATE # - 1
             
             if self.__seconds < 0:
                 self.set_nulify()
                     
-        assert self.__parts <  gm.FRAN_RATE, "ERROR. too big"
+        assert self.__parts <=  gm.FRAN_RATE, "ERROR. too big"
     def get(self):
         return self.__seconds,  self.__parts
 

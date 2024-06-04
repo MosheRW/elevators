@@ -11,7 +11,9 @@ states = Enum('states', ['WAITING', 'ELEVATOR_HERE', 'STILL'])
 def get_init_position(serial, first_floor_is = 0):
      return (0, gm.FLOOR_SIZE[1] + (serial - first_floor_is) * (gm.ELEVATOR_SIZE[0]))
 
-
+         
+def convert(position):
+    return (position[0], position[1] - gm.WINDOW_SIZE[1])
 
 class Floor_2:
     
@@ -130,7 +132,8 @@ class Floor_2:
     
     def update_timer(self):
         self._timer.update()
-        
+        #if self.get_status() == states.WAITING:
+         #   print(self.get_timer())
     
     def update_img(self):                           #maybe need to implement another one, with state as inputs
         pass
@@ -153,10 +156,27 @@ class Floor_2:
         elif self.get_status() == states.WAITING:
             return f"{self.get_timer()} states.WAITING"
 
+
+
+    def is_clicked(self, m_position):
+        m_position = convert(m_position)
+        #print(f"m_position[0] >= self.get_position()[0] and m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])     and     m_position[1] >= self.get_position()[1] and m_position[1] <= (self.get_position()[0] + gm.FLOOR_SIZE[1]):")
+        if m_position[0] >= self.get_position()[0] and m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])     and     m_position[1] >= self.get_position()[1] and m_position[1] <= (self.get_position()[0] + gm.FLOOR_SIZE[1]):
+            return True
+        
+        return False
+        
+    
 #-------------------------------------------------------------
     def __str__ (self):
         return f'|floor: {self.get_floor()},  status: {self.get_status()}, timer: {self.get_timer()} |\n'
     
     def __repr__ (self):
        return f'|floor: {self.get_floor()},  status: {self.get_status()}, timer: {self.get_timer()} |\n'
-        
+
+
+"""
+fl = Floor_2(0)
+print(fl.get_position())
+print(fl.is_clicked((15,15)))
+"""s
