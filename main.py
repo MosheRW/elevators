@@ -37,7 +37,9 @@ pygame.mixer.init()
 pygame.mixer.music.load('ding.mp3')
 pygame.mixer.music.set_volume(0.7)
 pygame.mixer.music.play(-1)
-        
+shape = pygame.Rect(160,160, 20,20)
+#shape = screen.subsurface(shape)
+#shape.unlock()
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -70,8 +72,8 @@ while running:
             screen.blit(img_2, (0,0))
             
             print("")
-            
-            screen.blit(text,textRect)
+            pygame.draw.rect(screen,(0,0,0), shape)
+            #screen.blit(text,textRect)
            # pygame.mixer.music.play(-1)
             
             

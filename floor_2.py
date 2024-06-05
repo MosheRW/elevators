@@ -4,6 +4,7 @@ from Graphic_Manager import WAIT_IN_FLOOR, get_floors_boundries
 import Graphic_Manager as gm
 from Timer_2 import Timer_2
 import pygame
+from Button import Button
 
 
 states = Enum('states', ['WAITING', 'ELEVATOR_HERE', 'STILL'])
@@ -27,6 +28,11 @@ class Floor_2:
         
         self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()
         
+        self._button = Button(self._floor)
+        self._timer_text = Button(self._floor)
+        
+        
+        #the text hendlers could be unnecessary or need to be changed
         self.text = gm.font.render(self.textGenerator(),True,(0,0,0))
         self.text_rect = self.text.get_rect()
 
