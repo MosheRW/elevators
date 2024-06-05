@@ -28,8 +28,8 @@ class Floor_2:
         
         self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()
         
-        self._button = Button(self._floor)
-        self._timer_text = Button(self._floor)
+        self._button = Button(self.get_position(), str(self._floor), "yellow")
+        self._timer_text = Button(self.get_position(),"00:00","black")
         
         
         #the text hendlers could be unnecessary or need to be changed
@@ -40,6 +40,7 @@ class Floor_2:
         self._floor = floor
         self.set_status(states.STILL)
         self.set_position(get_init_position(floor))
+        self._timer_text.init(f"{self.get_timer()}")
         
 #---------------------------------------------------------------------------------
 
@@ -87,8 +88,8 @@ class Floor_2:
          return pygame.transform.scale(self.img, gm.FLOOR_SIZE)
     
     def get_text(self):
-        
-        return self.text, self.get_position()
+        return self._timer_text.get()
+        #return self.text, self.get_position()
         #return self.text,self.text_rect
     
 #-----------------------------------------------------------
@@ -109,9 +110,10 @@ class Floor_2:
          self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()
          
     def set_text(self):
-        self.text = gm.font.render(self.textGenerator(),True,(0,0,0))
+        self._timer_text = Button(self.get_position(),"00:00","black")
+        #self.text = gm.font.render(self.textGenerator(),True,(0,0,0))
        
-        self.text_rect = self.text.get_rect()
+        #self.text_rect = self.text.get_rect()
         
         #self.text_rect.topleft(self.get_position())
         
@@ -134,7 +136,7 @@ class Floor_2:
         elif self.get_status() == states.ELEVATOR_HERE: #case elevator is here
             if not self._timer.is_running():
                 self.set_status(states.STILL)
-
+                    
     
     def update_timer(self):
         self._timer.update()
@@ -146,7 +148,8 @@ class Floor_2:
 
 
     def update_text(self):
-        self.set_text()
+        self._timer_text.update(str(self.get_timer()),self.get_status())
+        #self.set_text()
         
     def play_ding(self):
         pygame.mixer.music.load("resources\ding.mp3")

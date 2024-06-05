@@ -39,16 +39,16 @@ class Button:
 		
 	
 	def get(self):
-		return self.get_text(), self.get_shape(), self._getrect()
+		return self.get_text(), self.get_shape(), self.getrect()
 	
 	def update(self, new_text, new_status):		
-		self.set_status()
+		self.set_status(new_status)
 		self.set_text(new_text)
 	
 #----------------------------------
 	def set_shape(self):
 		self._shape = pygame.Surface((self.getrect().w, self.getrect().h))
-		self._shape.fill("purple")
+		self._shape.fill("gray")
 		#self._shape = self._text.get_rect()
 		#self._shape.center = (gm.WINDOW_SIZE[0] //2, gm.WINDOW_SIZE[1] //2 )
 		

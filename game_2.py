@@ -55,6 +55,8 @@ class Game:
     def pack_floors_to_desplay(self, floors_pac):
         for i in range(len(floors_pac)):
             self.screen.blit(floors_pac[i][0],(floors_pac[i][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][1]))
+           # self.screen.blit(floors_pac[i][2][0],(floors_pac[i][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][1]))
+            self.screen.blit(floors_pac[i][2][1],(floors_pac[i][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][1]))
             self.screen.blit(floors_pac[i][2][0],(floors_pac[i][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][1]))
             
     def pack_elevators_to_desplay(self, elevators_pac):
