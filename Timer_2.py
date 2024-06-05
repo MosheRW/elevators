@@ -98,7 +98,9 @@ class Timer_2:
                  return calculate(sec, parts)
 
     def __str__(self):
-        return f"sec: {self.get()[0]}, parts: {self.get()[1]}, is running: {self.is_running()}\n"
+        return f"{self.get()[0]}:{self.get()[1]}"
+    
+        #return f"sec: {self.get()[0]}, parts: {self.get()[1]}, is running: {self.is_running()}\n"
       
     def __repr__(self):
         return f"sec: {self.get()[0]}, parts: {self.get()[1]}, is running: {self.is_running()}\n"

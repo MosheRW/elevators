@@ -32,14 +32,14 @@ class Button:
 #-----------------------------------	
 	def set(self, location, text = "00:00", color = "white", status = states.STILL):
 		self.set_position(location)
-		self.set_backround_color(color)
 		self.set_text(text)
 		self.set_shape()
+		self.set_backround_color(color)
 		self.set_status(status)
 		
 	
 	def get(self):
-		return self.get_text(), self.get_shape(), self.getrect()
+		return self.get_text(), self.get_shape(), self.get_position()
 	
 	def update(self, new_text, new_status):		
 		self.set_status(new_status)
@@ -48,7 +48,8 @@ class Button:
 #----------------------------------
 	def set_shape(self):
 		self._shape = pygame.Surface((self.getrect().w, self.getrect().h))
-		self._shape.fill("gray")
+		self.set_backround_color(self._backround_color)
+		#self._shape.fill("gray")
 		#self._shape = self._text.get_rect()
 		#self._shape.center = (gm.WINDOW_SIZE[0] //2, gm.WINDOW_SIZE[1] //2 )
 		
@@ -65,6 +66,10 @@ class Button:
 	
 	def set_position(self, new_position):
 		self.__position = new_position
+		
+	def set_backround_color(self, new_color):
+		self._shape.fill(new_color)
+		self._shape.fill(new_color)
 	
 #----------------------------------
 #	

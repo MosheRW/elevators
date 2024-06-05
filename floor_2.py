@@ -40,7 +40,10 @@ class Floor_2:
         self._floor = floor
         self.set_status(states.STILL)
         self.set_position(get_init_position(floor))
-        self._timer_text.init(f"{self.get_timer()}")
+        self._button.set(self.calculate_button_pos(),str(self.get_floor()),"gray")
+        self._timer_text.set(self.calculate_timer_pos(), "00:00", "gray")
+        #self._timer_text.init(f"{self.get_timer()}")
+        
         
 #---------------------------------------------------------------------------------
 
@@ -57,13 +60,14 @@ class Floor_2:
 #----------------------------------------------------------------------------------
         
     def get(self):    
-        return (self.get_img(), self.get_position(), self.get_text())
+        return (self.get_img(), self.get_position(), self.get_text(), self.get_button())
     
     def update(self):
         #self.update_text()
         self.update_timer()
         self.update_status()
         self.update_text()
+        self.update_button()
         
   
 #----------------------------------------------------------
@@ -92,6 +96,9 @@ class Floor_2:
         #return self.text, self.get_position()
         #return self.text,self.text_rect
     
+    def get_button(self):
+        return self._button.get()
+        
 #-----------------------------------------------------------
 
     def set_position(self,new_position):
@@ -110,7 +117,7 @@ class Floor_2:
          self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()
          
     def set_text(self):
-        self._timer_text = Button(self.get_position(),"00:00","black")
+        self._timer_text = Button(self.calculate_timer_pos(),"00:00","black")
         #self.text = gm.font.render(self.textGenerator(),True,(0,0,0))
        
         #self.text_rect = self.text.get_rect()
@@ -135,8 +142,7 @@ class Floor_2:
                 
         elif self.get_status() == states.ELEVATOR_HERE: #case elevator is here
             if not self._timer.is_running():
-                self.set_status(states.STILL)
-                    
+                self.set_status(states.STILL)                    
     
     def update_timer(self):
         self._timer.update()
@@ -146,11 +152,15 @@ class Floor_2:
     def update_img(self):                           #maybe need to implement another one, with state as inputs
         pass
 
-
     def update_text(self):
-        self._timer_text.update(str(self.get_timer()),self.get_status())
+        self._timer_text.update(str(self._timer),self.get_status())
         #self.set_text()
+
+    def update_button(self):
+        self._button.update(str(self.get_floor()),self.get_status())
         
+#----------------------------------------------------------
+#        
     def play_ding(self):
         pygame.mixer.music.load("resources\ding.mp3")
         pygame.mixer.music.play()
@@ -165,13 +175,10 @@ class Floor_2:
         elif self.get_status() == states.WAITING:
             return f"{self.get_timer()} states.WAITING"
 
-
     def is_clicked(self, m_position):
         m_position = convert(m_position)
         print(f"\n\n{self.get_floor()}")
         print(f"m_position: {m_position}")
-        
-        
         top_x, top_y = self.get_position()
         bottom_x, bottom_y = gm.FLOOR_SIZE[0], self.get_position()[1] - gm.FLOOR_SIZE[1]
         
@@ -181,6 +188,19 @@ class Floor_2:
            if m_position[1] <= top_y   and m_position[1] >= bottom_y:
             return True
         return False
+        
+        
+
+    def calculate_button_pos(self):
+        #temp = self.get_position()
+        #temp = (temp[0] + 20, temp[1] - 20)
+        return ( self.get_position()[0] + 20, self.get_position()[1] - 20)
+               
+
+    def calculate_timer_pos(self):
+        #temp = self.get_position()
+        #temp = (temp[0] + 20, temp[1] - 20)
+        return ( self.get_position()[0] + gm.FLOOR_SIZE[0] - (20 + self._timer_text.getrect().right),   self.get_position()[1] - 20)
             
         """            
         print(f"{m_position[0] >= self.get_position()[0]}, {m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])}, {m_position[1] >= self.get_position()[1]}, {m_position[1] <= (self.get_position()[0] + gm.FLOOR_SIZE[1])}")
