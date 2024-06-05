@@ -3,6 +3,7 @@ import os
 import pygame
 import Graphic_Manager as gm
 
+import Button
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 screen.fill("white")
@@ -40,6 +41,9 @@ pygame.mixer.music.play(-1)
 shape = pygame.Rect(160,160, 20,20)
 #shape = screen.subsurface(shape)
 #shape.unlock()
+
+#bu = Button.Button(0,(160,160), 'mee')
+#bu.init("hello")
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -68,11 +72,13 @@ while running:
             #img_1 = pygame.transform.scale(img_1, gm.ELEVATOR_SIZE)
             #img_2 = pygame.transform.scale(img_2, gm.FLOOR_SIZE)
             
-            screen.blit(img_1, (100,300))
-            screen.blit(img_2, (0,0))
+            
+            #screen.blit(img_1, (100,300))
+            #screen.blit(img_2, (0,0))
+            #screen.blit(bu.get_text(), bu.getrect())
             
             print("")
-            pygame.draw.rect(screen,(0,0,0), shape)
+            #pygame.draw.rect(screen,(0,0,0), shape)
             #screen.blit(text,textRect)
            # pygame.mixer.music.play(-1)
             

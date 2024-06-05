@@ -9,13 +9,20 @@ def get_init_position(floor, floor_position):
 	pass
 
 class Button:
-	def __init__(self, floor ,location, text):
-		self.__floor = floor
+	def __init__(self ,location, text = "00:00", color = "white"):
+		
 		self.__position = location
-		self._shape = None
-		self._text = None
-		self._the_text_as_str = "00:00"
 		self._status = states.STILL
+		
+		self._backround_color = color
+		
+		self._the_text_as_str = text
+		#self._text = gm.font.render(self._the_text_as_str,True,self.calculate_color())
+		self._text = gm.font.render("hello",True,self.calculate_color())
+		
+		self._shape = pygame.Surface((self.getrect().w, self.getrect().h))
+		self._shape.fill(self._backround_color)
+		
 		
 
 	def init(self, new_text):
@@ -23,11 +30,16 @@ class Button:
 		self.set_shape()
 
 #-----------------------------------	
-	def set(self, floor, location):
-		pass
+	def set(self, location, text = "00:00", color = "white", status = states.STILL):
+		self.set_position(location)
+		self.set_backround_color(color)
+		self.set_text(text)
+		self.set_shape()
+		self.set_status(status)
+		
 	
 	def get(self):
-		return self.get_text(), self.get_shape()
+		return self.get_text(), self.get_shape(), self._getrect()
 	
 	def update(self, new_text, new_status):		
 		self.set_status()
@@ -35,7 +47,12 @@ class Button:
 	
 #----------------------------------
 	def set_shape(self):
-		self._shape = self._text.get_rect()
+		self._shape = pygame.Surface((self.getrect().w, self.getrect().h))
+		self._shape.fill("purple")
+		#self._shape = self._text.get_rect()
+		#self._shape.center = (gm.WINDOW_SIZE[0] //2, gm.WINDOW_SIZE[1] //2 )
+		
+		#self._shape.x, self._shape.y = self.get_position()
 
 	def set_text(self, new_text):
 		self._the_text_as_str = new_text
@@ -52,14 +69,20 @@ class Button:
 #----------------------------------
 #	
 	def get_shape(self):
-		return self._shape.copy,  self.calculate_shape_position()
+		return self._shape
+	
 	
 	def get_text(self):
-		return self._text.copy, self.calculate_text_position()
+		return self._text
+	
+	def getrect(self):
+		return self._text.get_rect()
 	
 	def get_position(self):
 		return self.__position
 
+	def get_state(self):
+		return self._status
 #----------------------------------
 #	
 	def update_shape(self):				#<--- Probably unnecessary
@@ -73,7 +96,7 @@ class Button:
 		pass
 	
 	def build_the_text(self):
-		self._text = gm.font.render(self._text,True,self.calculate_color())
+		self._text = gm.font.render(self._the_text_as_str,True,self.calculate_color())
 #----------------------------------
 	def is_clicked(self)	 -> bool:
 		pass
@@ -114,12 +137,31 @@ class Button:
 
 #--------------------------------------------------------------------------
 
-bu = Button(0, (160,160))		
+"""
+pygame.init()
+"""
+
+"""
+bu = Button(0, (160,160), "57")		
 
 bu.init("56:71")
 
 screen = gm.get_screen()
+clock = pygame.time.Clock()
 
-screen.blit(bu.get_text()[0], bu.get_text()[1])
+screen.fill("white")
+#screen.blit(bu.get_text()[0], bu.get_shape()[0])
 while True:
+	screen.fill("white")
+	screen.fill("black")
+	screen.fill("white")
+	screen.blit(bu.get_shape(),(160,160))
+	screen.blit(bu.get_text(), (160,160))
+	
+	#screen.draw.
+	#screen.blit(bu.get_shape()[0], bu.get_shape()[1])
+	#screen.blit(bu.get_shape()[0],  bu.get_shape()[1][0]) #, bu.get_shape()[1][1])
 	pygame.display.flip()
+
+	clock.tick(60)
+	"""
