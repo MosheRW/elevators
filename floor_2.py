@@ -166,7 +166,6 @@ class Floor_2:
             return f"{self.get_timer()} states.WAITING"
 
 
-
     def is_clicked(self, m_position):
         m_position = convert(m_position)
         print(f"\n\n{self.get_floor()}")
