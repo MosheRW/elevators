@@ -139,7 +139,6 @@ class Button:
 		#green = "green"
 		
 		if self.get_state() == states.WAITING:	
-			print("green")
 			return green
 		else:
 			return black

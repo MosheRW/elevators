@@ -31,6 +31,7 @@ class Elevator:
         
         self._time_to_end_status = Timer_2.Timer_2()
 
+        self.__destination = 0
 
 #--------------------------------------------------------------------------
 #        
@@ -44,19 +45,17 @@ class Elevator:
 
     def is_call_worthy(self, floor):
         if(len(self._queque) > 0):
-           # print(f"Elevator.is_call_worthy: _queque not empty ")
-            #return self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
-            temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
+              temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
         else:
-             #print(f"Elevator.is_call_worthy: _queque is empty ") 
-             #return self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._floor,floor))
              temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._floor,floor))
+             #temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self.__destination,floor))
              
-        print(f"{self._serial} Elevator.is_call_worthy.temp: {temp}")
+        #print(f"{self._serial} Elevator.is_call_worthy.temp: {temp}")
         return temp
 
+
     def call(self, floor):
-        print("\n\n" + str(self.get_status()) + "\n")
+        #print("\n\n" + str(self.get_status()) + "\n")
         if len(self._queque) > 0:
             if self._queque[-1] == floor:
                 return  self.get_time().get()
@@ -65,10 +64,12 @@ class Elevator:
             if self._floor == floor:
                 return   self.get_time().get() #(0,0)
         
-
+          
+        #---------#
+            
         temp = self.is_call_worthy(floor) 
         self._queque.append(floor)
-        
+   
        # if  self.get_status() != ele_status.DOORS_OPEN:
         if  self.get_status() == ele_status.STILL:
              self.set_status(ele_status.INVITED)
@@ -79,7 +80,7 @@ class Elevator:
                 """     
         #temp = self.is_call_worthy(floor) 
         
-        print(F"call.temp: {temp}")
+        ##print(F"call.temp: {temp}")
      
         self._time_until_clear.add(temp[0], temp[1])
         temp2 = self.get_time().get()
@@ -90,10 +91,12 @@ class Elevator:
         assert temp != (0,0), "ERROR"
         
         print(f"Elevator_2.call.temp: {temp}")
-        print(f"Elevator_2.call.temp: {temp2}")
+        print(f"Elevator_2.call.temp2: {temp2}")
         
+        if self.get_status() == ele_status.STILL:
+            return temp2
         #return  self._time_until_clear.get()
-        return  temp2
+        return  temp
         
        
     def get_time(self):
@@ -152,7 +155,7 @@ class Elevator:
         
     def update_big_timer(self):
         self._time_until_clear.update()
-        #print(self._time_until_clear)
+        ##print(self._time_until_clear)
     
     def update_small_timer(self):
         self._time_to_end_status.update()
@@ -212,6 +215,7 @@ class Elevator:
                 #self.set_status(self.calculate_movment_direction(self._floor))
                 self.set_status(self.calculate_movment_direction(self._queque[0]))
                 self.update_novment_limit(self._queque[0])
+                self.__destination = self._queque[0]
             else:
                 self.set_status(ele_status.STILL)
         
@@ -224,11 +228,11 @@ class Elevator:
     def calculate_movment_direction(self, end):
         return calculate_movment_direction(self._floor,end)
     """
-        print (f"calculate movment: {self.get_status()}")
+        #print (f"calculate movment: {self.get_status()}")
         
         temp = calculate_movment_direction(self._floor,end)
         assert type(temp) == ele_status, "ERROR"
-        print(temp)
+        #print(temp)
         return temp #calculate_movment_direction(self._floor,end)
         """
         
@@ -250,11 +254,11 @@ class Elevator:
     
 
 def calculate_time_from_one_store_to_another(strt, end):
-    print (f"{abs(strt - end)}, strt:{strt}, end:{end}")
+    #print (f"{abs(strt - end)}, strt:{strt}, end:{end}")
     if abs(strt - end) % 2 == 0:
         return  Timer_2.calculate(0,abs(strt - end) * gm.FRAMES_TO_CROSS_A_FLOOR) # + gm.FRAMES_TO_CROSS_A_FLOOR)
     else: 
-        print("not even")
+        #print("not even")
         return  Timer_2.calculate(0,abs(strt - end) * gm.FRAMES_TO_CROSS_A_FLOOR) # + gm.FRAMES_TO_CROSS_A_FLOOR)
     """    
      if strt > end: 
@@ -262,7 +266,7 @@ def calculate_time_from_one_store_to_another(strt, end):
      elif strt < end:
            return Timer_2.calculate(0, (end - strt) *  gm.FRAMES_TO_CROSS_A_FLOOR + gm.FRAMES_TO_CROSS_A_FLOOR)  #gm.FLOOR_SIZE[1]/ gm.PACE)
      else:
-         print("Elevator.calculate_time_from_one_store_to_another: strt == end")
+         #print("Elevator.calculate_time_from_one_store_to_another: strt == end")
          (0,0)                  
              """
 def calculate_novment_limit(strt, end):
@@ -298,9 +302,9 @@ def test()        :
     
     floor = 4
     
-    print(ele)
+    #print(ele)
 
-    print(ele.is_call_worthy(floor))
+    #print(ele.is_call_worthy(floor))
     
     count = 0
     
@@ -324,10 +328,10 @@ def test()        :
          pygame.display.flip()
     
          clock.tick(60)  # limits FPS to 60
-   # print(ele.is_call_worthy(5))
+   # #print(ele.is_call_worthy(5))
 
-    print(ele)
+    #print(ele)
 
 #test()
 
-#print(calculate_time_from_one_store_to_another(0,5) )
+##print(calculate_time_from_one_store_to_another(0,5) )
