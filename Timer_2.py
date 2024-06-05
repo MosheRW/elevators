@@ -25,7 +25,7 @@ class Timer_2:
     def add(self, seconds, parts = 0):
         self.__seconds += seconds
         self.__parts += parts
-        
+
         self.calculate()
         self.update_is_running()
     

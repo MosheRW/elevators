@@ -81,11 +81,11 @@ class Elevator:
         #temp = self.is_call_worthy(floor) 
         
         ##print(F"call.temp: {temp}")
-     
-        self._time_until_clear.add(temp[0], temp[1])
-        temp2 = self.get_time().get()
+        self._time_until_clear.set(temp)     
+        #self._time_until_clear.add(temp[0], temp[1])
+       
         self._time_until_clear.add(2)
-        
+        temp2 = self.get_time().get() 
         #temp = self._time_until_clear.get()
         assert type(temp) == tuple, "ERROR"
         assert temp != (0,0), "ERROR"
@@ -93,10 +93,10 @@ class Elevator:
         print(f"Elevator_2.call.temp: {temp}")
         print(f"Elevator_2.call.temp2: {temp2}")
         
-        if self.get_status() == ele_status.STILL:
-            return temp2
+        #if self.get_status() == ele_status.STILL:
+         #   return temp2
         #return  self._time_until_clear.get()
-        return  temp
+        return  temp2
         
        
     def get_time(self):
