@@ -97,8 +97,21 @@ class Timer_2:
              else:        
                  return calculate(sec, parts)
 
+
     def __str__(self):
-        return f"{self.get()[0]}:{self.get()[1]}"
+        if self.get()[0] >=10:
+            sec = f"{self.get()[0]}"
+        else:
+             sec = f"0{self.get()[0]}"
+             
+        if self.get()[1] >= 10:
+            parts =  f"{self.get()[1]}"
+        else:
+             parts = f"0{self.get()[1]}"
+        
+        return f"{sec}:{parts}"
+
+        #return f"{self.get()[0]}:{self.get()[1]}"
     
         #return f"sec: {self.get()[0]}, parts: {self.get()[1]}, is running: {self.is_running()}\n"
       

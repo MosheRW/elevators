@@ -5,9 +5,10 @@ import Graphic_Manager as gm
 from Timer_2 import Timer_2
 import pygame
 from Button import Button
+from Button import states
 
 
-states = Enum('states', ['WAITING', 'ELEVATOR_HERE', 'STILL'])
+#states = Enum('states', ['WAITING', 'ELEVATOR_HERE', 'STILL'])
 
 def get_init_position(serial, first_floor_is = 0):
      return (0, gm.FLOOR_SIZE[1] + (serial - first_floor_is) * (gm.ELEVATOR_SIZE[0]))
@@ -30,6 +31,7 @@ class Floor_2:
         
         self._button = Button(self.get_position(), str(self._floor), "yellow")
         self._timer_text = Button(self.get_position(),"00:00","black")
+        self.__empty = Button(self.get_position(),"00:00","black",  False)
         
         
         #the text hendlers could be unnecessary or need to be changed
@@ -40,8 +42,9 @@ class Floor_2:
         self._floor = floor
         self.set_status(states.STILL)
         self.set_position(get_init_position(floor))
-        self._button.set(self.calculate_button_pos(),str(self.get_floor()),"gray")
+        self._button.set(self.calculate_button_pos(),str(self.get_floor()),(255,255,255))# ") #(149, 201, 232))
         self._timer_text.set(self.calculate_timer_pos(), "00:00", "gray")
+        
         #self._timer_text.init(f"{self.get_timer()}")
         
         
@@ -92,7 +95,9 @@ class Floor_2:
          return pygame.transform.scale(self.img, gm.FLOOR_SIZE)
     
     def get_text(self):
-        return self._timer_text.get()
+        if self.get_status() == states.WAITING:
+            return self._timer_text.get()
+        return self.__empty.get()
         #return self.text, self.get_position()
         #return self.text,self.text_rect
     
@@ -153,11 +158,11 @@ class Floor_2:
         pass
 
     def update_text(self):
-        self._timer_text.update(str(self._timer),self.get_status())
+        self._timer_text.update(str(self._timer),states.STILL)
         #self.set_text()
 
     def update_button(self):
-        self._button.update(str(self.get_floor()),self.get_status())
+        self._button.update(str(self.get_floor()),self.get_status()) 
         
 #----------------------------------------------------------
 #        

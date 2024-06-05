@@ -9,7 +9,7 @@ def get_init_position(floor, floor_position):
 	pass
 
 class Button:
-	def __init__(self ,location, text = "00:00", color = "white"):
+	def __init__(self ,location, text = "00:00", color = "white", backround = True):
 		
 		self.__position = location
 		self._status = states.STILL
@@ -19,9 +19,11 @@ class Button:
 		self._the_text_as_str = text
 		#self._text = gm.font.render(self._the_text_as_str,True,self.calculate_color())
 		self._text = gm.font.render("hello",True,self.calculate_color())
+		self._backround = backround
 		
 		self._shape = pygame.Surface((self.getrect().w, self.getrect().h))
-		self._shape.fill(self._backround_color)
+		if self._backround :
+			self._shape.fill(self._backround_color)
 		
 		
 
@@ -43,6 +45,7 @@ class Button:
 	
 	def update(self, new_text, new_status):		
 		self.set_status(new_status)
+		
 		self.set_text(new_text)
 	
 #----------------------------------
@@ -63,13 +66,15 @@ class Button:
 		if self._status != new_status:
 			self._status = new_status
 			
+			
 	
 	def set_position(self, new_position):
 		self.__position = new_position
 		
 	def set_backround_color(self, new_color):
-		self._shape.fill(new_color)
-		self._shape.fill(new_color)
+		if self._backround :
+			self._shape.fill(new_color)
+		
 	
 #----------------------------------
 #	
@@ -131,9 +136,10 @@ class Button:
 	def calculate_color(self):
 		black = (0,0,0)
 		green = (0, 255, 0)
+		#green = "green"
 		
-		if self.get_state() == states.WAITING:
-			
+		if self.get_state() == states.WAITING:	
+			print("green")
 			return green
 		else:
 			return black
