@@ -69,6 +69,7 @@ class Elevator:
         #---------#
             
         temp = self.is_call_worthy(floor) 
+        #print(f"adding the new time to the current time: {self.get_time()} + the addition = {temp}")
         self._queque.append(floor)
    
        # if  self.get_status() != ele_status.DOORS_OPEN:
@@ -86,18 +87,12 @@ class Elevator:
         #self._time_until_clear.add(temp[0], temp[1])
        
         temp2 = self.get_time().get() 
-        self._time_until_clear.add(2)
+        self._time_until_clear.add(gm.WAIT_IN_FLOOR,0)          #need to look into this methode
         
         #temp = self._time_until_clear.get()
         assert type(temp) == tuple, "ERROR"
         assert temp != (0,0), "ERROR"
         
-        ##print(f"Elevator_2.call.temp: {temp}")
-        ##print(f"Elevator_2.call.temp2: {temp2}")
-        
-        #if self.get_status() == ele_status.STILL:
-         #   return temp2
-        #return  self._time_until_clear.get()
         return  temp
         
        
@@ -105,6 +100,7 @@ class Elevator:
         return self._time_until_clear
    
     def update(self):
+       #  print(f" Elevator serial: {self._serial}. big_timer: {self._time_until_clear}, small_timer: {self._time_to_end_status}\n")  
          self.move()  
          self.update_big_timer()
          self.update_small_timer()
@@ -252,6 +248,8 @@ class Elevator:
 
 def calculate_time_from_one_store_to_another(strt, end):
     ###print (f"{abs(strt - end)}, strt:{strt}, end:{end}")
+    #print(f" gm.FRAMES_TO_CROSS_A_FLOOR: {gm.FRAMES_TO_CROSS_A_FLOOR}")
+    print(f"it takes {Timer_2.calculate(0,int(abs(strt - end)) * gm.FRAMES_TO_CROSS_A_FLOOR)} to travel from one floor to another")
     return Timer_2.calculate(0,int(abs(strt - end)) * gm.FRAMES_TO_CROSS_A_FLOOR)
              
 

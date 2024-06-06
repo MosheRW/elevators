@@ -16,11 +16,13 @@ class Button:
 		
 		self._backround_color = color
 		
+		
 		self._the_text_as_str = text
 		self._text = gm.font.render("hello",True,self.calculate_color())
 		self._backround = backround
 		
 		self._shape = pygame.Surface((self.getrect().w, self.getrect().h))
+		
 		if self._backround :
 			self._shape.fill(self._backround_color)
 		
@@ -108,8 +110,11 @@ class Button:
 		self._text = gm.font.render(self._the_text_as_str,True,self.calculate_color())
 #----------------------------------
 	def is_clicked(self, mous_pos)	 -> bool:
-		mous = pygame.rect.Rect(mous_pos, (1,1))
-		return self.getrect().contains(mous)
+		
+		return self.getrect().collidepoint(mous_pos)
+		#return pygame.rect.Rect.collidepoint()
+		#mous = pygame.rect.Rect(mous_pos, (1,1))
+		#return 	self.getrect().contains(mous)
 
 #----------------------------------
 
@@ -148,15 +153,20 @@ class Button:
 #--------------------------------------------------------------------------
 
 
+
+
+
 """
 pygame.init()
 """
 
-"""
-bu = Button(0, (160,160), "57")		
+
+bu = Button(0, (160,160), "white")		
 
 bu.init("56:71")
 
+print(bu.is_clicked((5,5)))
+"""
 screen = gm.get_screen()
 clock = pygame.time.Clock()
 

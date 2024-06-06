@@ -1,14 +1,22 @@
 import random
+from tkinter import W
 from turtle import Screen
 from Building_2 import Building 
 import pygame
 import Graphic_Manager as gm
 
 
+
+def cuordinates_calculator(cuordinates):
+    return (cuordinates[0],gm.WINDOW_SIZE[1] - cuordinates[1])
+    
+
+
+
 class Game:
     screen = gm.get_screen()
     
-    def __init__(self, floors = 10, elevators = 1):
+    def __init__(self, floors = 11, elevators =7):
         self.__num_of_floors = floors
         self.__num_of_elevators = elevators
         
@@ -156,7 +164,9 @@ class Game:
 
     def test(self):
         running = True
-        tes = [6,3,5,7,4,2,1,10,9,0,8,1,2,3,7]
+      #  tes = [6,3,5,7,4,2,1,10,9,0,8,1,2,3,7]
+        #tes = [6,3,5,7,4,2,1,10,9,0,8,1,2,3,7]
+        tes = [random.randint(0,11) for _ in range(100)]
         
         tes_i = 0
         
@@ -165,19 +175,22 @@ class Game:
         self.erease_screen()
         
         while running:
-            
-
-             
+        
+              #print("\n--------------------------------------------------------------------\nnew iteration\n")
+#              self.update()                                               
+              """
               if tes_i < len(tes):                
                  self._building.get_elevator(tes[tes_i])
                  tes_i += 1
-                 ##print("innnnnnnnnnnnnnnnnn")
-
+              else:
+                  tes_i = 0
+                  """
               for event in pygame.event.get():
                   if pygame.mouse.get_pressed()[0]:
                     pos = pygame.mouse.get_pos()
-                    ##print(f"pos: {pos}")
-                    floor =  self._building.who_clicked(pos)
+                    print(f"pos: {pos}")
+                    print(f"pos: {cuordinates_calculator(pos)}")
+                    floor =  self._building.who_clicked(cuordinates_calculator(pos))
                     ##print(floor)
                     if floor != -1:
                              self._building.get_elevator(floor)
@@ -211,7 +224,7 @@ class Game:
               
               pygame.display.flip()
               
-              clock.tick(30) #gm.FRAN_RATE)
+              clock.tick(60) #gm.FRAN_RATE)
 
     def get_floor(self, key):
          if key[pygame.K_KP0]:

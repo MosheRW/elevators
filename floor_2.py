@@ -72,6 +72,7 @@ class Floor_2:
         return (self.get_img(), self.get_text(), self.get_button(),self.get_buffer())
     
     def update(self):
+        #print(f" Floor serial: {self._floor}. timer: {self._timer} \n") 
         #self.update_text()
         self.update_timer()
         self.update_status()
@@ -189,7 +190,7 @@ class Floor_2:
         
 
     def is_clicked(self, m_position):
-        return self._button.is_clicked()
+        return self._button.is_clicked(m_position)
     """
         m_position = convert(m_position)
         ##print(f"\n\n{self.get_floor()}")

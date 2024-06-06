@@ -40,9 +40,9 @@ class Timer_2:
         if self.is_running():
             self.__parts -= 1
         
-            if self.__parts <= 0:
+            if self.__parts < 0:                    #changed from <=
                 self.__seconds -= 1
-                self.__parts = gm.FRAN_RATE # - 1
+                self.__parts = gm.FRAN_RATE  - 1    #changed from exact FRAN_RATE
             
             if self.__seconds < 0:
                 self.set_nulify()
@@ -82,9 +82,12 @@ class Timer_2:
         temp_sec = 0
         temp_parts = 0
         if self.is_running():
+            print("the timer is runnig: ", end="")
             if type(sec) == tuple:
+                print("input is tuple: ", end="")
+                print(f"the timer is runnig: ", end="")
                 temp_sec =  self.__seconds + sec[0]
-                temp_parts =  self.__seconds + sec[1]
+                temp_parts =  self.__parts + sec[1]
             else:
                 temp_sec =  self.__seconds + sec
                 temp_parts = self.__parts + parts
@@ -136,7 +139,7 @@ def calculate(sec = 0, parts = 0):
     sec += parts // int(gm.FRAN_RATE)# * gm.WAIT_IN_FLOOR))
     parts = parts % int(gm.FRAN_RATE)# * gm.WAIT_IN_FLOOR))
    
-    
+    assert  int(sec) == sec and int(parts) == parts, "Numbers do not match"
     return int(sec), int(parts)
     
 
