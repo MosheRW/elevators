@@ -62,9 +62,9 @@ class Floor_2:
     
 
     def get_elevator(self, time):        
-        #print(f"-> 1 -> Floor_2.get_elevator.time: {time}   <-")
+        ###print(f"-> 1 -> Floor_2.get_elevator.time: {time}   <-")
         self.set_timer(time)
-        #print(f"-> 2 -> Floor_2.get_elevator.time: {time}   <-")
+        ###print(f"-> 2 -> Floor_2.get_elevator.time: {time}   <-")
         self.set_status(states.WAITING)
 #----------------------------------------------------------------------------------
         
@@ -89,7 +89,7 @@ class Floor_2:
     
     def get_status(self):
         assert type(self._status) == states, "ERROR, Wrong type"
-        #print( self._status)
+        ###print( self._status)
         return self._status
         #temp = self._status
         #return temp
@@ -192,12 +192,12 @@ class Floor_2:
         return self._button.is_clicked()
     """
         m_position = convert(m_position)
-        print(f"\n\n{self.get_floor()}")
-        print(f"m_position: {m_position}")
+        ##print(f"\n\n{self.get_floor()}")
+        ##print(f"m_position: {m_position}")
         top_x, top_y = self.get_position()
         bottom_x, bottom_y = gm.FLOOR_SIZE[0], self.get_position()[1] - gm.FLOOR_SIZE[1]
         
-        print(f"top: ({top_x}, {top_y}), bottom: ({bottom_x}, {bottom_y})")
+        ##print(f"top: ({top_x}, {top_y}), bottom: ({bottom_x}, {bottom_y})")
 
         if m_position[0] <= top_x   and m_position[0] >= bottom_x:
            if m_position[1] <= top_y   and m_position[1] >= bottom_y:
@@ -225,6 +225,6 @@ class Floor_2:
 
 """
 fl = Floor_2(0)
-print(fl.get_position())
-print(fl.is_clicked((15,15)))
+##print(fl.get_position())
+##print(fl.is_clicked((15,15)))
 """

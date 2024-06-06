@@ -35,7 +35,7 @@ class Game:
         
     def init_screen(self):
         
-        print(pygame.display.get_desktop_sizes())
+        #print(pygame.display.get_desktop_sizes())
         self.screen.fill("white")
         self.screen.set_colorkey()
      
@@ -93,7 +93,7 @@ class Game:
                  if m:
                     self.__building.get_elevator(f)
                     """
-                 #print(self.__building)
+                 ##print(self.__building)
                      
                    
                          
@@ -102,8 +102,8 @@ class Game:
                                       
            
              if count % 20 == 0:
-                 #print(count,end="\r")
-                 print(self.__building, end="\r")
+                 ##print(count,end="\r")
+                 #print(self.__building, end="\r")
                  
              if count == 60: 
                 count = 0
@@ -115,7 +115,7 @@ class Game:
              
              self.__clock.tick(60)
         
-        print(self.__building)
+        #print(self.__building)
 
     def get_floor(self, key):
          if key[pygame.K_KP0]:
@@ -145,8 +145,8 @@ class Game:
     def get_ele(self,i):
         self.__building.get_elevator(i)
         
-    def print_building(self):
-        print(self.__building)
+    def #print_building(self):
+        #print(self.__building)
         
     def update(self):
         self.__building.update()
@@ -154,36 +154,36 @@ class Game:
 
 def close_terminal():
     
-    print("insert first digit: ",)
+    #print("insert first digit: ",)
     first = int(input(""))# end="\r")
     
     while first != 4:
-        print("insert first digit: ") #\r)#, end="\r")
+        #print("insert first digit: ") #\r)#, end="\r")
         first = int(input(""))
         
 
     
-    print("insert second digit: ") #, end="\r")
+    #print("insert second digit: ") #, end="\r")
     second = int(input(""))
     
     while second != 0:
-        print("insert second digit: ") #, end="\r")
+        #print("insert second digit: ") #, end="\r")
         second = int(input(""))
     
-    print("insert thired digit: ") #, end="\r")
+    #print("insert thired digit: ") #, end="\r")
     thired = int(input(""))
     
     while thired != 4:
-        print("insert thired digit: ") #, end="\r")
+        #print("insert thired digit: ") #, end="\r")
         thired = int(input(""))
         
 
     
-    print("insert fourth digit: ") #, end="\r")
+    #print("insert fourth digit: ") #, end="\r")
     fourth = int(input(""))
     
     while fourth != 1:
-        print("insert fourth digit: ") #, end="\r")
+        #print("insert fourth digit: ") #, end="\r")
         fourth = int(input(""))
         
 
@@ -204,10 +204,10 @@ tes_i = 0
     
 #for tes_i in tes:
 for i in range(len(tes)):
-    print(tes[i])
+    #print(tes[i])
   #  game.update()
     game.get_ele(set[i])
     game.update()
-    game.print_building()
+    game.#print_building()
     
 """    

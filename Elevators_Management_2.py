@@ -32,9 +32,9 @@ class Elevators_Management_2:
         
     def get_an_elevator(self, floor):     
         elevat = self.__shortest_time_elevator(floor)         # the shortest queque
-        print(f"elevator num: {elevat}")
+        #print(f"elevator num: {elevat}")
         tup = self._the_elevators[elevat].call(floor)
-        print(f"Elevator_managemant.get_an_elevator.tup: {tup}")
+        #print(f"Elevator_managemant.get_an_elevator.tup: {tup}")
         #return timer.calculate(tup[0], tup[1] - 30)
         #return self._the_elevators[elevat].call(floor)
         return tup
@@ -47,7 +47,7 @@ class Elevators_Management_2:
             if self.is_left_smaller(i,minimum, floor):
                 minimum = i
        
-        print(f"Elevator_managemant.__shortest_time_elevator: is_call_worthy= {self._the_elevators[minimum].is_call_worthy(floor)}")
+        #print(f"Elevator_managemant.__shortest_time_elevator: is_call_worthy= {self._the_elevators[minimum].is_call_worthy(floor)}")
         return minimum
         
     def is_left_smaller(self, elevator_1, elevator_2, floor) -> bool:
@@ -93,7 +93,7 @@ def test():
     e.init()
     
     #tes = [random.randint(1,12) for _ in range(20)]
-    #print(tes)
+    ##print(tes)
     #doc= [False for _ in range(13)]
     #tes_i = 0
     count = 0
@@ -105,7 +105,7 @@ def test():
     #time = Timer_2()
     #time.set(10)
     
-    #print(e)
+    ##print(e)
     while running:
             
             for event in pygame.event.get():
@@ -125,9 +125,9 @@ def test():
                         
                         floor =  random.randint(1,10)
                              
-                        #print(f"floor: {floor}")
+                        ##print(f"floor: {floor}")
                         time = e.get_an_elevator(floor)                                                       
-                        #print(f"time to: {time}")
+                        ##print(f"time to: {time}")
                        
                         #e.get_an_elevator(tes_i)
                                 
@@ -143,7 +143,7 @@ def test():
            #time.update()
             e.update()
             e.pack(screen)
-           # print(f"time: {time.get()}, is running? {time.is_running()}")
+           # #print(f"time: {time.get()}, is running? {time.is_running()}")
           
             
             pygame.display.flip()          
@@ -158,7 +158,7 @@ def test():
         
     """
     for i in range(len(tes)):
-        print(e.get_an_elevator(i))
+        #print(e.get_an_elevator(i))
        """ 
         
 

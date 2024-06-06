@@ -54,7 +54,7 @@ while running:
         if event.type == pygame.KEYDOWN:
                 key_name = pygame.key.name(event.key)
                 
-                print(key_name)
+                ##print(key_name)
         key = pygame.key.get_pressed()
 
 
@@ -78,7 +78,7 @@ while running:
             
             #screen.blit(bu.get_text(), bu.getrect())
             
-            print("")
+            ##print("")
             #pygame.draw.rect(screen,(0,0,0), shape)
             #screen.blit(text,textRect)
            # pygame.mixer.music.play(-1)

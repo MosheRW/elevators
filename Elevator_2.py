@@ -50,14 +50,14 @@ class Elevator:
              temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._floor,floor))
              #temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self.__destination,floor))
              
-        #print(f"{self._serial} Elevator.is_call_worthy.temp: {temp}")
+        ###print(f"{self._serial} Elevator.is_call_worthy.temp: {temp}")
         return temp
 
 
     def call(self, floor):
-        #print("\n\n" + str(self.get_status()) + "\n")
+        ###print("\n\n" + str(self.get_status()) + "\n")
         if len(self._queque) > 0:
-            print(">>>")
+            ##print(">>>")
             if self._queque[-1] == floor:
                 return  self.get_time().get()
         
@@ -81,7 +81,7 @@ class Elevator:
                 """     
         #temp = self.is_call_worthy(floor) 
         
-        ##print(F"call.temp: {temp}")
+        ####print(F"call.temp: {temp}")
         self._time_until_clear.set(temp)     
         #self._time_until_clear.add(temp[0], temp[1])
        
@@ -92,8 +92,8 @@ class Elevator:
         assert type(temp) == tuple, "ERROR"
         assert temp != (0,0), "ERROR"
         
-        print(f"Elevator_2.call.temp: {temp}")
-        print(f"Elevator_2.call.temp2: {temp2}")
+        ##print(f"Elevator_2.call.temp: {temp}")
+        ##print(f"Elevator_2.call.temp2: {temp2}")
         
         #if self.get_status() == ele_status.STILL:
          #   return temp2
@@ -157,7 +157,7 @@ class Elevator:
         
     def update_big_timer(self):
         self._time_until_clear.update()
-        ##print(self._time_until_clear)
+        ####print(self._time_until_clear)
     
     def update_small_timer(self):
         self._time_to_end_status.update()
@@ -251,7 +251,7 @@ class Elevator:
     
 
 def calculate_time_from_one_store_to_another(strt, end):
-    #print (f"{abs(strt - end)}, strt:{strt}, end:{end}")
+    ###print (f"{abs(strt - end)}, strt:{strt}, end:{end}")
     return Timer_2.calculate(0,int(abs(strt - end)) * gm.FRAMES_TO_CROSS_A_FLOOR)
              
 
@@ -291,9 +291,9 @@ def test()        :
     
     floor = 4
     
-    #print(ele)
+    ###print(ele)
 
-    #print(ele.is_call_worthy(floor))
+    ###print(ele.is_call_worthy(floor))
     
     count = 0
     
@@ -317,10 +317,10 @@ def test()        :
          pygame.display.flip()
     
          clock.tick(60)  # limits FPS to 60
-   # #print(ele.is_call_worthy(5))
+   # ###print(ele.is_call_worthy(5))
 
-    #print(ele)
+    ###print(ele)
 
 #test()
 
-##print(calculate_time_from_one_store_to_another(0,5) )
+####print(calculate_time_from_one_store_to_another(0,5) )
