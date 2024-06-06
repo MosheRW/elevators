@@ -89,11 +89,12 @@ class Button:
 	
 	def getrect(self):	
 		
-		#rect =  self._text.get_rect() #topleft = self.get_position())
+		rect =  self._text.get_rect(bottomleft = self.get_position()) #topleft = self.get_position())
+		
 		#rect.x = self.get_position()[0]
 		#rect.y = self.get_position()[1]
 		#return self._text.get_rect(topleft = self.get_position())
-		return self._text.get_rect(topleft = self.get_position())
+		#return self._text.get_rect(topleft = self.get_position())
 		return rect
 	
 	def get_position(self):
@@ -118,7 +119,7 @@ class Button:
 #----------------------------------
 	def is_clicked(self, mous_pos)	 -> bool:
 		#print(f" {mous_pos} is colided: {self.getrect().collidepoint(mous_pos)} with {self.getrect()}")
-		print(f" {mous_pos} is colided: {self.getrect().collidepoint(mous_pos)} with {self.getrect()}")
+		print(f" {mous_pos} is colided: {self.getrect().collidepoint(mous_pos)} with {self.getrect()} | position: {self.get_position()}")
 		return self.getrect().collidepoint(mous_pos)
 		#return pygame.rect.Rect.collidepoint()
 		#mous = pygame.rect.Rect(mous_pos, (1,1))
