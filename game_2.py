@@ -117,7 +117,9 @@ class Game:
               for event in pygame.event.get():
                                    
                   #pull floor from mouse events
-                  floor = self.get_floor_from_mouse()
+                  floor = -1
+                 # if pygame.mouse.get_pressed()[0]:
+                  #  floor = self.get_floor_from_mouse()
                   
                   #pull floor from keyboard events
                   if event.type == pygame.KEYDOWN:
