@@ -113,11 +113,14 @@ class Game:
         
         running = True
         while running:
-        
+              
+              floor = -1
+              if pygame.mouse.get_pressed()[0]:
+                    floor = self.get_floor_from_mouse()
               for event in pygame.event.get():
                                    
                   #pull floor from mouse events
-                  floor = -1
+                  #floor = -1
                  # if pygame.mouse.get_pressed()[0]:
                   #  floor = self.get_floor_from_mouse()
                   

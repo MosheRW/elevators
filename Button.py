@@ -18,50 +18,52 @@ class Button:
 		self._backround_color = color
 		self._backround = backround
 		
-		self._shape = pygame.Surface((self.getrect().w, self.getrect().h))
+		self.__rect = self._text.get_rect(bottomleft = self.get_position())		
+		self._shape = pygame.Surface((self.getrect().w, self.getrect().h))			
 		
-
 		if self._backround :
 			self._shape.fill(self._backround_color)
 		
-	
+#-----------------------------------		
 		
-
 	def init(self, new_text):
 		self.set_text(new_text)
 		self.set_shape()
 
 #-----------------------------------	
+		
 	def set(self, location, text = "00:00", color = "white", status = states.STILL):
 		self.set_position(location)
 		self.set_text(text)
 		self.set_shape()
 		self.set_backround_color(color)
-		self.set_status(status)
+		self.set_status(status)		
 		
-	
-#----------------------------------
-	def is_clicked(self, mous_pos)	 -> bool:
-		return self.getrect().collidepoint(mous_pos)
-
-#---------------------------------
-			
+		
 	def get(self):
 		return self.get_text(), self.get_shape(), self.get_position()
 	
+
+
 	def update(self, new_text, new_status):		
-		self.set_status(new_status)
-		
+		self.set_status(new_status)		
 		self.set_text(new_text)
+	
+#----------------------------------
+		
+	def is_clicked(self, mous_pos)	 -> bool:
+		return self.getrect().collidepoint(mous_pos)
 	
 #----------------------------------
 	def set_shape(self):
 		self._shape = pygame.Surface((self.getrect().w, self.getrect().h))
 		self.set_backround_color(self._backround_color)
 		
+		
 	def set_text(self, new_text):
 		self._the_text_as_str = new_text
 		self.__build_the_text()
+		self.__rect = self._text.get_rect(bottomleft = self.get_position())
 
 	def set_status(self, new_status):
 		if self._status != new_status:
@@ -84,26 +86,16 @@ class Button:
 	def get_text(self):
 		return self._text
 	
-	def getrect(self):			
-		rect =  self._text.get_rect(bottomleft = self.get_position())
-		return rect
+	def getrect(self):		
+		return self.__rect
 	
 	def get_position(self):
 		return self.__position
 
 	def get_state(self):
 		return self._status
-#----------------------------------
-#	
-	def update_shape(self):				#<--- Probably unnecessary
-		pass
 	
-	def update_text(self, new_text):		#<--- Probably unnecessary
-		self._the_text_as_str = new_text
-		self.__build_the_text()
-		
-	def update_position(self,):				#<--- Probably unnecessary
-		pass
+#----------------------------------
 	
 	def __build_the_text(self):
 		self._text = gm.font.render(self._the_text_as_str,True,self.calculate_color())
