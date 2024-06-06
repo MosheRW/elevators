@@ -26,6 +26,7 @@ class Button:
 		if self._backround :
 			self._shape.fill(self._backround_color)
 		
+	
 		
 
 	def init(self, new_text):
@@ -86,8 +87,14 @@ class Button:
 	def get_text(self):
 		return self._text
 	
-	def getrect(self):
-		return self._text.get_rect()
+	def getrect(self):	
+		
+		#rect =  self._text.get_rect() #topleft = self.get_position())
+		#rect.x = self.get_position()[0]
+		#rect.y = self.get_position()[1]
+		#return self._text.get_rect(topleft = self.get_position())
+		return self._text.get_rect(topleft = self.get_position())
+		return rect
 	
 	def get_position(self):
 		return self.__position
@@ -110,7 +117,8 @@ class Button:
 		self._text = gm.font.render(self._the_text_as_str,True,self.calculate_color())
 #----------------------------------
 	def is_clicked(self, mous_pos)	 -> bool:
-		
+		#print(f" {mous_pos} is colided: {self.getrect().collidepoint(mous_pos)} with {self.getrect()}")
+		print(f" {mous_pos} is colided: {self.getrect().collidepoint(mous_pos)} with {self.getrect()}")
 		return self.getrect().collidepoint(mous_pos)
 		#return pygame.rect.Rect.collidepoint()
 		#mous = pygame.rect.Rect(mous_pos, (1,1))
@@ -161,7 +169,7 @@ pygame.init()
 """
 
 
-bu = Button(0, (160,160), "white")		
+bu = Button((0,60))#, "white")		
 
 bu.init("56:71")
 

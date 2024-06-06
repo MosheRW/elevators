@@ -66,7 +66,8 @@ class Game:
         #shape = pygame.Surface((160, 7))
         #shape.fill("black")
         for i in range(len(floors_pac)):
-            self.screen.blit(floors_pac[i][0][0],(floors_pac[i][0][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][0][1][1]))
+           # self.screen.blit(floors_pac[i][0][0],(floors_pac[i][0][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][0][1][1]))
+            self.screen.blit(floors_pac[i][0][0],cuordinates_calculator(floors_pac[i][0][1]))
            # self.screen.blit(floors_pac[i][2][0],(floors_pac[i][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][1]))
             self.screen.blit(floors_pac[i][1][1],(floors_pac[i][1][2][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][2][1]))
             self.screen.blit(floors_pac[i][1][0],(floors_pac[i][1][2][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][2][1]))
