@@ -39,7 +39,7 @@ class Game:
         
     def init_screen(self):
         
-        print(pygame.display.get_desktop_sizes())
+        #print(pygame.display.get_desktop_sizes())
         self.screen.fill("white")
         self.screen.set_colorkey()
      
@@ -104,7 +104,7 @@ class Game:
                  if m:
                     self._building.get_elevator(f)
                     """
-                 #print(self._building)
+                 ##print(self._building)
                      
                    
                          
@@ -113,8 +113,8 @@ class Game:
                                       
            
              if count % 20 == 0:
-                 #print(count,end="\r")
-                 #print(self._building, end="\r")
+                 ##print(count,end="\r")
+                 ##print(self._building, end="\r")
                  pass
              
              if count == gm.FRAN_RATE: 
@@ -127,7 +127,7 @@ class Game:
              
              self.__clock.tick(gm.FRAN_RATE)
         
-        print(self._building)
+        #print(self._building)
 
     def test(self):
         running = True
@@ -141,9 +141,9 @@ class Game:
               for event in pygame.event.get():
                   if pygame.mouse.get_pressed()[0]:
                     pos = pygame.mouse.get_pos()
-                    print(f"pos: {pos}")
+                    #print(f"pos: {pos}")
                     floor =  self._building.who_clicked(pos)
-                    print(floor)
+                    #print(floor)
                     if floor != -1:
                              self._building.get_elevator(floor)
                    
@@ -160,7 +160,7 @@ class Game:
                         """     
                         if key[pygame.MOUSEBUTTONDOWN]:
                             pos = pygame.mouse.get_pos()
-                            print(f"pos: {pos}")
+                            #print(f"pos: {pos}")
                             floor =  self._building.who_clicked(pos)
                             """
                         if floor != -1:
@@ -208,8 +208,8 @@ class Game:
     def get_ele(self,i):
         self._building.get_elevator(i)
         
-    def print_building(self):
-        print(self._building)
+    def #print_building(self):
+        #print(self._building)
         
     def update(self):
         self._building.update()
@@ -217,36 +217,36 @@ class Game:
 
 def close_terminal():
     
-    print("insert first digit: ",)
+    #print("insert first digit: ",)
     first = int(input(""))# end="\r")
     
     while first != 4:
-        print("insert first digit: ") #\r)#, end="\r")
+        #print("insert first digit: ") #\r)#, end="\r")
         first = int(input(""))
         
 
     
-    print("insert second digit: ") #, end="\r")
+    #print("insert second digit: ") #, end="\r")
     second = int(input(""))
     
     while second != 0:
-        print("insert second digit: ") #, end="\r")
+        #print("insert second digit: ") #, end="\r")
         second = int(input(""))
     
-    print("insert thired digit: ") #, end="\r")
+    #print("insert thired digit: ") #, end="\r")
     thired = int(input(""))
     
     while thired != 4:
-        print("insert thired digit: ") #, end="\r")
+        #print("insert thired digit: ") #, end="\r")
         thired = int(input(""))
         
 
     
-    print("insert fourth digit: ") #, end="\r")
+    #print("insert fourth digit: ") #, end="\r")
     fourth = int(input(""))
     
     while fourth != 1:
-        print("insert fourth digit: ") #, end="\r")
+        #print("insert fourth digit: ") #, end="\r")
         fourth = int(input(""))
         
 
@@ -268,10 +268,10 @@ tes_i = 0
     
 #for tes_i in tes:
 for i in range(len(tes)):
-    print(tes[i])
+    #print(tes[i])
   #  game.update()
     game.get_ele(set[i])
     game.update()
-    game.print_building()
+    game.#print_building()
     
 """    

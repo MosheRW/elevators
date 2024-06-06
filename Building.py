@@ -6,20 +6,20 @@ from Elevators_Management import Elevators_Management
 
 class Building:
     def __init__(self, floors = 8, elevators = 3):
-        print("start building")
+        #print("start building")
         self.__num_of_floors = floors
         self.__num_of_elevators = elevators
         
         self._floors_mange = Floors_managment(self.__num_of_floors)        #[(0.0, False) for _ in range(self.__num_of_floors +1)]
         self._elevator_mange = Elevators_Management(self.__num_of_floors, self.__num_of_elevators)
         
-        print(self)
+        #print(self)
         
 #methodes to utilise the class
     def get_elevator(self, floor):
         
         if self._floors_mange.is_this_floor_needs_an_elevator(floor):
-            print("geting an elevator") 
+            #print("geting an elevator") 
             exac_time = self._elevator_mange.get_an_elevator(floor)
             self._floors_mange.get_an_elevator(floor,exac_time)
 

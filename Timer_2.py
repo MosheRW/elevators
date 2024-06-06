@@ -8,7 +8,7 @@ class Timer_2:
         self.__is_running = False
         
     def set(self, seconds, parts = 0):
-        print  (f"1 Timer_2.Set: seconds: {seconds},  parts: {parts} \n self.__seconds: {self.__seconds}, self.__parts: {self.__parts}")  
+        #print  (f"1 Timer_2.Set: seconds: {seconds},  parts: {parts} \n self.__seconds: {self.__seconds}, self.__parts: {self.__parts}")  
         
         if type(seconds) == tuple:
             self.__seconds = seconds[0]
@@ -18,7 +18,7 @@ class Timer_2:
             self.__parts = int(parts)
         
             
-        print  (f"2 Timer_2.Set: seconds: {seconds},  parts: {parts} \n self.__seconds: {self.__seconds}, self.__parts: {self.__parts}")  
+        #print  (f"2 Timer_2.Set: seconds: {seconds},  parts: {parts} \n self.__seconds: {self.__seconds}, self.__parts: {self.__parts}")  
         self.calculate()
         self.update_is_running()        
                 
@@ -145,8 +145,8 @@ tim = Timer_2()
 
 tim.set((2,30))
 
-print(tim.get())
+#print(tim.get())
 
 tim.set(2,30)
 
-print(tim.get())
+#print(tim.get())

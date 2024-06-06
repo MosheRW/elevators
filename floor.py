@@ -22,9 +22,9 @@ class Floor(UPM):
         return self._state == states.STILL
     
     def get_elevator(self, exact_time):
-        print(f'get elevator: {self._state}')
+        #print(f'get elevator: {self._state}')
         self._state = states.WAITING
-        print(f'get elevator: {self._state}')
+        #print(f'get elevator: {self._state}')
         self._timer.set(exact_time[0], exact_time[1])
 
     def get(self):

@@ -62,13 +62,13 @@ class Elevator:
         #self.__calculate_if_got_invited()
         
         if temp_s != self._state:
-            print("here")
+            #print("here")
         
         return (self._timer.get_exact()[0], self._timer.get_exact()[1])
 
  
     def to_get_the_elevator(self, floor): 
-        #print(f'serial: {self.serial}, {self._state}')
+        ##print(f'serial: {self.serial}, {self._state}')
 
         temp = self._queque
         tim1 = self.__current_ride
@@ -83,7 +83,7 @@ class Elevator:
         assert self._state == sta, "unauthorised change has done with the state"
             
 
-       # print(f'serial: {self.serial}, {self._state}')
+       # #print(f'serial: {self.serial}, {self._state}')
         
         return time
      
@@ -101,8 +101,8 @@ class Elevator:
         
         
         if state != self._state:
-            print("-------------------------change-------------------------------\n")
-            print(f"{state} -> {self._state}")
+            #print("-------------------------change-------------------------------\n")
+            #print(f"{state} -> {self._state}")
             
 
     def get(self):        
@@ -134,7 +134,7 @@ class Elevator:
             self._state = self.calculate_direction(self._floor, self.next_in_line())
             
             assert  self._state != directions.STILL, "WRONG!"
-            print (self.__current_ride)
+            #print (self.__current_ride)
             change = True
           
         elif (self._state == directions.GOING_DOWN or  self._state == directions.GOING_UP) and not change:
@@ -150,14 +150,14 @@ class Elevator:
 
     def __calculate_if_arrived(self):     #going_up, going_down
         if self.__current_ride.is_time_is_up() and (self._state == directions.GOING_DOWN or self._state == directions.GOING_UP):
-            print(f"self.__current_ride.is_time_is_up() {self.__current_ride.is_time_is_up()} self._state == directions.GOING_DOWN {self._state == directions.GOING_DOWN} self._state == directions.GOING_UP {self._state == directions.GOING_UP}")
-            print("-------------------> arrived <--------------")
-            print(f"->>>>>>>>>>>>>>>>>>>  self.__current_ride: {self.__current_ride}")
+            #print(f"self.__current_ride.is_time_is_up() {self.__current_ride.is_time_is_up()} self._state == directions.GOING_DOWN {self._state == directions.GOING_DOWN} self._state == directions.GOING_UP {self._state == directions.GOING_UP}")
+            #print("-------------------> arrived <--------------")
+            #print(f"->>>>>>>>>>>>>>>>>>>  self.__current_ride: {self.__current_ride}")
             self._state = directions.DOORS_OPEN
             
             self.__current_ride.set_exact(int(WAIT_IN_FLOOR),0)
-            print(f"->>>>>>>>>>>>>>>>>>> self.__current_ride: {self.__current_ride}")
-          #  print(self.__current_ride)
+            #print(f"->>>>>>>>>>>>>>>>>>> self.__current_ride: {self.__current_ride}")
+          #  #print(self.__current_ride)
             
             self._floor = self._queque.pop()
             return True
@@ -190,8 +190,8 @@ class Elevator:
 
 
         if not self._queque.is_empty() and  self._state == directions.STILL:
-            print(f"__calculate_if {self.serial} _got_invited")    
-            print(self._queque.peek())
+            #print(f"__calculate_if {self.serial} _got_invited")    
+            #print(self._queque.peek())
             
             if self._queque.peek() > self._floor:
                 self._state = directions.GOING_UP
@@ -258,7 +258,7 @@ def test():
     tes = [random.randint(1,10) for _ in range(10)]
     
     for i in range(len(tes)):
-        print(e.to_get_the_elevator(i))
+        #print(e.to_get_the_elevator(i))
         
 
 #test()

@@ -56,9 +56,9 @@ class Floor_2:
     
 
     def get_elevator(self, time):        
-        print(f"-> 1 -> Floor_2.get_elevator.time: {time}   <-")
+        #print(f"-> 1 -> Floor_2.get_elevator.time: {time}   <-")
         self.set_timer(time)
-        print(f"-> 2 -> Floor_2.get_elevator.time: {time}   <-")
+        #print(f"-> 2 -> Floor_2.get_elevator.time: {time}   <-")
         self.set_status(states.WAITING)
 #----------------------------------------------------------------------------------
         
@@ -66,6 +66,7 @@ class Floor_2:
         return (self.get_img(), self.get_position(), self.get_text(), self.get_button())
     
     def update(self):
+        print(f" floor serial: {self._floor}. timer: {self._timer}\n") 
         #self.update_text()
         self.update_timer()
         self.update_status()
@@ -83,7 +84,7 @@ class Floor_2:
     
     def get_status(self):
         assert type(self._status) == states, "ERROR, Wrong type"
-        #print( self._status)
+        ##print( self._status)
         return self._status
         #temp = self._status
         #return temp
@@ -152,7 +153,7 @@ class Floor_2:
     def update_timer(self):
         self._timer.update()
         #if self.get_status() == states.WAITING:
-         #   print(self.get_timer())
+         #   #print(self.get_timer())
     
     def update_img(self):                           #maybe need to implement another one, with state as inputs
         pass
@@ -182,12 +183,12 @@ class Floor_2:
 
     def is_clicked(self, m_position):
         m_position = convert(m_position)
-        print(f"\n\n{self.get_floor()}")
-        print(f"m_position: {m_position}")
+        #print(f"\n\n{self.get_floor()}")
+        #print(f"m_position: {m_position}")
         top_x, top_y = self.get_position()
         bottom_x, bottom_y = gm.FLOOR_SIZE[0], self.get_position()[1] - gm.FLOOR_SIZE[1]
         
-        print(f"top: ({top_x}, {top_y}), bottom: ({bottom_x}, {bottom_y})")
+        #print(f"top: ({top_x}, {top_y}), bottom: ({bottom_x}, {bottom_y})")
 
         if m_position[0] <= top_x   and m_position[0] >= bottom_x:
            if m_position[1] <= top_y   and m_position[1] >= bottom_y:
@@ -208,8 +209,8 @@ class Floor_2:
         return ( self.get_position()[0] + gm.FLOOR_SIZE[0] - (20 + self._timer_text.getrect().right),   self.get_position()[1] - 20)
             
         """            
-        print(f"{m_position[0] >= self.get_position()[0]}, {m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])}, {m_position[1] >= self.get_position()[1]}, {m_position[1] <= (self.get_position()[0] + gm.FLOOR_SIZE[1])}")
-        print(f"{self.get_position()[0]}, {(self.get_position()[0] + gm.FLOOR_SIZE[0])}, {self.get_position()[1]}, {(self.get_position()[0] + gm.FLOOR_SIZE[1])}")
+        #print(f"{m_position[0] >= self.get_position()[0]}, {m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])}, {m_position[1] >= self.get_position()[1]}, {m_position[1] <= (self.get_position()[0] + gm.FLOOR_SIZE[1])}")
+        #print(f"{self.get_position()[0]}, {(self.get_position()[0] + gm.FLOOR_SIZE[0])}, {self.get_position()[1]}, {(self.get_position()[0] + gm.FLOOR_SIZE[1])}")
         if m_position[0] >= self.get_position()[0] and m_position[0] <= (self.get_position()[0] + gm.FLOOR_SIZE[0])     and     m_position[1] >= self.get_position()[1] and m_position[1] >= (self.get_position()[0] + gm.FLOOR_SIZE[1]):
             return True
         
@@ -227,6 +228,6 @@ class Floor_2:
 
 """
 fl = Floor_2(0)
-print(fl.get_position())
-print(fl.is_clicked((15,15)))
+#print(fl.get_position())
+#print(fl.is_clicked((15,15)))
 """

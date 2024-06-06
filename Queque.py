@@ -49,7 +49,7 @@ class Queque_0:
         self.tail =  self.head
         self.size = 1
         
-       #print(f'inserted data: {data} end of Queque.init, self.head.data: {self.head.data}')
+       ##print(f'inserted data: {data} end of Queque.init, self.head.data: {self.head.data}')
         
         assert type(self.head) != None, "inside Queque.init"
         
@@ -86,7 +86,7 @@ class Queque_0:
         """    
    
     def pop(self):
-       #print("pop")
+       ##print("pop")
         
         if self.head != None and self.size >= 1:
             data = self.head.get_data()
@@ -99,9 +99,9 @@ class Queque_0:
     def peek(self):
         assert type(self.head) != None, "inside Queque.peek"
         assert type(self.head.data) != None, "inside Queque.peek"
-       #print(type(self.head))
-       #print("peek")
-       #print(self.head)
+       ##print(type(self.head))
+       ##print("peek")
+       ##print(self.head)
        # data = self.head.get_data()
         data = self.head.data
         return data
@@ -111,8 +111,8 @@ class Queque_0:
         return self.size
     
     def is_empty(self):
-      #print(f'size: {self.get_size()}')
-       #print(self)
+      ##print(f'size: {self.get_size()}')
+       ##print(self)
        return self.get_size() <= 0 or self.head == None or self.head.data == None
    
     def __repr__(self) -> str:
@@ -132,32 +132,32 @@ class Queque_0:
         
 def test():
     data = [random.randint(1,10) for _ in range(10)]
-   #print(data)
+   ##print(data)
     
     q = Queque(data[0])
-   #print(f'initilize: {q}')
+   ##print(f'initilize: {q}')
     
     for i in range(1,8,2):
         q.push(data[i])
-       #print(f'pushing: {data[i]}')
-       #print(f'first push:{q}')
+       ##print(f'pushing: {data[i]}')
+       ##print(f'first push:{q}')
 
-       #print(f'first peek: {q.peek()}')
+       ##print(f'first peek: {q.peek()}')
        
         q.push(data[i+1])
-       #print(f'pushing: {data[i+1]}')
-       #print(f'second push:{q}')
+       ##print(f'pushing: {data[i+1]}')
+       ##print(f'second push:{q}')
 
         q.pop()
-       #print(f'pop:{q}')
+       ##print(f'pop:{q}')
         
-       #print(f'second peek: {q.peek()}')
+       ##print(f'second peek: {q.peek()}')
         
-       #print(f'end of loo:{q}')
+       ##print(f'end of loo:{q}')
         
     while not q.is_empty():
         q.pop()
-       #print(f'pop:{q}')
+       ##print(f'pop:{q}')
         
 
 #test()

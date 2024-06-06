@@ -19,10 +19,10 @@ class Elevators_Management:
     def get_an_elevator(self, floor):
      
         elevat = self.__shortest_time_elevator(floor)         # the shortiest queque
-        print(elevat)
+        #print(elevat)
         #elevat = 5
         tup = self._the_elevators[elevat].get_the_elevator(floor)
-        print(tup)
+        #print(tup)
         return tup
          
       
@@ -49,8 +49,8 @@ class Elevators_Management:
         return minimum
         
     def is_left_smaller(self, elevator_1, elevator_2, floor) -> bool:
-            print(f"floor: {floor}")    
-            print(f"is_left_smaller: {self._the_elevators[elevator_1].to_get_the_elevator(floor)}, {self._the_elevators[elevator_2].to_get_the_elevator(floor)}")
+            #print(f"floor: {floor}")    
+            #print(f"is_left_smaller: {self._the_elevators[elevator_1].to_get_the_elevator(floor)}, {self._the_elevators[elevator_2].to_get_the_elevator(floor)}")
         
             if self._the_elevators[elevator_1].to_get_the_elevator(floor)[0] < self._the_elevators[elevator_2].to_get_the_elevator(floor)[0]:
                 return True
@@ -81,7 +81,7 @@ def test():
     running = True
     clock = pygame.time.Clock()
 
-    print(e)
+    #print(e)
     while running:
             
             for event in pygame.event.get():
@@ -114,14 +114,14 @@ def test():
             count += 1
             
             if count == 20:
-                 print(e)
+                 #print(e)
                  count = 0
             
             clock.tick(30)
         
     """
     for i in range(len(tes)):
-        print(e.get_an_elevator(i))
+        #print(e.get_an_elevator(i))
        """ 
         
 
