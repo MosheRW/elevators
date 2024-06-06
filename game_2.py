@@ -5,6 +5,7 @@ from Building_2 import Building
 import pygame
 import Graphic_Manager as gm
 
+#start cleaning
 
 
 def cuordinates_calculator(cuordinates):
