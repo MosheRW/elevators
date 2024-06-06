@@ -17,7 +17,6 @@ class Button:
 		self._backround_color = color
 		
 		self._the_text_as_str = text
-		#self._text = gm.font.render(self._the_text_as_str,True,self.calculate_color())
 		self._text = gm.font.render("hello",True,self.calculate_color())
 		self._backround = backround
 		
@@ -108,8 +107,9 @@ class Button:
 	def build_the_text(self):
 		self._text = gm.font.render(self._the_text_as_str,True,self.calculate_color())
 #----------------------------------
-	def is_clicked(self)	 -> bool:
-		pass
+	def is_clicked(self, mous_pos)	 -> bool:
+		mous = pygame.rect.Rect(mous_pos, (1,1))
+		return self.getrect().contains(mous)
 
 #----------------------------------
 
@@ -146,6 +146,7 @@ class Button:
 
 
 #--------------------------------------------------------------------------
+
 
 """
 pygame.init()

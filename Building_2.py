@@ -26,16 +26,16 @@ class Building:
             
             time_stamp = self._elevator_mange.get_an_elevator(floor)
             
-            print(f"1_building.get_elevator,time: {time_stamp}------------------------------")
+        #    print(f"1_building.get_elevator,time: {time_stamp}------------------------------")
            # time_stamp = (time_stamp[0] - 2, time_stamp[1])             #<- fixing ?
 
 
-            print(f"2_building.get_elevator,time: {time_stamp}------------------------------")
+         #   print(f"2_building.get_elevator,time: {time_stamp}------------------------------")
             assert type(time_stamp) == tuple, "Error, incorrect value"
             
             self._floors_mange.get_an_elevator(floor,time_stamp)
         else:
-             print("building.get_elevator.not need elevator")
+            pass#   print("building.get_elevator.not need elevator")
 
     def update(self):
         self._floors_mange.update()

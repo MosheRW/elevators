@@ -74,7 +74,8 @@ while running:
             
             
             #screen.blit(img_1, (100,300))
-            #screen.blit(img_2, (0,0))
+            screen.blit(img_2, (0,0))
+            
             #screen.blit(bu.get_text(), bu.getrect())
             
             print("")

@@ -14,6 +14,8 @@ FLOOR_PIC_FILE = 'resources\wall.jpg'
 FRAN_RATE = 60
 PACE = 2
 FRAMES_TO_CROSS_A_FLOOR = int(TIME_TRAVEL_BETWEEN_FLOORS * FRAN_RATE)
+HORIZONTAL_BUFFER_SIZE = (FLOOR_SIZE[0],7)
+HORIZONTAL_BUFFER_COLOR = "black"
 
 
 screenz = pygame.display.set_mode((1280, 720))

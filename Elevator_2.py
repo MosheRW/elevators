@@ -57,6 +57,7 @@ class Elevator:
     def call(self, floor):
         #print("\n\n" + str(self.get_status()) + "\n")
         if len(self._queque) > 0:
+            print(">>>")
             if self._queque[-1] == floor:
                 return  self.get_time().get()
         
@@ -84,8 +85,9 @@ class Elevator:
         self._time_until_clear.set(temp)     
         #self._time_until_clear.add(temp[0], temp[1])
        
-        self._time_until_clear.add(2)
         temp2 = self.get_time().get() 
+        self._time_until_clear.add(2)
+        
         #temp = self._time_until_clear.get()
         assert type(temp) == tuple, "ERROR"
         assert temp != (0,0), "ERROR"
@@ -96,7 +98,7 @@ class Elevator:
         #if self.get_status() == ele_status.STILL:
          #   return temp2
         #return  self._time_until_clear.get()
-        return  temp2
+        return  temp
         
        
     def get_time(self):
@@ -183,6 +185,7 @@ class Elevator:
         self._time_to_end_status.set(gm.WAIT_IN_FLOOR)
         self.set_status(ele_status.DOORS_OPEN)
         self.set_floor(self._queque.pop(0))
+        #<------
     
     def update_status_case_still(self):
           if self.get_status() == ele_status.STILL:            
@@ -194,9 +197,6 @@ class Elevator:
         if self.get_status() == ele_status.GOING_DOWN or self.get_status() == ele_status.GOING_UP:
             if(self.is_got_to_place()):
                  self.open_the_doors()
-              #  self._time_to_end_status.set(gm.WAIT_IN_FLOOR)
-              #  self.set_status(ele_status.DOORS_OPEN)
-              #  self.set_floor(self._queque.pop(0))
                 
     def update_status_case_doors_opened(self):
          if self.get_status() == ele_status.DOORS_OPEN:
@@ -204,11 +204,15 @@ class Elevator:
                 pass # self.set_status(self.get_status())
             elif len(self._queque) > 0:
                 self.set_status(ele_status.INVITED)
-                self.update()
+                #self.update()
+               # dbug =input("is the elevator ariived too early?: ")
             else:
                  self.set_status(ele_status.STILL)
                  self._time_until_clear.set_nulify()
-    
+                # dbug =input("is the elevator ariived too early?: ")
+                
+
+
     def update_status_case_invited(self):
         if self.get_status() == ele_status.INVITED:
             if len(self._queque) > 0:                     
@@ -227,15 +231,8 @@ class Elevator:
    
     def calculate_movment_direction(self, end):
         return calculate_movment_direction(self._floor,end)
-    """
-        #print (f"calculate movment: {self.get_status()}")
         
-        temp = calculate_movment_direction(self._floor,end)
-        assert type(temp) == ele_status, "ERROR"
-        #print(temp)
-        return temp #calculate_movment_direction(self._floor,end)
-        """
-        
+
     def update_novment_limit(self, end):
         self.novment_limit = calculate_novment_limit(self._floor,end)
         self.novment_counter = 0
@@ -255,28 +252,9 @@ class Elevator:
 
 def calculate_time_from_one_store_to_another(strt, end):
     #print (f"{abs(strt - end)}, strt:{strt}, end:{end}")
-    if abs(strt - end) % 2 == 0:
-        return  Timer_2.calculate(0,abs(strt - end) * gm.FRAMES_TO_CROSS_A_FLOOR) # + gm.FRAMES_TO_CROSS_A_FLOOR)
-    else: 
-        #print("not even")
-        return  Timer_2.calculate(0,abs(strt - end) * gm.FRAMES_TO_CROSS_A_FLOOR) # + gm.FRAMES_TO_CROSS_A_FLOOR)
-    """    
-     if strt > end: 
-           return Timer_2.calculate(0, (strt - end) * gm.FRAMES_TO_CROSS_A_FLOOR + gm.FRAMES_TO_CROSS_A_FLOOR)
-     elif strt < end:
-           return Timer_2.calculate(0, (end - strt) *  gm.FRAMES_TO_CROSS_A_FLOOR + gm.FRAMES_TO_CROSS_A_FLOOR)  #gm.FLOOR_SIZE[1]/ gm.PACE)
-     else:
-         #print("Elevator.calculate_time_from_one_store_to_another: strt == end")
-         (0,0)                  
-             """
-def calculate_novment_limit(strt, end):
-    #if strt <= end:
-    if strt < end:
-        return (end - strt) * (gm.ELEVATOR_SIZE[1] + gm.SPACE)
-    elif strt > end:
-        return (strt - end) *(gm.ELEVATOR_SIZE[1] + gm.SPACE)
-    else:
-        return 0
+    return Timer_2.calculate(0,int(abs(strt - end)) * gm.FRAMES_TO_CROSS_A_FLOOR)
+             
+
  
 def calculate_movment_direction(strt, end):
         if strt > end:
@@ -285,7 +263,18 @@ def calculate_movment_direction(strt, end):
             return ele_status.GOING_UP
         else:
             return ele_status.GOING_DOWN
-            
+
+def calculate_novment_limit(strt, end):
+    return int(abs(strt - end) * gm.ELEVATOR_SIZE[1])
+"""
+#if strt <= end:
+    if strt < end:
+        return (end - strt) * (gm.ELEVATOR_SIZE[1] + gm.SPACE)
+    elif strt > end:
+        return (strt - end) *(gm.ELEVATOR_SIZE[1] + gm.SPACE)
+    else:
+        return 0
+"""            
              
        # assert strt != end, "ERROE"
             

@@ -52,14 +52,26 @@ class Game:
         self.pack_floors_to_desplay(floors_pac)
         self.pack_elevators_to_desplay(elevators_pac)
         
+
+
     def pack_floors_to_desplay(self, floors_pac):
+        #shape = pygame.Surface((160, 7))
+        #shape.fill("black")
         for i in range(len(floors_pac)):
-            self.screen.blit(floors_pac[i][0],(floors_pac[i][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][1]))
+            self.screen.blit(floors_pac[i][0][0],(floors_pac[i][0][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][0][1][1]))
            # self.screen.blit(floors_pac[i][2][0],(floors_pac[i][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][1]))
+            self.screen.blit(floors_pac[i][1][1],(floors_pac[i][1][2][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][2][1]))
+            self.screen.blit(floors_pac[i][1][0],(floors_pac[i][1][2][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][2][1]))
             self.screen.blit(floors_pac[i][2][1],(floors_pac[i][2][2][0],gm.WINDOW_SIZE[1] - floors_pac[i][2][2][1]))
             self.screen.blit(floors_pac[i][2][0],(floors_pac[i][2][2][0],gm.WINDOW_SIZE[1] - floors_pac[i][2][2][1]))
-            self.screen.blit(floors_pac[i][3][1],(floors_pac[i][3][2][0],gm.WINDOW_SIZE[1] - floors_pac[i][3][2][1]))
-            self.screen.blit(floors_pac[i][3][0],(floors_pac[i][3][2][0],gm.WINDOW_SIZE[1] - floors_pac[i][3][2][1]))
+            self.screen.blit(floors_pac[i][3][0],(floors_pac[i][3][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][3][1][1]))
+            
+            #self.screen.blit(shape,(floors_pac[i][1][0],gm.WINDOW_SIZE[1] - floors_pac[i][1][1]))
+            
+            
+            
+
+
             
     def pack_elevators_to_desplay(self, elevators_pac):
         for i in range(len(elevators_pac)):
@@ -82,10 +94,22 @@ class Game:
         
         while running:
              count += 1
+             
+             if tes_i < len(tes):
+                
+                 tes_i += 1
+                 self._building.get_elevator(tes[tes_i])
+                 print("innnnnnnnnnnnnnnnnn")
+             
+             
+             
+
+
+
              for event in pygame.event.get():
                   
                   if event.type == pygame.KEYDOWN:
-                     tes_i += 1
+                   
                      key = pygame.key.get_pressed()
                  
                 
@@ -95,9 +119,10 @@ class Game:
                         running = False 
                     
                      if key[pygame.K_RETURN]:
+                         pass
                         # self._building.get_elevator(random.randint(2,10))  
-                         if tes_i < len(tes):                         
-                            self._building.get_elevator(tes[tes_i])                           
+                        # if tes_i < len(tes):                         
+                         #   self._building.get_elevator(tes[tes_i])                           
                          
                      """   
                  f, m = self.get_floor(key)
@@ -131,12 +156,22 @@ class Game:
 
     def test(self):
         running = True
+        tes = [6,3,5,7,4,2,1,10,9,0,8,1,2,3,7]
+        
+        tes_i = 0
+        
         clock = pygame.time.Clock()
         
         self.erease_screen()
         
         while running:
             
+
+             
+              if tes_i < len(tes):                
+                 self._building.get_elevator(tes[tes_i])
+                 tes_i += 1
+                 print("innnnnnnnnnnnnnnnnn")
 
               for event in pygame.event.get():
                   if pygame.mouse.get_pressed()[0]:
