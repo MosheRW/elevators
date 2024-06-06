@@ -1,5 +1,5 @@
          
-from Graphic_Manager import get_floors_boundries
+#from Graphic_Manager import get_floors_boundries
 from Floors_managemant_2 import Floors_managment
 from Elevators_Management_2 import Elevators_Management_2 as Elevators_Management
 

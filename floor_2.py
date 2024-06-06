@@ -1,21 +1,17 @@
-#from Queque import Queque
+import pygame
 from enum import Enum
-from Graphic_Manager import WAIT_IN_FLOOR, get_floors_boundries
+
+from Graphic_Manager import WAIT_IN_FLOOR
 import Graphic_Manager as gm
 from Timer_2 import Timer_2
-import pygame
+
 from Button import Button
 from Button import states
 
 
-#states = Enum('states', ['WAITING', 'ELEVATOR_HERE', 'STILL'])
-
 def get_init_position(serial, first_floor_is = 0):
      return (0, gm.FLOOR_SIZE[1] + (serial - first_floor_is) * (gm.ELEVATOR_SIZE[0]))
-
          
-def convert(position):
-    return (position[0], gm.WINDOW_SIZE[1] - position[1] )
 
 class Floor_2:
     
@@ -36,10 +32,6 @@ class Floor_2:
         self.__buffer = pygame.Surface((160, 7))
         self.__buffer.fill(gm.HORIZONTAL_BUFFER_COLOR)
 
-        #the text hendlers could be unnecessary or need to be changed
-        self.text = gm.font.render(self.textGenerator(),True,(0,0,0))
-        self.text_rect = self.text.get_rect()
-
 
 #---------------------------------------------------------------------------------
         
@@ -47,33 +39,30 @@ class Floor_2:
         self._floor = floor
         self.set_status(states.STILL)
         self.set_position(get_init_position(floor))
-        self._button.set(self.calculate_button_pos(),str(self.get_floor()),(255,255,255))# ") #(149, 201, 232))
+        self._button.set(self.calculate_button_pos(),str(self.get_floor()),(255,255,255))
         self._timer_text.set(self.calculate_timer_pos(), "00:00", "gray")
         self.set_buffer()
-        
-        #self._timer_text.init(f"{self.get_timer()}")
+        pygame.mixer.music.load(gm.DING_FILE)
         
         
 #---------------------------------------------------------------------------------
-
         
     def is_this_floor_needs_an_elevator(self):
         return self.get_status() == states.STILL
     
 
     def get_elevator(self, time):        
-        ###print(f"-> 1 -> Floor_2.get_elevator.time: {time}   <-")
         self.set_timer(time)
-        ###print(f"-> 2 -> Floor_2.get_elevator.time: {time}   <-")
         self.set_status(states.WAITING)
-#----------------------------------------------------------------------------------
         
+#----------------------------------------------------------------------------------
+
+    #get the surface's of the class
     def get(self):    
         return (self.get_img(), self.get_text(), self.get_button(),self.get_buffer())
     
-    def update(self):
-        #print(f" Floor serial: {self._floor}. timer: {self._timer} \n") 
-        #self.update_text()
+    #update the class variables, timers and statuses
+    def update(self):        
         self.update_timer()
         self.update_status()
         self.update_text()
@@ -90,10 +79,7 @@ class Floor_2:
     
     def get_status(self):
         assert type(self._status) == states, "ERROR, Wrong type"
-        ###print( self._status)
         return self._status
-        #temp = self._status
-        #return temp
     
     def get_timer(self):
         return self._timer.get()
@@ -101,10 +87,9 @@ class Floor_2:
     def get_img(self):
          return (pygame.transform.scale(self.img, gm.FLOOR_SIZE), self.get_position())
     
-    def get_text(self):
-        return self._timer_text.get()
+    def get_text(self):        
         if self.get_status() == states.WAITING:
-            return self._timer_text.get()
+            return self._timer_text.get()        
         return self.__empty.get()
     
     def get_buffer(self):
@@ -152,9 +137,9 @@ class Floor_2:
                 self.set_status(states.ELEVATOR_HERE)
                 self.set_timer(gm.WAIT_IN_FLOOR)
                 self.play_ding()
-                # dBug =input("ariived on time? ")
                 
-        elif self.get_status() == states.ELEVATOR_HERE: #case elevator is here
+                #case elevator is here
+        elif self.get_status() == states.ELEVATOR_HERE: 
             
             if not self._timer.is_running():
                 self.set_status(states.STILL)                    
@@ -174,8 +159,7 @@ class Floor_2:
         
 #----------------------------------------------------------
 #        
-    def play_ding(self):
-        pygame.mixer.music.load("resources\ding.mp3")
+    def play_ding(self):        
         pygame.mixer.music.play()
 
     def textGenerator(self) -> str:
@@ -191,21 +175,7 @@ class Floor_2:
 
     def is_clicked(self, m_position):
         return self._button.is_clicked(m_position)
-    """
-        m_position = convert(m_position)
-        ##print(f"\n\n{self.get_floor()}")
-        ##print(f"m_position: {m_position}")
-        top_x, top_y = self.get_position()
-        bottom_x, bottom_y = gm.FLOOR_SIZE[0], self.get_position()[1] - gm.FLOOR_SIZE[1]
-        
-        ##print(f"top: ({top_x}, {top_y}), bottom: ({bottom_x}, {bottom_y})")
-
-        if m_position[0] <= top_x   and m_position[0] >= bottom_x:
-           if m_position[1] <= top_y   and m_position[1] >= bottom_y:
-            return True
-        return False
-        
-        """
+    
 
     def calculate_button_pos(self):
         
@@ -224,8 +194,3 @@ class Floor_2:
        return f'|floor: {self.get_floor()},  status: {self.get_status()}, timer: {self.get_timer()} |\n'
 
 
-"""
-fl = Floor_2(0)
-##print(fl.get_position())
-##print(fl.is_clicked((15,15)))
-"""

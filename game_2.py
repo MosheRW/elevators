@@ -4,12 +4,9 @@ import pygame
 import Graphic_Manager as gm
 from Building_2 import Building 
 
-#start cleaning
-
-
 
 class Game:
-    screen = gm.get_screen()
+    screen = gm.screen
     
     def __init__(self, floors = 11, elevators =7):
         self.__num_of_floors = floors
@@ -17,10 +14,14 @@ class Game:
         
         self._building = Building(self.__num_of_floors, self.__num_of_elevators)
                        
-
+        
+        
     def init(self):
+        #maybe need to change the size of the screen here
         pygame.init()        
         self._building.init()
+
+
                   
     def erease_screen(self):
         self.screen.fill("white")
@@ -52,6 +53,8 @@ class Game:
             #draw the buffer between floors
             self.screen.blit(floors_pac[i][3][0],   cuordinates_calculator(floors_pac[i][3][1]))
             
+
+
     def draw_elevators(self, elevators_pac):
         for i in range(len(elevators_pac)):
             
@@ -61,6 +64,7 @@ class Game:
             
             #draw the elevator img
             self.screen.blit(ele[0], cuordinates_calculator(ele[1]))        
+
 
     # pull floor from numpad events.
     # if 'Enter' pressed returning random floor.
@@ -100,6 +104,9 @@ class Game:
               pos = pygame.mouse.get_pos()
               return  self._building.who_clicked(    cuordinates_calculator(pos))
         return -1
+
+
+
     
     def play(self):
         clock = pygame.time.Clock()

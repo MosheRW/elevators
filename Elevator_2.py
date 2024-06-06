@@ -12,7 +12,7 @@ def get_init_position(serial, first_elevator_is = 1) -> tuple:
             return (int(gm.FLOOR_SIZE[0] + gm.SPACE + gm.ELEVATOR_SIZE[0] + (serial - first_elevator_is) * (gm.ELEVATOR_SIZE[0] + gm.SPACE)),     int(gm.ELEVATOR_SIZE[1]))
 
 class Elevator:
-    screen = gm.get_screen()
+    #screen = gm.get_screen()
     
     def __init__(self,serial,starting_point = 0):
         pygame.init
