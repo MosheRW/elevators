@@ -96,7 +96,7 @@ class Game:
          
          return -1
     
-     #pull floor from mouse events. if no floor clikced returning '-1'
+    
     
     #pull floor from mouse events. if no floor clikced returning '-1'
     def get_floor_from_mouse(self):

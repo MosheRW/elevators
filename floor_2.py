@@ -17,19 +17,21 @@ class Floor_2:
     
     def __init__(self, floor = 0):
         
+        #data
         self._floor = floor
         self._position = (0,0)
         
         self._status = states.STILL
         self._timer = Timer_2()
         
-        self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()
+        #graphics
+        self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()                  #the floor img
         
-        self._button = Button(self.get_position(), str(self._floor), "yellow")
-        self._timer_text = Button(self.get_position(),"00:00","black")
-        self.__empty = Button(self.get_position(),"00:00","black",  False)
+        self._button = Button(self.__get_position(), str(self._floor), "yellow")      #the elevator invite button (also display thefloor number)
+        self._timer_text = Button(self.__get_position(),"00:00","black")              #the timer display module. appearing when the timer is on
+        self.__empty = Button(self.__get_position(),"00:00","black",  False)          #outputing this case the timer isnt on
         
-        self.__buffer = pygame.Surface((160, 7))
+        self.__buffer = pygame.Surface(gm.HORIZONTAL_BUFFER_SIZE)                   #the buffer module
         self.__buffer.fill(gm.HORIZONTAL_BUFFER_COLOR)
 
 
@@ -39,16 +41,16 @@ class Floor_2:
         self._floor = floor
         self.set_status(states.STILL)
         self.set_position(get_init_position(floor))
-        self._button.set(self.calculate_button_pos(),str(self.get_floor()),(255,255,255))
-        self._timer_text.set(self.calculate_timer_pos(), "00:00", "gray")
-        self.set_buffer()
+        self._button.set(self.__calculate_button_pos(),str(self.__get_floor()),(255,255,255))
+        self._timer_text.set(self.__calculate_timer_pos(), "00:00", "gray")
+        self.__set_buffer()
         pygame.mixer.music.load(gm.DING_FILE)
         
         
 #---------------------------------------------------------------------------------
         
     def is_this_floor_needs_an_elevator(self):
-        return self.get_status() == states.STILL
+        return self.__get_status() == states.STILL
     
 
     def get_elevator(self, time):        
@@ -59,43 +61,43 @@ class Floor_2:
 
     #get the surface's of the class
     def get(self):    
-        return (self.get_img(), self.get_text(), self.get_button(),self.get_buffer())
+        return (self.__get_img(), self.__get_text(), self.__get_button(),self.__get_buffer())
     
     #update the class variables, timers and statuses
     def update(self):        
-        self.update_timer()
-        self.update_status()
-        self.update_text()
-        self.update_button()
+        self.__update_timer()
+        self.__update_status()
+        self.__update_text()
+        self.__update_button()
         
   
 #----------------------------------------------------------
 
-    def get_floor(self):
+    def __get_floor(self):
         return self._floor
     
-    def get_position(self):
+    def __get_position(self):
         return self._position
     
-    def get_status(self):
+    def __get_status(self):
         assert type(self._status) == states, "ERROR, Wrong type"
         return self._status
     
-    def get_timer(self):
+    def __get_timer(self):
         return self._timer.get()
     
-    def get_img(self):
-         return (pygame.transform.scale(self.img, gm.FLOOR_SIZE), self.get_position())
+    def __get_img(self):
+         return (pygame.transform.scale(self.img, gm.FLOOR_SIZE), self.__get_position())
     
-    def get_text(self):        
-        if self.get_status() == states.WAITING:
+    def __get_text(self):        
+        if self.__get_status() == states.WAITING:
             return self._timer_text.get()        
         return self.__empty.get()
     
-    def get_buffer(self):
-        return (self.__buffer, self.get_position())    
+    def __get_buffer(self):
+        return (self.__buffer, self.__get_position())    
     
-    def get_button(self):
+    def __get_button(self):
         return self._button.get()
         
 #-----------------------------------------------------------
@@ -107,90 +109,74 @@ class Floor_2:
     def set_status(self, new_status):
         assert type(new_status) == states, "ERROR, incorrect value of new_position"
         self._status = new_status
-        self.update_img()
+        self.__update_img()
         
     def set_timer(self, new_time):
         self._timer.set(new_time)
 
-    def set_img(self,filename):         #maybe need to implement another one, with state as input
+    def set_img(self,filename):
          self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()
          
-    def set_text(self):
-        self._timer_text = Button(self.calculate_timer_pos(),"00:00","black")
+    def __set_text(self):
+        self._timer_text = Button(self.__calculate_timer_pos(),"00:00","black")
         
-    def set_buffer(self):
+    def __set_buffer(self):
         self.__buffer = pygame.Surface(gm.HORIZONTAL_BUFFER_SIZE)
         self.__buffer.fill(gm.HORIZONTAL_BUFFER_COLOR)
         
         
-        
-        
-    
-
 #-------------------------------------------------------------
+    # updates section        
 
-    def update_status(self):
-        if  self.get_status() == states.WAITING:
+    def __update_status(self):
+        if  self.__get_status() == states.WAITING:                
             
-            if not self._timer.is_running():
+            if not self._timer.is_running():                     #case elevator isnt here
                 
                 self.set_status(states.ELEVATOR_HERE)
                 self.set_timer(gm.WAIT_IN_FLOOR)
                 self.play_ding()
                 
-                #case elevator is here
-        elif self.get_status() == states.ELEVATOR_HERE: 
+                
+        elif self.__get_status() == states.ELEVATOR_HERE:          #case elevator is here
             
             if not self._timer.is_running():
-                self.set_status(states.STILL)                    
+                self.set_status(states.STILL)                       
     
-    def update_timer(self):
+    def __update_timer(self):
         self._timer.update()
     
-    def update_img(self):                           #maybe need to implement another one, with state as inputs
+    def __update_img(self):
+        #can change the elevator pic when the status changes
         pass
 
-    def update_text(self):
+    def __update_text(self):
         self._timer_text.update(str(self._timer),states.STILL)
-        #self.set_text()
-
-    def update_button(self):
-        self._button.update(str(self.get_floor()),self.get_status()) 
+       
+    def __update_button(self):
+        self._button.update(str(self.__get_floor()),self.__get_status()) 
         
 #----------------------------------------------------------
 #        
     def play_ding(self):        
         pygame.mixer.music.play()
 
-    def textGenerator(self) -> str:
-        #return str(self.get_timer()) + str(self.get_status())
-    
-        if self.get_status() == states.STILL:
-            return f"{self.get_timer()} click here!"
-        elif self.get_status() == states.ELEVATOR_HERE:
-            return f"{self.get_timer()} arruved!"
-        elif self.get_status() == states.WAITING:
-            return f"{self.get_timer()} states.WAITING"
-        
-
     def is_clicked(self, m_position):
         return self._button.is_clicked(m_position)
     
 
-    def calculate_button_pos(self):
-        
-        return ( self.get_position()[0] + 20, self.get_position()[1] - 20)
+    def __calculate_button_pos(self):        
+        return ( self.__get_position()[0] + 20, self.__get_position()[1] - 20)
                
-
-    def calculate_timer_pos(self):
-        return ( self.get_position()[0] + gm.FLOOR_SIZE[0] - (20 + self._timer_text.getrect().right),   self.get_position()[1] - 20)
+    def __calculate_timer_pos(self):
+        return ( self.__get_position()[0] + gm.FLOOR_SIZE[0] - (20 + self._timer_text.getrect().right),      self.__get_position()[1] - 20)
        
     
 #-------------------------------------------------------------
     def __str__ (self):
-        return f'|floor: {self.get_floor()},  status: {self.get_status()}, timer: {self.get_timer()} |\n'
+        return f'|floor: {self.__get_floor()},  status: {self.__get_status()}, timer: {self.__get_timer()} |\n'
     
     def __repr__ (self):
-       return f'|floor: {self.get_floor()},  status: {self.get_status()}, timer: {self.get_timer()} |\n'
+       return f'|floor: {self.__get_floor()},  status: {self.__get_status()}, timer: {self.__get_timer()} |\n'
 
 
