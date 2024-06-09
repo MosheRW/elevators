@@ -5,7 +5,7 @@ pygame.font.init()
 
 
 #font to use in the project
-font = pygame.font.Font('Roboto-Black.ttf',23)
+font = pygame.font.Font('resources\Roboto-Black.ttf',23)
 
 #time settings
 TIME_TRAVEL_BETWEEN_FLOORS = 0.5 #seconds
