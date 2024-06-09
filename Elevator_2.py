@@ -17,7 +17,7 @@ class Elevator:
         self._serial = serial               #the elevator serial number from all the elevators
         self._position = (0,0)              #the position on the screen in Euclidean values
         
-        self._status = ele_status.STILL     #the status of the elevator, one five availables above.(enum. initilize to still)
+        self._status = ele_status.STILL     #the status of the elevator, one from  the five availables above.(enum. initilize to still)
         self._img =  pygame.image.load(gm.ELEVATOR_PIC_FILE).convert()   #_img representation of the elevator
         
         self.__novment_counter = 0            #counts the pixels the elevator moves from the last time the elevators opend its doors
@@ -31,7 +31,7 @@ class Elevator:
     def set(self, position):
         self.__set_position(position)
           
-    #get the graphical represntations end Euclidean location of the elevator in a tuple
+    #get the graphical represntations asnd Euclidean location of the elevator in a tuple
     def get(self) -> tuple:
         return (self.get__img(),self.get_position())
     
