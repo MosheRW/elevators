@@ -18,10 +18,10 @@ class Elevator:
         self._position = (0,0)              #the position on the screen in Euclidean values
         
         self._status = ele_status.STILL     #the status of the elevator, one five availables above.(enum. initilize to still)
-        self.img =  pygame.image.load(gm.ELEVATOR_PIC_FILE).convert()   #img representation of the elevator
+        self._img =  pygame.image.load(gm.ELEVATOR_PIC_FILE).convert()   #_img representation of the elevator
         
-        self.novment_counter = 0            #counts the pixels the elevator moves from the last time the elevators opend its doors
-        self.novment_limit = 0              #the num of pixels the elevator need to move until its next destnation         
+        self.__novment_counter = 0            #counts the pixels the elevator moves from the last time the elevators opend its doors
+        self.__novment_limit = 0              #the num of pixels the elevator need to move until its next destnation         
         
         self._time_until_clear = Timer_2.Timer_2()          #timer object. store the time until the end of the entire scedualed travel, including the waiting time at any floor
         self._time_to_end_status = Timer_2.Timer_2()        #timer object. store the time until the current operation will end.
@@ -29,19 +29,19 @@ class Elevator:
 #--------------------------------------------------------------------------#       
     #set the Euclidean location of the elevator
     def set(self, position):
-        self.set_position(position)
+        self.__set_position(position)
           
     #get the graphical represntations end Euclidean location of the elevator in a tuple
     def get(self) -> tuple:
-        return (self.get_img(),self.get_position())
+        return (self.get__img(),self.get_position())
     
     #updates the location, graphic represantation, status and timers of the elevator 
     def update(self):
-         self.move()  
-         self.update_big_timer()
-         self.update_small_timer()
-         self.update_status()
-         self.update_img()
+         self.__move()  
+         self.__update_big_timer()
+         self.__update_small_timer()
+         self.__update_status()
+         self.__update__img()
 
 #--------------------------------------------------------------------------#       
              
@@ -78,7 +78,7 @@ class Elevator:
         # if the elevator is on stil state - setting it to ivited status
         # so in the next update, it will calculate the direction of movment and moves
         if  self.get_status() == ele_status.STILL:
-             self.set_status(ele_status.INVITED)
+             self.__set_status(ele_status.INVITED)
              
         #setting the ncalculated time             
         self._time_until_clear.set(new_time)     
@@ -104,8 +104,8 @@ class Elevator:
     def get_position(self):
         return self._position
   
-    def get_img(self):        
-        return pygame.transform.scale(self.img, gm.ELEVATOR_SIZE)    
+    def get__img(self):        
+        return pygame.transform.scale(self._img, gm.ELEVATOR_SIZE)    
     
     def get_status(self):
         return self._status
@@ -123,109 +123,109 @@ class Elevator:
 
 #--------------------------------------------------------------------
       
-    def set_position(self, position, y = 0):
+    def __set_position(self, position, y = 0):
         if type(position) == tuple:
             self._position = position            
         else:
             self._position[0] = position
             self._position[1] = y                
 
-    def set_img(self, filename = gm.ELEVATOR_PIC_FILE):
-        self.img = pygame.image.load(filename).convert()
+    def __set__img(self, filename = gm.ELEVATOR_PIC_FILE):
+        self._img = pygame.image.load(filename).convert()
        
-    def set_status(self, new_status):
+    def __set_status(self, new_status):
         self._status = new_status
         
-    def set_floor(self, new_floor):
+    def __set_floor(self, new_floor):
         self._floor = new_floor
     
 
 #--------------------------------------------------------------------
- 
-    def update_img(self):
+    #update methodes
+    def __update__img(self):
         if self.get_status() == ele_status.DOORS_OPEN:            
-            self.set_img(gm.ELEVATOR_GREEN_PIC_FILE)            
+            self.__set__img(gm.ELEVATOR_GREEN_PIC_FILE)            
         else:
-             self.set_img()
+             self.__set__img()
                         
-    def update_big_timer(self):
+    def __update_big_timer(self):
         self._time_until_clear.update()
         
-    def update_small_timer(self):
+    def __update_small_timer(self):
         self._time_to_end_status.update()
              
-    def update_status(self):
-         self.update_status_case_still()
-         self.update_status_case_moving()
-         self.update_status_case_doors_opened()
-         self.update_status_case_invited()
+    def __update_status(self):
+         self.__update_status_case_still()
+         self.__update_status_case_moving()
+         self.__update_status_case_doors_opened()
+         self.__update_status_case_invited()
 
 #--------------------------------------------------------------------
     
     #update status methodes and calculators
-    def update_status_case_still(self):
+    def __update_status_case_still(self):
           if self.get_status() == ele_status.STILL:            
             assert len(self._queque) == 0, "error. still even there is floors in line"
             
-    def update_status_case_moving(self):        
+    def __update_status_case_moving(self):        
         if (self.get_status() == ele_status.GOING_DOWN
             or self.get_status() == ele_status.GOING_UP ) \
-                and self.is_got_to_place():                        
-                    self.open_the_doors()
+                and self.__is_got_to_place():                        
+                    self.__open_the_doors()
                 
-    def update_status_case_doors_opened(self):
+    def __update_status_case_doors_opened(self):
          if self.get_status() == ele_status.DOORS_OPEN:
             
             if self._time_to_end_status.is_running():
                 pass 
             
             elif len(self._queque) > 0:
-                self.set_status(ele_status.INVITED)
+                self.__set_status(ele_status.INVITED)
                 
             else:
-                 self.set_status(ele_status.STILL)
+                 self.__set_status(ele_status.STILL)
                  self._time_until_clear.set_nulify()
 
-    def update_status_case_invited(self):
+    def __update_status_case_invited(self):
         if self.get_status() == ele_status.INVITED:
             if len(self._queque) > 0:                
-                self.set_status(self.calculate_movment_direction(self._queque[0]))
-                self.update_novment_limit(self._queque[0])
+                self.__set_status(self.__calculate_movment_direction(self._queque[0]))
+                self.__update___novment_limit(self._queque[0])
                 self.__destination = self._queque[0]
             else:
-                self.set_status(ele_status.STILL)       
+                self.__set_status(ele_status.STILL)       
   
-    def update_novment_limit(self, end):
-        self.novment_limit = calculate_novment_limit(self._floor,end)
-        self.novment_counter = 0
+    def __update___novment_limit(self, end):
+        self.__novment_limit = calculate___novment_limit(self._floor,end)
+        self.__novment_counter = 0
 
-    def open_the_doors(self):    
+    def __open_the_doors(self):    
         self._time_to_end_status.set(gm.WAIT_IN_FLOOR)
-        self.set_status(ele_status.DOORS_OPEN)
-        self.set_floor(self._queque.pop(0))
+        self.__set_status(ele_status.DOORS_OPEN)
+        self.__set_floor(self._queque.pop(0))
            
-    def is_got_to_place(self):
-        return self.novment_counter >= self.novment_limit    
+    def __is_got_to_place(self):
+        return self.__novment_counter >= self.__novment_limit    
  
-    def calculate_movment_direction(self, end):
+    def __calculate_movment_direction(self, end):
         return calculate_movment_direction(self._floor,end)
         
 
 #--------------------------------------------------------------------
     #movemant methodes
-    def move(self):
+    def __move(self):
         if self.get_status() == ele_status.GOING_UP:
-             self.move_up()
+             self.__move_up()
         elif  self.get_status() == ele_status.GOING_DOWN:
-             self.move_down()
+             self.__move_down()
 
-    def move_up(self):
+    def __move_up(self):
         self._position = (self._position[0], self._position[1] + gm.PACE)
-        self.novment_counter += gm.PACE
+        self.__novment_counter += gm.PACE
     
-    def move_down(self):
+    def __move_down(self):
          self._position = (self._position[0], self._position[1] - gm.PACE)
-         self.novment_counter += gm.PACE         
+         self.__novment_counter += gm.PACE         
     
 #--------------------------------------------------------------------
     #textual representation functions    
@@ -237,7 +237,7 @@ class Elevator:
             temp = str(self._queque[0])
         else: ""
         
-        return f"\nserial: {self._serial}, status: {self._status} " +  temp + f", position: {self._position}, timer: {self._time_until_clear}, small timer: {self._time_to_end_status}, movments: {self.novment_counter}"
+        return f"\nserial: {self._serial}, status: {self._status} " +  temp + f", position: {self._position}, timer: {self._time_until_clear}, small timer: {self._time_to_end_status}, movments: {self.__novment_counter}"
 
 #--------------------------------------------------------------------
 
@@ -249,59 +249,12 @@ def get_init_position(serial, first_elevator_is = 1) -> tuple:
 
 def calculate_time_from_one_store_to_another(strt, end):
     return Timer_2.calculate(0,int(abs(strt - end)) * gm.FRAMES_TO_CROSS_A_FLOOR)
-
               
 def calculate_movment_direction(strt, end):
         if strt > end:
             return ele_status.GOING_DOWN
         elif strt < end:
-            return ele_status.GOING_UP
-        #else:
-         #   return ele_status.GOING_DOWN
+            return ele_status.GOING_UP        
 
-def calculate_novment_limit(strt, end):
+def calculate___novment_limit(strt, end):
     return int(abs(strt - end) * gm.ELEVATOR_SIZE[1])
-
-#------------------------------------------------------
-def test()        :
-    
-    pygame.init
-    screen = gm.get_screen()
-    clock = pygame.time.Clock()
-    ele = Elevator(0)
-    
-    floor = 4
-    
-    ###print(ele)
-
-    ###print(ele.is_call_worthy(floor))
-    
-    count = 0
-    
-    #screen.fill("white")
-    #screen.set_colorkey()
-    
-    while True:
-         count += 1
-         
-         if count == 240:
-            ele.call(floor)
-         
-         ele.update()
-         
-        
-         
-         screen.fill("white")
-         screen.set_colorkey()
-         
-         screen.blit(ele.get_img(), ele.get_position())
-         pygame.display.flip()
-    
-         clock.tick(60)  # limits FPS to 60
-   # ###print(ele.is_call_worthy(5))
-
-    ###print(ele)
-
-#test()
-
-####print(calculate_time_from_one_store_to_another(0,5) )
