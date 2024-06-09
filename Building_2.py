@@ -12,36 +12,40 @@ class Building:
         self._elevator_mange = Elevators_Management(self.__num_of_elevators)
         
 #----------------------------------------------------------------------------
-
+    #initilize the floors and elevators managemant
     def init(self):
         self._floors_mange.init()
         self._elevator_mange.init()
         
+    #updates the floors and elevators                
+    def update(self):
+        self._floors_mange.update()
+        self._elevator_mange.update()
+        
+    #get an array of the floors and elevators graphical represntations arrays of tuples
+    def get(self):
+        return [self._floors_mange.get(), self._elevator_mange.get()]
+        
 #----------------------------------------------------------------------------
+
+    #returns which floor who clicked by the user, or '-1' if none clicked
+    def who_clicked(self, location_of_the_click):
+        return self._floors_mange.who_clicked(location_of_the_click)
+   
+    # calling to an elevator to a given floor - if the floor is eligible to invite an elevator
+    # and delegates the timing to the given floor
     def get_elevator(self, floor):
         if self._floors_mange.is_this_floor_needs_an_elevator(floor):
             
             time_stamp = self._elevator_mange.get_an_elevator(floor)
             
-            assert type(time_stamp) == tuple, "Error, incorrect value"            
+            assert type(time_stamp) == tuple, "Error, incorrect value"        
+            
             self._floors_mange.get_an_elevator(floor,time_stamp)
         
+
 #----------------------------------------------------------------------------
-            
-    def update(self):
-        self._floors_mange.update()
-        self._elevator_mange.update()
-        
 
-    def get(self):
-        return [self._floors_mange.get(), self._elevator_mange.get()]
-
-
-#-----------------------------------------------------------------------------
-    
-    
-    def who_clicked(self, location_of_the_click):
-        return self._floors_mange.who_clicked(location_of_the_click)
     def __str__(self):
          return f'floor_manger: {self._floors_mange}\nelevator_mange: {self._elevator_mange}'
     

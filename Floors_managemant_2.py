@@ -13,7 +13,7 @@ class Floors_managment:
          for i in range(len(self._the_floors)):
             self._the_floors[i].init(i)
     
-    #get an array of floors the graphical represntations tuples            
+    #get an array of the floors graphical represntations tuples            
     def get(self):
         return [self._the_floors[i].get() for i in range(len(self._the_floors))]
 

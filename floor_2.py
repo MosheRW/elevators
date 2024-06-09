@@ -156,14 +156,16 @@ class Floor_2:
         self._button.update(str(self.__get_floor()),self.__get_status()) 
         
 #----------------------------------------------------------
-#        
+        
     def play_ding(self):        
         pygame.mixer.music.play()
 
+    #boolean: returns true if the floors buttton clicked
     def is_clicked(self, m_position):
         return self._button.is_clicked(m_position)
     
-
+#----------------------------------------------------------
+    
     def __calculate_button_pos(self):        
         return ( self.__get_position()[0] + gm.IDENTATION,  self.__get_position()[1] - gm.IDENTATION)
                
