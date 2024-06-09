@@ -1,8 +1,8 @@
-
+from re import I
 import pygame
-#import Queque
-import Graphic_Manager as gm
 from enum import Enum
+
+import Graphic_Manager as gm
 import Timer_2
 
 
@@ -12,8 +12,6 @@ def get_init_position(serial, first_elevator_is = 1) -> tuple:
             return (int(gm.FLOOR_SIZE[0] + gm.SPACE + gm.ELEVATOR_SIZE[0] + (serial - first_elevator_is) * (gm.ELEVATOR_SIZE[0] + gm.SPACE)),     int(gm.ELEVATOR_SIZE[1]))
 
 class Elevator:
-    #screen = gm.get_screen()
-    
     def __init__(self,serial,starting_point = 0):
         pygame.init
         
@@ -27,73 +25,81 @@ class Elevator:
         self.novment_counter = 0
         self.novment_limit = 0
         
-        self._time_until_clear = Timer_2.Timer_2()
-        
+
+        self._time_until_clear = Timer_2.Timer_2()        
         self._time_to_end_status = Timer_2.Timer_2()
 
-        self.__destination = 0
+        #self.__destination = 0
 
-#--------------------------------------------------------------------------
-#        
+#--------------------------------------------------------------------------#        
     def set(self, position):
         self.set_position(position)
           
     def get(self):
-        #return self.screen.blit(self.get_img(),self.get_position())
         return (self.get_img(),self.get_position())
              
 
+    # is_call_worthy:       <-      attantion: this function will not change any stored data!
+    # calculate ans returns the time it'ill take to the elevator to get to a specific floor,
+    # concidering the current time sceduale, and the time it will take to travel to new floor
     def is_call_worthy(self, floor):
-        if(len(self._queque) > 0):
-              temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
-        else:
-             temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._floor,floor))
-             #temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self.__destination,floor))
-             
-        ###print(f"{self._serial} Elevator.is_call_worthy.temp: {temp}")
-        return temp
+        
+        # getting the last floor in line
+        last_floor_in_line = self.__get_last_floor_in_line()                                    
+        
+        # calculating the time travel from the last floor in line - to the new floor
+        the_new_jurny_time = calculate_time_from_one_store_to_another(last_floor_in_line,floor) 
+        
+        # calculating and returning the current time scedualed with the addition of time of the new floor
+        return self._time_until_clear.get_with_addition(the_new_jurny_time)
+    
 
-
+        
+    # call function:
+    # adding the new call to the sceduale and the queque
     def call(self, floor):
-        ###print("\n\n" + str(self.get_status()) + "\n")
-        if len(self._queque) > 0:
-            ##print(">>>")
+        #cases that no need to make a change - even the elevator calld       
+        
+        if self.__get_last_floor_in_line() == floor:
+                return  self.get_time().get()
+        
+        """
+        if len(self._queque) > 0:       #case the last invite is the same as new invitation
             if self._queque[-1] == floor:
                 return  self.get_time().get()
         
-        elif len(self._queque) == 0:
+        elif len(self._queque) == 0:    #case the new invitation is to the current floor
             if self._floor == floor:
                 return   self.get_time().get() #(0,0)
-        
-          
-        #---------#
             
-        temp = self.is_call_worthy(floor) 
-        #print(f"adding the new time to the current time: {self.get_time()} + the addition = {temp}")
+                """
+                 
+        #---------#
+       
+        #calculating the time untill the arriving in the newest scedualded floor
+        new_time = self.is_call_worthy(floor) 
+        
+        #adding the newely invited floor to the queque
         self._queque.append(floor)
-   
-       # if  self.get_status() != ele_status.DOORS_OPEN:
+        
+        # if the elevator is on stil state - setting it to ivited status
+        # so in the next update, it will calculate the direction of movment and moves
         if  self.get_status() == ele_status.STILL:
              self.set_status(ele_status.INVITED)
-             """
-             temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._floor,floor))
-        else:
-            temp = self._time_until_clear.get_with_addition(calculate_time_from_one_store_to_another(self._queque[-1],floor))
-                """     
-        #temp = self.is_call_worthy(floor) 
-        
-        ####print(F"call.temp: {temp}")
-        self._time_until_clear.set(temp)     
-        #self._time_until_clear.add(temp[0], temp[1])
+             
+        #setting the ncalculated time             
+        self._time_until_clear.set(new_time)     
        
-        temp2 = self.get_time().get() 
-        self._time_until_clear.add(gm.WAIT_IN_FLOOR,0)          #need to look into this methode
+        # adding the 'waiting in floor' time on top of the 'waiting to the elevator' time,
+        # so we will know when the elevator will be available again
+        self._time_until_clear.add(gm.WAIT_IN_FLOOR,0) 
         
-        #temp = self._time_until_clear.get()
-        assert type(temp) == tuple, "ERROR"
-        assert temp != (0,0), "ERROR"
         
-        return  temp
+        assert type(new_time) == tuple and new_time != (0,0), "ERROR"        
+        
+        # retuning the time without the recently added wait in floor time
+        # so we can know when elevator will arrive at the newely scedualed floor
+        return  new_time
         
        
     def get_time(self):
@@ -246,10 +252,14 @@ class Elevator:
         return f"\nserial: {self._serial}, status: {self._status} " +  temp + f", position: {self._position}, timer: {self._time_until_clear}, small timer: {self._time_to_end_status}, movments: {self.novment_counter}"
     
 
+    #get_last_floor_in_line returns the last floor in line or the current floor if there is no floor in line
+    def __get_last_floor_in_line(self):
+          if(len(self._queque) > 0):
+                 return self._queque[-1]
+          return self.get_floor()
+              
+
 def calculate_time_from_one_store_to_another(strt, end):
-    ###print (f"{abs(strt - end)}, strt:{strt}, end:{end}")
-    #print(f" gm.FRAMES_TO_CROSS_A_FLOOR: {gm.FRAMES_TO_CROSS_A_FLOOR}")
-    print(f"it takes {Timer_2.calculate(0,int(abs(strt - end)) * gm.FRAMES_TO_CROSS_A_FLOOR)} to travel from one floor to another")
     return Timer_2.calculate(0,int(abs(strt - end)) * gm.FRAMES_TO_CROSS_A_FLOOR)
              
 
@@ -259,25 +269,11 @@ def calculate_movment_direction(strt, end):
             return ele_status.GOING_DOWN
         elif strt < end:
             return ele_status.GOING_UP
-        else:
-            return ele_status.GOING_DOWN
+        #else:
+         #   return ele_status.GOING_DOWN
 
 def calculate_novment_limit(strt, end):
     return int(abs(strt - end) * gm.ELEVATOR_SIZE[1])
-"""
-#if strt <= end:
-    if strt < end:
-        return (end - strt) * (gm.ELEVATOR_SIZE[1] + gm.SPACE)
-    elif strt > end:
-        return (strt - end) *(gm.ELEVATOR_SIZE[1] + gm.SPACE)
-    else:
-        return 0
-"""            
-             
-       # assert strt != end, "ERROE"
-            
-        
-        
 
 #------------------------------------------------------
 def test()        :

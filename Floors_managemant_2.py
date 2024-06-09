@@ -27,8 +27,8 @@ class Floors_managment:
 #----------------------------------------------------------------------------
 
     def is_this_floor_needs_an_elevator(self, floor):
-        ##print(f"floor_managemant.is_this_floor_needs_an_elevator: self._the_floors[floor].get_status()) {self._the_floors[floor].get_status()}")
         return self._the_floors[floor].is_this_floor_needs_an_elevator()
+    
         
     def get_an_elevator(self, floor, new_time):
         self._the_floors[floor].get_elevator(new_time)
@@ -40,8 +40,6 @@ class Floors_managment:
                 return i
         return -1
         
-        #return index of the floor
-    
 
 #----------------------------------------------------------------------------
 
