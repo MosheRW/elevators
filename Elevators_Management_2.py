@@ -13,7 +13,7 @@ class Elevators_Management_2:
         
 
 #--------------------------------------------------------------------
-    #initilize the elevators i the array        
+    #initilize the elevators in the array        
     def init(self):
         for i in range(len( self._the_elevators)):
             self._the_elevators[i].set(ele.get_init_position(i))

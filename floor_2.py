@@ -34,11 +34,15 @@ class Floor_2:
         
     def init(self, floor):
         self._floor = floor
+        
         self.set_status(states.STILL)
-        self.set_position(get_init_position(floor))
+        self.set_position( get_init_position(floor))
+        
         self._button.set(self.__calculate_button_pos(),str(self.__get_floor()),(255,255,255))
         self._timer_text.set(self.__calculate_timer_pos(), "00:00", "gray")
+        
         self.__set_buffer()
+        
         pygame.mixer.music.load(gm.DING_FILE)
         
         

@@ -1,6 +1,4 @@
 from floor_2 import Floor_2 as Floor
-import floor_2 as fl
-import Graphic_Manager as gm
 
 
 class Floors_managment:
@@ -10,39 +8,40 @@ class Floors_managment:
         self._the_floors = [Floor(i) for i in range(self.__num_of_floors + 1)]
 
 #-------------------------------------------------------------------------        
+    #initilize the floors in the array        
     def init(self):
          for i in range(len(self._the_floors)):
             self._the_floors[i].init(i)
-             #self._the_floors[i].set_position((fl.get_init_position(i)))
-       
-        
+    
+    #get an array of floors the graphical represntations tuples            
     def get(self):
         return [self._the_floors[i].get() for i in range(len(self._the_floors))]
 
-
+    #updates the floors 
     def update(self):
         for i in range(len(self._the_floors)):
             self._the_floors[i].update()
         
 #----------------------------------------------------------------------------
-
-    def is_this_floor_needs_an_elevator(self, floor):
+    #returns if a given flooe is already invite an elevator to
+    def is_this_floor_needs_an_elevator(self, floor) -> bool:
         return self._the_floors[floor].is_this_floor_needs_an_elevator()
     
-        
+    #sets a given floor as waiting to an elevator, and delgating the time it will take
     def get_an_elevator(self, floor, new_time):
         self._the_floors[floor].get_elevator(new_time)
+       
+#----------------------------------------------------------------------------
         
-
+    #returns which floor who clicked by the user, or '-1' if none clicked
     def who_clicked(self, location_of_the_click):
         for i in range(len(self._the_floors)):
             if self._the_floors[i].is_clicked(location_of_the_click):
                 return i
-        return -1
-        
+        return -1       
 
 #----------------------------------------------------------------------------
-
+    #textual representation functions
     def __repr__(self):
         return f'the floors: {self._the_floors}'
     
