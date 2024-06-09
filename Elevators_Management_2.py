@@ -19,7 +19,8 @@ class Elevators_Management_2:
 
     def init(self):
         for i in range(len( self._the_elevators)):
-            self._the_elevators[i].set_position((ele.get_init_position(i)))
+            self._the_elevators[i].set(ele.get_init_position(i))
+            
             
     def update(self):
         for i in  range(len(self._the_elevators)):
