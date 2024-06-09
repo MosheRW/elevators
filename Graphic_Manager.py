@@ -11,7 +11,6 @@ font = pygame.font.Font('resources\Roboto-Black.ttf',23)
 TIME_TRAVEL_BETWEEN_FLOORS = 0.5 #seconds
 WAIT_IN_FLOOR = 2
 
-
 #sizes of the game images
 ELEVATOR_SIZE = (60,60)
 FLOOR_SIZE = (160,60)

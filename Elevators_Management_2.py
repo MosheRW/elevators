@@ -1,8 +1,7 @@
 import pygame
-from Elevator_2 import Elevator
+
+from  Elevator_2 import Elevator
 import Elevator_2 as ele
-
-
 
 class Elevators_Management_2:
 
