@@ -73,25 +73,25 @@ class Game:
     # if no floor clikced returning '-1'
     def get_floor_from_keyboard(self, key):
          
-         if key[pygame.K_KP0]:
+         if key[pygame.K_KP0] or key[pygame.K_0]:
              return 0
-         elif key[pygame.K_KP1]:
+         elif key[pygame.K_KP1] or key[pygame.K_1]:
              return 1
-         elif key[pygame.K_KP2]:
+         elif key[pygame.K_KP2] or key[pygame.K_2]:
              return 2
-         elif key[pygame.K_KP3]:
+         elif key[pygame.K_KP3] or key[pygame.K_3]:
              return 3
-         elif key[pygame.K_KP4]:
+         elif key[pygame.K_KP4] or key[pygame.K_4]:
              return 4
-         elif key[pygame.K_KP5]:
+         elif key[pygame.K_KP5] or key[pygame.K_5]:
              return 5
-         elif key[pygame.K_KP6]:
+         elif key[pygame.K_KP6] or key[pygame.K_6]:
              return 6
-         elif key[pygame.K_KP7]:
+         elif key[pygame.K_KP7] or key[pygame.K_7]:
              return 7
-         elif key[pygame.K_KP8]:
+         elif key[pygame.K_KP8] or key[pygame.K_8]:
              return 8
-         elif key[pygame.K_KP9]:
+         elif key[pygame.K_KP9] or key[pygame.K_9]:
              return 9
          elif key[pygame.K_RETURN]:
              return random.randint(0,self.__num_of_floors)
