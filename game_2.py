@@ -3,7 +3,7 @@ import pygame
 
 import Graphic_Manager as gm
 from Building_2 import Building 
-
+import time
 
 class Game:
     screen = gm.screen
@@ -13,8 +13,9 @@ class Game:
         self.__num_of_elevators = elevators
         
         self._building = Building(self.__num_of_floors, self.__num_of_elevators)
-                       
         
+        self.__time = time.time()
+        self.__prev_time = self.__time
         
     def init(self):
         #maybe need to change the size of the screen here
@@ -68,10 +69,13 @@ class Game:
             self.screen.blit(ele[0], cuordinates_calculator(ele[1]))        
 
 
-    # pull floor from numpad events.
-    # if 'Enter' pressed returning random floor.
-    # if no floor clikced returning '-1'
+    
     def get_floor_from_keyboard(self, key):
+         """
+         pull floor from keyboard events.
+         if 'Enter' pressed returning random floor.
+         if no floor clikced returning '-1'
+         """
          
          if key[pygame.K_KP0] or key[pygame.K_0]:
              return 0
@@ -111,14 +115,22 @@ class Game:
 
     
     def play(self):
+        
+       
         clock = pygame.time.Clock()
         
         running = True
         while running:
               
+              self.__time = time.time()
+              
+              num_of_updates = is_it_late(self.__prev_time, self.__time,gm.DURATION_OF_ITERATION)
+              self.__prev_time = self.__time
+              
               floor = -1
               if pygame.mouse.get_pressed()[0]:
                     floor = self.get_floor_from_mouse()
+                    
               for event in pygame.event.get():
                                    
                   #pull floor from mouse events
@@ -141,11 +153,19 @@ class Game:
                         self._building.get_elevator(floor)
                              
                           
-                            
+           #   for i in range(0,num_of_updates):
+            #        self._building.update()                                               
+              print(num_of_updates) 
+              if num_of_updates:
+                  self._building.update()                                               
+                  
               self._building.update()                                               
+                    
               self.draw()
               
               pygame.display.flip()
+              
+             
               
               clock.tick(gm.FRAN_RATE)
 
@@ -155,6 +175,18 @@ class Game:
 def cuordinates_calculator(cuordinates):
     return (cuordinates[0],gm.WINDOW_SIZE[1] - cuordinates[1])
     
+
+def is_it_late(prev_time, current_time, correct_delta):
+    
+   # return (current_time - correct_delta - prev_time) % gm.DURATION_OF_ITERATION
+    print((current_time - correct_delta - prev_time) % gm.DURATION_OF_ITERATION)
+    
+    if (current_time - correct_delta) >= prev_time:
+        return True
+    return False
+      
+
+
 
 
 

@@ -4,6 +4,8 @@ import Graphic_Manager as gm
 import game_2 as Game
 
 
+
+
 def get_settings():
     #check if ther is json file
         #case true: open it and return the data(num of floors, num of elevators)

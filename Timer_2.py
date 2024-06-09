@@ -8,8 +8,6 @@ class Timer_2:
         self.__is_running = False
         
     def set(self, seconds, parts = 0):
-        ##print  (f"1 Timer_2.Set: seconds: {seconds},  parts: {parts} \n self.__seconds: {self.__seconds}, self.__parts: {self.__parts}")  
-        
         if type(seconds) == tuple:
             self.__seconds = seconds[0]
             self.__parts = seconds[1]

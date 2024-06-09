@@ -30,6 +30,8 @@ DING_FILE = "resources\ding.mp3"
 FRAN_RATE = 60
 PACE = 2
 FRAMES_TO_CROSS_A_FLOOR = int(TIME_TRAVEL_BETWEEN_FLOORS * FRAN_RATE)
+DURATION_OF_ITERATION = 1/FRAN_RATE
+
 
 #given floors buffer
 HORIZONTAL_BUFFER_SIZE = (FLOOR_SIZE[0],7)
@@ -39,3 +41,6 @@ HORIZONTAL_BUFFER_COLOR = "black"
 SCREEN_SIZE = (pygame.display.Info().current_w, pygame.display.Info().current_h)
 screen = pygame.display.set_mode(SCREEN_SIZE)
 WINDOW_SIZE = pygame.display.get_window_size()
+
+
+print(DURATION_OF_ITERATION)
