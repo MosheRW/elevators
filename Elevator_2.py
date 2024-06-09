@@ -1,4 +1,3 @@
-from re import I
 import pygame
 from enum import Enum
 
@@ -31,7 +30,7 @@ class Elevator:
     def set(self, position):
         self.__set_position(position)
           
-    #get the graphical represntations asnd Euclidean location of the elevator in a tuple
+    #get the graphical represntations and Euclidean location of the elevator in a tuple
     def get(self) -> tuple:
         return (self.get__img(),self.get_position())
     

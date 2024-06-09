@@ -58,7 +58,9 @@ class Game:
     def draw_elevators(self, elevators_pac):
         for i in range(len(elevators_pac)):
             
-            assert (gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]) >= 0 and  (gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]) <= gm.WINDOW_SIZE[1], f'{(elevators_pac[i][1][0], gm.WINDOW_SIZE[1] - elevators_pac[i][1][1])}'
+            assert (gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]) >= 0 \
+               and  (gm.WINDOW_SIZE[1] - elevators_pac[i][1][1]) <= gm.WINDOW_SIZE[1],\
+              f'{(elevators_pac[i][1][0], gm.WINDOW_SIZE[1] - elevators_pac[i][1][1])}'
             
             ele = elevators_pac[i]
             

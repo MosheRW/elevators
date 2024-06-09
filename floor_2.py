@@ -1,7 +1,5 @@
 import pygame
-from enum import Enum
 
-from Graphic_Manager import WAIT_IN_FLOOR
 import Graphic_Manager as gm
 from Timer_2 import Timer_2
 
@@ -9,9 +7,6 @@ from Button import Button
 from Button import states
 
 
-def get_init_position(serial, first_floor_is = 0):
-     return (0, gm.FLOOR_SIZE[1] + (serial - first_floor_is) * (gm.ELEVATOR_SIZE[0]))
-         
 
 class Floor_2:
     
@@ -27,9 +22,9 @@ class Floor_2:
         #graphics
         self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()                  #the floor img
         
-        self._button = Button(self.__get_position(), str(self._floor), "yellow")      #the elevator invite button (also display thefloor number)
-        self._timer_text = Button(self.__get_position(),"00:00","black")              #the timer display module. appearing when the timer is on
-        self.__empty = Button(self.__get_position(),"00:00","black",  False)          #outputing this case the timer isnt on
+        self._button = Button(self.__get_position(), str(self._floor), "yellow")    #the elevator invite button (also display thefloor number)
+        self._timer_text = Button(self.__get_position(),"00:00","black")            #the timer display module. appearing when the timer is on
+        self.__empty = Button(self.__get_position(),"00:00","black",  False)        #outputing this case the timer isnt on
         
         self.__buffer = pygame.Surface(gm.HORIZONTAL_BUFFER_SIZE)                   #the buffer module
         self.__buffer.fill(gm.HORIZONTAL_BUFFER_COLOR)
@@ -166,10 +161,11 @@ class Floor_2:
     
 
     def __calculate_button_pos(self):        
-        return ( self.__get_position()[0] + 20, self.__get_position()[1] - 20)
+        return ( self.__get_position()[0] + gm.IDENTATION,  self.__get_position()[1] - gm.IDENTATION)
                
     def __calculate_timer_pos(self):
-        return ( self.__get_position()[0] + gm.FLOOR_SIZE[0] - (20 + self._timer_text.getrect().right),      self.__get_position()[1] - 20)
+        return (self.__get_position()[0] + gm.FLOOR_SIZE[0] - (gm.IDENTATION + self._timer_text.getrect().right),
+                self.__get_position()[1] - gm.IDENTATION)
        
     
 #-------------------------------------------------------------
@@ -180,3 +176,7 @@ class Floor_2:
        return f'|floor: {self.__get_floor()},  status: {self.__get_status()}, timer: {self.__get_timer()} |\n'
 
 
+   
+def get_init_position(serial, first_floor_is = 0):
+     return (0, gm.FLOOR_SIZE[1] + (serial - first_floor_is) * (gm.ELEVATOR_SIZE[0]))
+         
