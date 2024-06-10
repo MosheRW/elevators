@@ -17,7 +17,7 @@ class Elevator:
         self._position = (0,0)              #the position on the screen in Euclidean values
         
         self._status = ele_status.STILL     #the status of the elevator, one from  the five availables above.(enum. initilize to still)
-        self._img =  pygame.image.load(gm.ELEVATOR_PIC_FILE).convert()   #_img representation of the elevator
+        self._img =  gm.ELEVATOR_PIC        #_img representation of the elevator
         
         self.__novment_counter = 0            #counts the pixels the elevator moves from the last time the elevators opend its doors
         self.__novment_limit = 0              #the num of pixels the elevator need to move until its next destnation         
@@ -41,6 +41,7 @@ class Elevator:
              self.__update_big_timer()
              self.__update_small_timer()
              self.__update_status()
+             #self.__update__img()           #no need here. it updates in another methodes when it needs
              self.update(iterations - 1)
              
 
@@ -132,7 +133,10 @@ class Elevator:
             self._position[1] = y                
 
     def __set__img(self, filename = gm.ELEVATOR_PIC_FILE):
-        self._img = pygame.image.load(filename).convert()
+        if filename == gm.ELEVATOR_PIC_FILE:
+             self._img = gm.ELEVATOR_PIC 
+        else:
+             self._img = gm.ELEVATOR_GREEN_PIC
        
     def __set_status(self, new_status):
         self._status = new_status
