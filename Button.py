@@ -30,11 +30,14 @@ class Button:
 
 #-----------------------------------	
 	#set the button location, text, colors of the text and backround, and status.
-	def set(self, location, text = "00:00", color = "white", status = states.STILL):
-		self.__set_position(location)
+	def set(self, position, text = "00:00", color = "white", backround = True, status = states.STILL):
+		self.__set_position(position)
 		self.__set_text(text)
-		self.__set_shape()
-		self.__set_backround_color(color)
+		self.__set_shape()		
+		self._backround = backround
+		
+		if  self._backround:
+			self.__set_backround_color(color)
 		self.__set_status(status)		
 		
 	#get the graphical represntations and Euclidean location of the button in a tuple		

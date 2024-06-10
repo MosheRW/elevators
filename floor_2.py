@@ -14,7 +14,7 @@ class Floor_2:
         
         #data
         self._floor = floor
-        self._position = (0,0)
+        self._position = get_init_position(self._floor)
         
         self._status = states.STILL
         self._timer = Timer_2()
@@ -22,12 +22,14 @@ class Floor_2:
         #graphics
         self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()                  #the floor img
         
-        self._button = Button(self.__get_position(), str(self._floor), "yellow")    #the elevator invite button (also display thefloor number)
-        self._timer_text = Button(self.__get_position(),"00:00","black")            #the timer display module. appearing when the timer is on
-        self.__empty = Button(self.__get_position(),"00:00","black",  False)        #outputing this case the timer isnt on
+        self._button = Button(self.__calculate_button_pos(),str(self.__get_floor()),(255,255,255))    #the elevator invite button (also display thefloor number)
+        self._timer_text = Button(self.__get_position(),"00:00","gray")            #the timer display module. appearing when the timer is on
+        self.__empty = Button(self.__get_position(),"00:00","white",  False)        #outputing this case the timer isnt on
         
         self.__buffer = pygame.Surface(gm.HORIZONTAL_BUFFER_SIZE)                   #the buffer module
         self.__buffer.fill(gm.HORIZONTAL_BUFFER_COLOR)
+        
+        pygame.mixer.music.load(gm.DING_FILE)
 
 
 #---------------------------------------------------------------------------------

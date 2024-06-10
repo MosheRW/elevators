@@ -14,7 +14,7 @@ class Elevator:
         self._queque = []                   #queque of floors wiatinf to the elevator
         self._floor  = int(starting_point)  #the last floor the elevator parked in
         self._serial = serial               #the elevator serial number from all the elevators
-        self._position = (0,0)              #the position on the screen in Euclidean values
+        self._position = get_init_position(self._serial)#(0,0)              #the position on the screen in Euclidean values
         
         self._status = ele_status.STILL     #the status of the elevator, one from  the five availables above.(enum. initilize to still)
         self._img =  gm.ELEVATOR_PIC        #_img representation of the elevator
@@ -26,22 +26,24 @@ class Elevator:
         self._time_to_end_status = Timer_2.Timer_2()        #timer object. store the time until the current operation will end.
 
 #--------------------------------------------------------------------------#       
-    #set the Euclidean location of the elevator
+   
     def set(self, position):
+        "set the Euclidean location of the elevator"
         self.__set_position(position)
           
-    #get the graphical represntations and Euclidean location of the elevator in a tuple
+    
     def get(self) -> tuple:
+        "get the graphical represntations and Euclidean location of the elevator in a tuple"
         return (self.get__img(),self.get_position())
     
-    #updates the location, graphic represantation, status and timers of the elevator 
-    def update(self, iterations):       
+   
+    def update(self, iterations):
+        "updates the location, graphic represantation, status and timers of the elevator"
         if iterations > 0:     
              self.__move()              
              self.__update_big_timer()
              self.__update_small_timer()
              self.__update_status()
-             #self.__update__img()           #no need here. it updates in another methodes when it needs
              self.update(iterations - 1)
              
 
@@ -54,6 +56,9 @@ class Elevator:
          is_call_worthy:       <-      attantion: this function will not change any stored data!
          calculate ans returns the time it'ill take to the elevator to get to a specific floor,
          concidering the current time sceduale, and the time it will take to travel to new floor
+         
+         input: destination floor (int)
+         output: the time it will take to the elevator to get ther (tuple of ints)
         """
         
         # getting the last floor in line
@@ -69,9 +74,12 @@ class Elevator:
     #-----------------------------------------------   
     def call(self, floor):
         """
-        call function:s
+        call function:
         adding the new call to the sceduale and the queque
-        """
+        
+        input: destination floor (int)
+        output: the time it will take to the elevator to get ther (tuple of ints)   """
+        
         #cases that no need to make a change - even the elevator calld       
         if self.__get_last_floor_in_line() == floor:
                 return  self.get_time().get()

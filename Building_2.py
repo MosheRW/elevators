@@ -12,10 +12,13 @@ class Building:
         self._elevator_mange = Elevators_Management(self.__num_of_elevators)
         
 #----------------------------------------------------------------------------
-    #initilize the floors and elevators managemant
+    
     def init(self):
+        """
+        initilize the floors and elevators managemant
+        """
         self._floors_mange.init()
-        self._elevator_mange.init()
+        #self._elevator_mange.init()
         
     #updates the floors and elevators                
     def update(self, iterations = 1):
