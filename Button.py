@@ -3,17 +3,19 @@ import pygame
 from enum import Enum
 
 states = Enum('states', ['WAITING', 'ELEVATOR_HERE', 'STILL'])
-"the possibale states of the floor: 'WAITING', 'ELEVATOR_HERE' or 'STILL'"
+"the possible  states of the floor: 'WAITING', 'ELEVATOR_HERE' or 'STILL'"
 
 class Button:
 	"""
 	Button.
-	responsebol for displaying updateable and clickable text with backround
-	input: location(euclidean tuple), text(str), colors of backround, if need to create the backround(bool).
-	output:	None
+	responsible for displaying updateable and clickable text with background
 	"""
 
 	def __init__(self ,position, text = "00:00", color = "white", backround = True):
+		"""
+		input: location(euclidean tuple), text(str), colors of backround, if need to create the backround(bool).
+		output:	None
+		"""
 		
 		self.__position = position		#store the euclidean location
 		self._status = states.STILL		#the status of the floor button, one from the three availables above.(enum. initilize to still)
@@ -61,7 +63,6 @@ class Button:
 		self.__set_text(new_text)
 	
 #----------------------------------
-	#return boolean value. if the button clicked
 	def is_clicked(self, mous_pos)	 -> bool:
 		"return True if the button clicked, and False if not"
 		return self.getrect().collidepoint(mous_pos)

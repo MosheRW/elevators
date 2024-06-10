@@ -11,7 +11,7 @@ class Floors_managment:
     #initilize the floors in the array        
     def init(self):
          for i in range(len(self._the_floors)):
-            self._the_floors[i].init(i)
+            self._the_floors[i].set(i)
     
     #get an array of the floors graphical represntations tuples            
     def get(self):

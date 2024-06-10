@@ -9,32 +9,44 @@ from Button import states
 
 
 class Floor_2:
+    """
+    Floor
+    responsible about all the aspects of the floors:
+    euclidian location, img to display, timer, clickable buttons, status of the floor, and to play dinf when elevator arrived in the floor 
+    """
+    
     
     def __init__(self, floor = 0):
-        
+        """input:   floor(int)
+            output: None"""
         #data
-        self._floor = floor
-        self._position = get_init_position(self._floor)
+        self._floor = floor                                             # the floor serial    
+        self._position = get_init_position(self._floor)                 # the floor euclidean position
         
-        self._status = states.STILL
-        self._timer = Timer_2()
+        self._status = states.STILL                                     # the floor status
+        self._timer = Timer_2()                                         # the floors timer, utllized when elevator is invited or arrived in the floor
         
         #graphics
-        self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()                  #the floor img
+        self.img =  pygame.image.load(gm.FLOOR_PIC_FILE).convert()      #the floor img
         
         self._button = Button(self.__calculate_button_pos(),str(self.__get_floor()),(255,255,255))    #the elevator invite button (also display thefloor number)
-        self._timer_text = Button(self.__get_position(),"00:00","gray")            #the timer display module. appearing when the timer is on
-        self.__empty = Button(self.__get_position(),"","black",  False)        #outputing this case the timer isnt on
+        self._timer_text = Button(self.__get_position(),"00:00","gray") #the timer display module. appearing when the timer is on
+        self.__empty = Button(self.__get_position(),"","black",  False) #outputing this case the timer isnt on
         
-        self.__buffer = pygame.Surface(gm.HORIZONTAL_BUFFER_SIZE)                   #the buffer module
-        self.__buffer.fill(gm.HORIZONTAL_BUFFER_COLOR)
+        self.__buffer = pygame.Surface(gm.HORIZONTAL_BUFFER_SIZE)       #the buffer module
+        self.__buffer.fill(gm.HORIZONTAL_BUFFER_COLOR)                  #buffer module initlization
         
-        pygame.mixer.music.load(gm.DING_FILE)
+        pygame.mixer.music.load(gm.DING_FILE)                           #sound initlization
 
 
 #---------------------------------------------------------------------------------
         
-    def init(self, floor):
+    def set(self, floor):
+        """
+        initilizing the floor
+        input:  floor serial(int)
+        output: None
+        """
         self._floor = floor
         
         self.set_status(states.STILL)
@@ -50,22 +62,36 @@ class Floor_2:
         
 #---------------------------------------------------------------------------------
         
-    def is_this_floor_needs_an_elevator(self):
+    def is_this_floor_needs_an_elevator(self) -> bool:
+        """returns True if no elevator invited or with open doors at the floor, else return False
+        no input"""
+        
         return self.__get_status() == states.STILL
     
 
-    def get_elevator(self, time):        
+    def get_elevator(self, time):
+        """
+        responsible about the floors aspects with elevator invitation:
+        setting timer for the arrivale EPA
+        sets the status to be 'waitin to elevators'
+        
+        input:  time EPA
+        output: none
+        """
         self.set_timer(time)
         self.set_status(states.WAITING)
         
 #----------------------------------------------------------------------------------
 
-    #get the surface's of the class
     def get(self):    
+        "get the surface's of the class, tuple with four tuples of surfaces"
         return (self.__get_img(), self.__get_text(), self.__get_button(),self.__get_buffer())
     
     #update the class variables, timers and statuses
-    def update(self, iterations = 1): 
+    def update(self, iterations = 1):
+            """update the class variables, timers and statuses
+                
+            """
         #if iterations >= 1:
             self.__update_timer(iterations)
             self.__update_status()
