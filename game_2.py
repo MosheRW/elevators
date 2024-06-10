@@ -14,15 +14,17 @@ class Game:
         
         self._building = Building(self.__num_of_floors, self.__num_of_elevators)
         
-        self.__time = time.time()
-        self.__prev_time = self.__time
+        self.__corerction_time = 0
+        self.__prev_time = 0
         
     def init(self):
         #maybe need to change the size of the screen here
         pygame.init()        
         self._building.init()
 
-
+    def __update(self, num_of_updates):
+        for _ in range(0,num_of_updates):
+            self._building.update()
                   
     def erease_screen(self):
         self.screen.fill("white")
@@ -52,9 +54,7 @@ class Game:
             self.screen.blit(floors_pac[i][2][0],   cuordinates_calculator(floors_pac[i][2][2]))
             
             #draw the buffer between floors
-            self.screen.blit(floors_pac[i][3][0],   cuordinates_calculator(floors_pac[i][3][1]))
-            
-
+            self.screen.blit(floors_pac[i][3][0],   cuordinates_calculator(floors_pac[i][3][1]))            
 
     def draw_elevators(self, elevators_pac):
         for i in range(len(elevators_pac)):
@@ -67,7 +67,6 @@ class Game:
             
             #draw the elevator img
             self.screen.blit(ele[0], cuordinates_calculator(ele[1]))        
-
 
     
     def get_floor_from_keyboard(self, key):
@@ -100,12 +99,13 @@ class Game:
          elif key[pygame.K_RETURN]:
              return random.randint(0,self.__num_of_floors)
          
-         return -1
-    
-    
-    
-    #pull floor from mouse events. if no floor clikced returning '-1'
+         return -1    
+       
     def get_floor_from_mouse(self):
+        """
+        pull floor from mouse events.
+        if no floor clikced returning '-1'
+        """
         if pygame.mouse.get_pressed()[0]:
               pos = pygame.mouse.get_pos()
               return  self._building.who_clicked(    cuordinates_calculator(pos))
@@ -117,26 +117,20 @@ class Game:
     def play(self):
         
        
-        clock = pygame.time.Clock()
-        
+        clock = pygame.time.Clock()        
+        self.__prev_time = time.monotonic_ns()        
         running = True
+        
         while running:
               
-              self.__time = time.time()
-              
-              num_of_updates = is_it_late(self.__prev_time, self.__time,gm.DURATION_OF_ITERATION)
-              self.__prev_time = self.__time
-              
-              floor = -1
-              if pygame.mouse.get_pressed()[0]:
-                    floor = self.get_floor_from_mouse()
+              num_of_updates = self.is_it_late()
+                                         
+              #pull floor from keyboard events
+              floor = self.get_floor_from_mouse()
                     
               for event in pygame.event.get():
                                    
-                  #pull floor from mouse events
-                  #floor = -1
-                 # if pygame.mouse.get_pressed()[0]:
-                  #  floor = self.get_floor_from_mouse()
+                  floor = self.get_floor_from_mouse()
                   
                   #pull floor from keyboard events
                   if event.type == pygame.KEYDOWN:
@@ -152,42 +146,33 @@ class Game:
                   if floor != -1:
                         self._building.get_elevator(floor)
                              
-                          
-           #   for i in range(0,num_of_updates):
-            #        self._building.update()                                               
-              print(num_of_updates) 
-              if num_of_updates:
-                  self._building.update()                                               
-                  
-              self._building.update()                                               
-                    
+                        
+                     
+            
+              self.__update(num_of_updates)                
               self.draw()
               
-              pygame.display.flip()
-              
-             
-              
+              pygame.display.flip()              
               clock.tick(gm.FRAN_RATE)
 
     
-
+    def is_it_late(self):
+        current_time = time.monotonic_ns()
+        
+        corrections = (current_time - self.__prev_time) //  gm.DURATION_OF_ITERATION
+        self.__corerction_time += ((time.monotonic_ns() - self.__prev_time) /  gm.DURATION_OF_ITERATION) % 1 
+        
+        corrections += int(self.__corerction_time)
+        self.__corerction_time -= int(self.__corerction_time)
+        
+        self.__prev_time = current_time
+        
+        return corrections
+    
 #calculating the end cuordinats (i stored the locations in Cartesian pivot table)
 def cuordinates_calculator(cuordinates):
     return (cuordinates[0],gm.WINDOW_SIZE[1] - cuordinates[1])
     
-
-def is_it_late(prev_time, current_time, correct_delta):
-    
-   # return (current_time - correct_delta - prev_time) % gm.DURATION_OF_ITERATION
-    print((current_time - correct_delta - prev_time) % gm.DURATION_OF_ITERATION)
-    
-    if (current_time - correct_delta) >= prev_time:
-        return True
-    return False
-      
-
-
-
 
 
 g = Game()

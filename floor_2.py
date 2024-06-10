@@ -63,11 +63,12 @@ class Floor_2:
         return (self.__get_img(), self.__get_text(), self.__get_button(),self.__get_buffer())
     
     #update the class variables, timers and statuses
-    def update(self):        
-        self.__update_timer()
-        self.__update_status()
-        self.__update_text()
-        self.__update_button()
+    def update(self, iterations = 1): 
+        #if iterations >= 1:
+            self.__update_timer(iterations)
+            self.__update_status()
+            self.__update_text()
+            self.__update_button()
         
   
 #----------------------------------------------------------
@@ -142,8 +143,8 @@ class Floor_2:
             if not self._timer.is_running():
                 self.set_status(states.STILL)                       
     
-    def __update_timer(self):
-        self._timer.update()
+    def __update_timer(self, iterations = 1):
+        self._timer.update(iterations)
     
     def __update_img(self):
         #can change the elevator pic when the status changes

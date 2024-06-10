@@ -35,12 +35,14 @@ class Elevator:
         return (self.get__img(),self.get_position())
     
     #updates the location, graphic represantation, status and timers of the elevator 
-    def update(self):
-         self.__move()  
-         self.__update_big_timer()
-         self.__update_small_timer()
-         self.__update_status()
-         self.__update__img()
+    def update(self, iterations):       
+        if iterations > 0:     
+             self.__move()              
+             self.__update_big_timer()
+             self.__update_small_timer()
+             self.__update_status()
+             self.update(iterations - 1)
+             
 
 #--------------------------------------------------------------------------#       
              
@@ -180,10 +182,12 @@ class Elevator:
             
             elif len(self._queque) > 0:
                 self.__set_status(ele_status.INVITED)
+                self.__update__img()
                 
             else:
                  self.__set_status(ele_status.STILL)
                  self._time_until_clear.set_nulify()
+                 self.__update__img()
 
     def __update_status_case_invited(self):
         if self.get_status() == ele_status.INVITED:
@@ -202,6 +206,7 @@ class Elevator:
         self._time_to_end_status.set(gm.WAIT_IN_FLOOR)
         self.__set_status(ele_status.DOORS_OPEN)
         self.__set_floor(self._queque.pop(0))
+        self.__update__img()
            
     def __is_got_to_place(self):
         return self.__novment_counter >= self.__novment_limit    

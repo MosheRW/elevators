@@ -18,9 +18,9 @@ class Elevators_Management_2:
             self._the_elevators[i].set(ele.get_init_position(i))
             
     #updates the elevators      
-    def update(self):
+    def update(self, iterations = 1):
         for i in  range(len(self._the_elevators)):
-            self._the_elevators[i].update()     
+            self._the_elevators[i].update(iterations)     
        
     #get an array of elevators the graphical represntations tuples
     def get(self):

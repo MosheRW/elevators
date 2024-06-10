@@ -18,9 +18,9 @@ class Floors_managment:
         return [self._the_floors[i].get() for i in range(len(self._the_floors))]
 
     #updates the floors 
-    def update(self):
+    def update(self, iterations = 1):
         for i in range(len(self._the_floors)):
-            self._the_floors[i].update()
+            self._the_floors[i].update(iterations)
         
 #----------------------------------------------------------------------------
     #returns if a given flooe is already invite an elevator to

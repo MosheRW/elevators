@@ -34,9 +34,9 @@ class Timer_2:
         self.calculate()
         self.update_is_running()
     
-    def update(self):
+    def update(self, iterations = 1):
         if self.is_running():
-            self.__parts -= 1
+            self.__parts -= iterations
         
             if self.__parts < 0:                    #changed from <=
                 self.__seconds -= 1

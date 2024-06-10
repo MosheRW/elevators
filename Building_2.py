@@ -18,9 +18,9 @@ class Building:
         self._elevator_mange.init()
         
     #updates the floors and elevators                
-    def update(self):
-        self._floors_mange.update()
-        self._elevator_mange.update()
+    def update(self, iterations = 1):
+        self._floors_mange.update(iterations)
+        self._elevator_mange.update(iterations)
         
     #get an array of the floors and elevators graphical represntations arrays of tuples
     def get(self):

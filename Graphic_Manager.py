@@ -23,14 +23,15 @@ IDENTATION = 20
 #media files path
 ELEVATOR_PIC_FILE = 'resources\elv.png'
 ELEVATOR_GREEN_PIC_FILE = 'resources\green-elv.png'
-FLOOR_PIC_FILE = 'resources\wall.jpg'
+#FLOOR_PIC_FILE = 'resources\wall.jpg'
+FLOOR_PIC_FILE = 'resources\ew_wall.png'
 DING_FILE = "resources\ding.mp3"
 
 #inside the game constsnt globals
 FRAN_RATE = 60
 PACE = 2
 FRAMES_TO_CROSS_A_FLOOR = int(TIME_TRAVEL_BETWEEN_FLOORS * FRAN_RATE)
-DURATION_OF_ITERATION = 1/FRAN_RATE
+DURATION_OF_ITERATION = int(1000000000/FRAN_RATE)
 
 
 #given floors buffer
