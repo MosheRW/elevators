@@ -24,7 +24,7 @@ class Floor_2:
         
         self._button = Button(self.__calculate_button_pos(),str(self.__get_floor()),(255,255,255))    #the elevator invite button (also display thefloor number)
         self._timer_text = Button(self.__get_position(),"00:00","gray")            #the timer display module. appearing when the timer is on
-        self.__empty = Button(self.__get_position(),"00:00","white",  False)        #outputing this case the timer isnt on
+        self.__empty = Button(self.__get_position(),"","black",  False)        #outputing this case the timer isnt on
         
         self.__buffer = pygame.Surface(gm.HORIZONTAL_BUFFER_SIZE)                   #the buffer module
         self.__buffer.fill(gm.HORIZONTAL_BUFFER_COLOR)
