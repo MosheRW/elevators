@@ -48,10 +48,13 @@ class Elevator:
 #--------------------------------------------------------------------------#       
              
     
-    # is_call_worthy:       <-      attantion: this function will not change any stored data!
-    # calculate ans returns the time it'ill take to the elevator to get to a specific floor,
-    # concidering the current time sceduale, and the time it will take to travel to new floor
+    
     def is_call_worthy(self, floor):
+        """
+         is_call_worthy:       <-      attantion: this function will not change any stored data!
+         calculate ans returns the time it'ill take to the elevator to get to a specific floor,
+         concidering the current time sceduale, and the time it will take to travel to new floor
+        """
         
         # getting the last floor in line
         last_floor_in_line = self.__get_last_floor_in_line()                                    
@@ -64,9 +67,11 @@ class Elevator:
     
 
     #-----------------------------------------------   
-    # call function:
-    # adding the new call to the sceduale and the queque
     def call(self, floor):
+        """
+        call function:s
+        adding the new call to the sceduale and the queque
+        """
         #cases that no need to make a change - even the elevator calld       
         if self.__get_last_floor_in_line() == floor:
                 return  self.get_time().get()
@@ -115,12 +120,15 @@ class Elevator:
     def get_floor(self):
         return self._floor
            
-    # get_last_floor_in_line returns the last floor in line,
-    # or the current floor if there is no floor in line
+     
     def __get_last_floor_in_line(self):
-          if(len(self._queque) > 0):
-                 return self._queque[-1]
-          return self.get_floor()
+        """
+        get_last_floor_in_line returns the last floor in line,
+        or the current floor if there is no floor in line
+        """
+        if(len(self._queque) > 0):
+                return self._queque[-1]
+        return self.get_floor()
               
 
 #--------------------------------------------------------------------
@@ -149,9 +157,16 @@ class Elevator:
     #update methodes
     def __update__img(self):
         if self.get_status() == ele_status.DOORS_OPEN:            
-            self.__set__img(gm.ELEVATOR_GREEN_PIC_FILE)            
-        else:
-             self.__set__img()
+            self._img = gm.ELEVATOR_GREEN_PIC 
+            
+        elif self.get_status() == ele_status.GOING_DOWN:
+             self._img = gm.ELEVATOR_DOWN_PIC
+             
+        elif self.get_status() == ele_status.GOING_UP:
+             self._img = gm.ELEVATOR_UP_PIC
+                             
+        elif self.get_status() == ele_status.STILL:
+             self._img = gm.ELEVATOR_PIC
                         
     def __update_big_timer(self):
         self._time_until_clear.update()
@@ -198,7 +213,8 @@ class Elevator:
             if len(self._queque) > 0:                
                 self.__set_status(self.__calculate_movment_direction(self._queque[0]))
                 self.__update___novment_limit(self._queque[0])
-                self.__destination = self._queque[0]
+                #self.__destination = self._queque[0]
+                self.__update__img()
             else:
                 self.__set_status(ele_status.STILL)       
   
