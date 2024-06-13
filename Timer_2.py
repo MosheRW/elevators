@@ -14,9 +14,7 @@ class Timer_2:
         else:
             self.__seconds = int(seconds)
             self.__parts = int(parts)
-        
-            
-        ##print  (f"2 Timer_2.Set: seconds: {seconds},  parts: {parts} \n self.__seconds: {self.__seconds}, self.__parts: {self.__parts}")  
+                          
         self.calculate()
         self.update_is_running()        
                 
@@ -111,10 +109,6 @@ class Timer_2:
              parts = f"0{self.get()[1]}"
         
         return f"{sec}:{parts}"
-
-        #return f"{self.get()[0]}:{self.get()[1]}"
-    
-        #return f"sec: {self.get()[0]}, parts: {self.get()[1]}, is running: {self.is_running()}\n"
       
     def __repr__(self):
         return f"sec: {self.get()[0]}, parts: {self.get()[1]}, is running: {self.is_running()}\n"
@@ -140,14 +134,3 @@ def calculate(sec = 0, parts = 0):
     assert  int(sec) == sec and int(parts) == parts, "Numbers do not match"
     return int(sec), int(parts)
     
-
-
-tim = Timer_2()
-
-tim.set((2,30))
-
-##print(tim.get())
-
-tim.set(2,30)
-
-##print(tim.get())

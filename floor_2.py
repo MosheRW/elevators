@@ -90,7 +90,7 @@ class Floor_2:
     #update the class variables, timers and statuses
     def update(self, iterations = 1):
             """update the class variables, timers and statuses
-                
+               possible input: number of iterations to run update
             """
         #if iterations >= 1:
             self.__update_timer(iterations)
