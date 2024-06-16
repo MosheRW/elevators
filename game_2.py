@@ -5,10 +5,12 @@ import Graphic_Manager as gm
 from Building_2 import Building 
 import time
 
+
+
 class Game:
     screen = gm.screen
     
-    def __init__(self, floors = 11, elevators =7):
+    def __init__(self, floors = 11, elevators =1):
         self.__num_of_floors = floors
         self.__num_of_elevators = elevators
         
@@ -17,14 +19,17 @@ class Game:
         self.__corerction_time = 0
         self.__prev_time = 0
         
+        self.__debug = 0
+        
     def init(self):
         #maybe need to change the size of the screen here
         pygame.init()        
         self._building.init()
 
     def __update(self, num_of_updates):
-        for _ in range(0,num_of_updates):
-            self._building.update()
+        self._building.update(num_of_updates)
+        #for _ in range(0,num_of_updates):
+         #   self._building.update()
                   
     def erease_screen(self):
         self.screen.fill("white")
@@ -145,6 +150,7 @@ class Game:
                        
                   if floor != -1:
                         self._building.get_elevator(floor)
+                        print(self.__debug)
                              
                         
                      
@@ -167,6 +173,10 @@ class Game:
         
         self.__prev_time = current_time
         
+        self.__debug += corrections
+        
+        
+        assert corrections <= 4
         return corrections
     
 #calculating the end cuordinats (i stored the locations in Cartesian pivot table)

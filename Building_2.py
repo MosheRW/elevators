@@ -43,6 +43,7 @@ class Building:
             time_stamp = self._elevator_mange.get_an_elevator(floor)
             
             assert type(time_stamp) == tuple, "Error, incorrect value"        
+            print(time_stamp)
             
             self._floors_mange.get_an_elevator(floor,time_stamp)
         

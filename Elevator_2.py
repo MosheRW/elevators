@@ -5,6 +5,7 @@ import Graphic_Manager as gm
 import Timer_2
 
 
+
 ele_status = Enum('ele_status',['GOING_UP','GOING_DOWN', 'STILL', 'DOORS_OPEN', 'INVITED'])
 
 
@@ -24,6 +25,8 @@ class Elevator:
         
         self._time_until_clear = Timer_2.Timer_2()          #timer object. store the time until the end of the entire scedualed travel, including the waiting time at any floor
         self._time_to_end_status = Timer_2.Timer_2()        #timer object. store the time until the current operation will end.
+        
+       
 
 #--------------------------------------------------------------------------#       
    
